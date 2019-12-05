@@ -16,13 +16,13 @@
   padding: 50px;
   height: 100%;
 }
-.nuxt-container {
-  margin: 30px;
-}
 .footer {
   background-color: #161d2d;
   margin: 0px -50px;
   color: white;
   padding: 50px;
+}
+.nuxt-container {
+  height: 100%;
 }
 </style>

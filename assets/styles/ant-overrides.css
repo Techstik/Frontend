@@ -1,3 +1,6 @@
+button{
+    font-family: 'Raleway', sans-serif;
+}
 .ant-btn-danger {
     color: white !important;
     background-color: #f76c6c !important;
