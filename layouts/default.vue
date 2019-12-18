@@ -13,16 +13,19 @@
 </template>
 <style scoped>
 .background {
-  padding: 50px;
   height: 100%;
+  background-image: url(/_nuxt/assets/images/MoonBackground-01.svg);
+  background-attachment: scroll;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .footer {
   background-color: #161d2d;
-  margin: 0px -50px;
   color: white;
   padding: 50px;
 }
 .nuxt-container {
-  height: 100%;
+  min-height: 100%;
+  padding: 50px;
 }
 </style>

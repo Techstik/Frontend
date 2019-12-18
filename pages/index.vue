@@ -1,11 +1,5 @@
 <template>
   <div class="container">
-    <div
-      class="background-shape"
-      :style="{
-        background: `url(${backgroundShape}) no-repeat scroll top left`
-      }"
-    ></div>
     <div class="top-bar">
       <a-button type="danger">Post a job</a-button>
     </div>
@@ -23,13 +17,21 @@
     <div class="filters">
       <a-button type="default">more filters</a-button>
     </div>
+    <div class="listings">
+      <listing />
+    </div>
   </div>
 </template>
 <script>
-import backgroundShape from '@/assets/images/background-shape.png'
+import listing from '@/components/listing'
+import backgroundShape from '@/assets/images/MoonBackground-01.svg'
 import globe from '@/assets/images/planet-earth.svg'
 import pin from '@/assets/images/pin.svg'
+
 export default {
+  components: {
+    listing
+  },
   data() {
     return {
       backgroundShape,
@@ -50,7 +52,9 @@ export default {
 }
 .title {
   text-align: center;
-  margin: 10% 0;
+  padding: 10% 0;
+  color: white;
+  margin: 0;
 }
 .top-bar {
   text-align: right;
@@ -64,7 +68,7 @@ export default {
 }
 .location {
   display: inline-block;
-  border: 2px solid;
+  border: 2px solid #c5c5c5;
   padding: 10px 20px;
   border-radius: 10px;
   margin: 0px 15px;
@@ -83,5 +87,9 @@ export default {
 .filters {
   text-align: center;
   margin-top: 15px;
+}
+.listings {
+  margin-top: 30px;
+  text-align: center;
 }
 </style>
