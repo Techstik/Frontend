@@ -1,9 +1,5 @@
 <template>
   <div class="container">
-    <div class="top-bar">
-      <a-button type="danger">Post a job</a-button>
-    </div>
-    <h1 class="title">Find tech jobs around the world</h1>
     <div class="locations">
       <div class="location">
         <img :src="globe" />
@@ -18,7 +14,16 @@
       <a-button type="default">more filters</a-button>
     </div>
     <div class="listings">
-      <listing />
+      <a-row>
+        <a-col :span="8"> <listing /> </a-col>
+        <a-col :span="8"> <listing /> </a-col>
+        <a-col :span="8"> <listing /> </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="8"> <listing /> </a-col>
+        <a-col :span="8"> <listing /> </a-col>
+        <a-col :span="8"> <listing /> </a-col>
+      </a-row>
     </div>
   </div>
 </template>
@@ -56,13 +61,6 @@ export default {
   color: white;
   margin: 0;
 }
-.top-bar {
-  text-align: right;
-  position: fixed;
-  top: 0;
-  right: 0;
-  margin: 30px;
-}
 .locations {
   text-align: center;
 }
@@ -91,5 +89,7 @@ export default {
 .listings {
   margin-top: 30px;
   text-align: center;
+  margin: auto;
+  max-width: 1500px;
 }
 </style>

@@ -31,9 +31,9 @@ export default {
 </script>
 <style scoped>
 .listing {
-  margin: auto;
-  max-width: 1200px;
   text-align: left;
+  margin: 15px;
+  height: 250px;
 }
 .company-image {
   width: 50px;
