@@ -1,18 +1,18 @@
 <template>
   <div class="card listing">
     <div class="card-body">
-      <a-row>
-        <a-col :span="24">
-          <img class="company-image" :src="google" />
-          <div class="content">
-            <p class="position">Full Stack Web Developer</p>
-            <p class="company">
-              <span class="location"><img :src="globe" /> REMOTE</span>
-              World Wide Technology
-            </p>
-          </div>
-        </a-col>
-      </a-row>
+      <div class="title">
+        <img class="company-image" :src="google" />
+        <div class="content">
+          <p class="position">Full Stack Web Developer</p>
+          <p class="company">
+            World Wide Technology
+          </p>
+        </div>
+      </div>
+      <a-progress :percent="30" :format="() => 'Junior'" />
+      <p>$90-100k p/a</p>
+      <a-divider> <img class="divider" :src="globe"/></a-divider>
     </div>
   </div>
 </template>
@@ -35,15 +35,19 @@ export default {
   margin: 15px;
   height: 250px;
 }
+.title {
+  margin-bottom: 10px;
+}
 .company-image {
   width: 50px;
+  position: absolute;
 }
 .company {
   font-size: 13px;
 }
 .content {
   display: inline-block;
-  margin-left: 30px;
+  margin-left: 60px;
 }
 .content p {
   margin-bottom: 0px;
@@ -60,5 +64,8 @@ export default {
 }
 .location img {
   width: 16px;
+}
+.divider {
+  width: 20px;
 }
 </style>
