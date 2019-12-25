@@ -1,5 +1,5 @@
 <template>
-  <div class="card listing">
+  <div class="card listing" @mouseover="onHoverEnter" @mouseout="onHoverExit">
     <div class="card-body">
       <div class="title">
         <img class="company-image" :src="google" />
@@ -11,20 +11,42 @@
         </div>
       </div>
       <a-progress :percent="30" :format="() => 'Junior'" />
-      <p>$90-100k p/a</p>
-      <a-divider> <img class="divider" :src="globe"/></a-divider>
+      <div class="tech-icons">
+        <img :src="vue" />
+        <img :src="node" />
+        <img :src="mongo" />
+        <img v-show="hovering" :src="mongo" />
+      </div>
+      <a-divider class="date-posted" orientation="right">
+        2 days ago
+      </a-divider>
     </div>
   </div>
 </template>
 <script>
 import google from '@/assets/images/google.png'
 import globe from '@/assets/images/planet-earth.svg'
+import vue from '@/assets/images/tech-icons/vue.svg'
+import node from '@/assets/images/tech-icons/node.svg'
+import mongo from '@/assets/images/tech-icons/mongo.svg'
 
 export default {
   data() {
     return {
+      hovering: false,
       google,
-      globe
+      globe,
+      vue,
+      node,
+      mongo
+    }
+  },
+  methods: {
+    onHoverEnter() {
+      this.hovering = true
+    },
+    onHoverExit() {
+      this.hovering = false
     }
   }
 }
@@ -33,7 +55,6 @@ export default {
 .listing {
   text-align: left;
   margin: 15px;
-  height: 250px;
 }
 .title {
   margin-bottom: 10px;
@@ -67,5 +88,16 @@ export default {
 }
 .divider {
   width: 20px;
+}
+.tech-icons {
+  text-align: center;
+  margin-top: 16px;
+}
+.tech-icons img {
+  width: 30px;
+}
+.date-posted {
+  margin-bottom: 0px;
+  font-size: 12px;
 }
 </style>
