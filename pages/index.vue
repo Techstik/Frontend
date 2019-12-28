@@ -14,12 +14,12 @@
       <a-button type="default">more filters</a-button>
     </div>
     <div class="listings">
-      <a-row>
+      <a-row type="flex" justify="space-around" align="middle">
         <a-col :span="8"> <listing /> </a-col>
         <a-col :span="8"> <listing /> </a-col>
         <a-col :span="8"> <listing /> </a-col>
       </a-row>
-      <a-row>
+      <a-row type="flex" justify="space-around" align="middle">
         <a-col :span="8"> <listing /> </a-col>
         <a-col :span="8"> <listing /> </a-col>
         <a-col :span="8"> <listing /> </a-col>

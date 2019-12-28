@@ -15,17 +15,31 @@
         <techicon tech="vue" />
         <techicon tech="node" />
         <techicon tech="mongo" />
+        <p v-show="!hovering" class="elipsis">...</p>
         <techicon v-show="hovering" tech="mongo" />
       </div>
-      <a-divider class="date-posted" orientation="right">
-        2 days ago
-      </a-divider>
+      <a-row type="flex" justify="space-around" align="middle">
+        <a-col span="2">
+          <a-tooltip placement="top">
+            <template slot="title">
+              <span>location shown here</span>
+            </template>
+            <img class="location" :src="globe" />
+          </a-tooltip>
+        </a-col>
+        <a-col span="22">
+          <a-divider class="date-posted" orientation="right">
+            2 days ago
+          </a-divider>
+        </a-col>
+      </a-row>
     </div>
   </div>
 </template>
 <script>
 import google from '@/assets/images/google.png'
 import globe from '@/assets/images/planet-earth.svg'
+import pin from '@/assets/images/pin.svg'
 import techicon from '@/components/techicon'
 
 export default {
@@ -36,7 +50,8 @@ export default {
     return {
       hovering: false,
       google,
-      globe
+      globe,
+      pin
     }
   },
   methods: {
@@ -59,7 +74,7 @@ export default {
   margin-bottom: 10px;
 }
 .company-image {
-  width: 50px;
+  width: 45px;
   position: absolute;
 }
 .company {
@@ -73,17 +88,13 @@ export default {
   margin-bottom: 0px;
 }
 .position {
-  font-size: 23px;
+  font-size: 21px;
+  color: black;
 }
 .location {
-  border: 1px solid;
-  width: fit-content;
-  padding: 4px;
-  border-radius: 20px;
-  font-size: 10px;
-}
-.location img {
-  width: 16px;
+  position: absolute;
+  width: 20px;
+  z-index: 1;
 }
 .divider {
   width: 20px;
@@ -94,6 +105,11 @@ export default {
 }
 .date-posted {
   margin-bottom: 0px;
+  font-size: 12px;
+}
+.elipsis {
+  margin: 0;
+  display: inline-block;
   font-size: 12px;
 }
 </style>

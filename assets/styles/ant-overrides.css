@@ -6,3 +6,6 @@ button{
     background-color: #f76c6c !important;
     border-color: #f76c6c !important;
 }
+.ant-divider-horizontal.ant-divider-with-text-right{
+    font-weight: unset !important;
+}
