@@ -9,3 +9,6 @@ button{
 .ant-divider-horizontal.ant-divider-with-text-right{
     font-weight: unset !important;
 }
+.ant-progress-status-success .ant-progress-text{
+    color: unset !important;
+}

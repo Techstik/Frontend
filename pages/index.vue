@@ -15,14 +15,14 @@
     </div>
     <div class="listings">
       <a-row type="flex" justify="space-around" align="middle">
-        <a-col :span="8"> <listing /> </a-col>
-        <a-col :span="8"> <listing /> </a-col>
-        <a-col :span="8"> <listing /> </a-col>
+        <a-col :span="8"> <listing v-model="testlisting" /> </a-col>
+        <a-col :span="8"> <listing v-model="testlisting" /> </a-col>
+        <a-col :span="8"> <listing v-model="testlisting" /> </a-col>
       </a-row>
       <a-row type="flex" justify="space-around" align="middle">
-        <a-col :span="8"> <listing /> </a-col>
-        <a-col :span="8"> <listing /> </a-col>
-        <a-col :span="8"> <listing /> </a-col>
+        <a-col :span="8"> <listing v-model="testlisting" /> </a-col>
+        <a-col :span="8"> <listing v-model="testlisting" /> </a-col>
+        <a-col :span="8"> <listing v-model="testlisting" /> </a-col>
       </a-row>
     </div>
   </div>
@@ -41,7 +41,19 @@ export default {
     return {
       backgroundShape,
       globe,
-      pin
+      pin,
+      testlisting: {
+        position: 'Full Stack Developer',
+        company: 'World Wide Technology',
+        website: '',
+        logo: '',
+        experience: ['Senior'],
+        tech: ['vue', 'node', 'mongo', 'mongo'],
+        remote: true,
+        locationbased: false,
+        location: '',
+        dateposted: null
+      }
     }
   }
 }
