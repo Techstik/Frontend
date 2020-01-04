@@ -1,5 +1,10 @@
 <template>
-  <img :src="techicons[tech]" :style="style" />
+  <a-tooltip placement="top">
+    <template slot="title">
+      <span>{{ tech }}</span>
+    </template>
+    <img :src="techicons[tech]" :style="style" />
+  </a-tooltip>
 </template>
 <script>
 import vue from '@/assets/images/tech-icons/vue.svg'

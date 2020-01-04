@@ -14,15 +14,36 @@
       <a-button type="default">more filters</a-button>
     </div>
     <div class="listings">
-      <a-row type="flex" justify="space-around" align="middle">
-        <a-col :span="8"> <listing v-model="testlisting" /> </a-col>
-        <a-col :span="8"> <listing v-model="testlisting" /> </a-col>
-        <a-col :span="8"> <listing v-model="testlisting" /> </a-col>
-      </a-row>
-      <a-row type="flex" justify="space-around" align="middle">
-        <a-col :span="8"> <listing v-model="testlisting" /> </a-col>
-        <a-col :span="8"> <listing v-model="testlisting" /> </a-col>
-        <a-col :span="8"> <listing v-model="testlisting" /> </a-col>
+      <a-row
+        type="flex"
+        justify="space-around"
+        :align="listingSelected ? 'top' : 'middle'"
+        class="_row"
+      >
+        <a-col
+          id="_listing_8797"
+          :span="8"
+          class="_column"
+          @click="onListingSelected('_listing_8797')"
+        >
+          <listing ref="_listing_8797" v-model="testlisting" />
+        </a-col>
+        <a-col
+          id="_listing_8798"
+          :span="8"
+          class="_column"
+          @click="onListingSelected('_listing_8798')"
+        >
+          <listing ref="_listing_8798" v-model="testlisting" />
+        </a-col>
+        <a-col
+          id="_listing_8799"
+          :span="8"
+          class="_column"
+          @click="onListingSelected('_listing_8799')"
+        >
+          <listing ref="_listing_8799" v-model="testlisting" />
+        </a-col>
       </a-row>
     </div>
   </div>
@@ -42,6 +63,7 @@ export default {
       backgroundShape,
       globe,
       pin,
+      listingSelected: false,
       testlisting: {
         position: 'Full Stack Developer',
         company: 'World Wide Technology',
@@ -53,6 +75,24 @@ export default {
         locationbased: false,
         location: '',
         dateposted: null
+      }
+    }
+  },
+  methods: {
+    onListingSelected(selectedColumn) {
+      this.listingSelected = true
+
+      var columns = document.getElementsByClassName('_column')
+      for (let index = 0; index < 3; index++) {
+        columns[index].classList.remove('_column_selected')
+
+        if (columns[index].id == selectedColumn) {
+          this.$refs[columns[index].id].setThumbnail(false)
+          columns[index].classList.add('_column_selected')
+        } else {
+          this.$refs[columns[index].id].setThumbnail(true)
+          columns[index].classList.add('column_unselected')
+        }
       }
     }
   }
@@ -103,5 +143,16 @@ export default {
   text-align: center;
   margin: auto;
   max-width: 1500px;
+}
+
+.column_unselected {
+  width: 10%;
+}
+
+._column_selected {
+  width: 70%;
+}
+* {
+  transition: all 0.3s ease 0s;
 }
 </style>

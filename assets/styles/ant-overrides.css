@@ -1,14 +1,29 @@
-button{
+button {
     font-family: 'Raleway', sans-serif;
 }
+
 .ant-btn-danger {
     color: white !important;
     background-color: #f76c6c !important;
     border-color: #f76c6c !important;
 }
-.ant-divider-horizontal.ant-divider-with-text-right{
+
+.ant-divider-horizontal.ant-divider-with-text-right {
     font-weight: unset !important;
 }
-.ant-progress-status-success .ant-progress-text{
+
+.ant-progress-status-success .ant-progress-text {
     color: unset !important;
+}
+
+.ant-collapse-borderless>.ant-collapse-item, .ant-collapse>.ant-collapse-item {
+    border: 0 !important;
+}
+
+.ant-collapse-content-box {
+    padding: 0px !important;
+}
+
+.ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-arrow {
+    left: 0px !important;
 }
