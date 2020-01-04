@@ -89,6 +89,7 @@ export default {
         if (columns[index].id == selectedColumn) {
           this.$refs[columns[index].id].setThumbnail(false)
           columns[index].classList.add('_column_selected')
+          this.$refs[columns[index].id].reveal()
         } else {
           this.$refs[columns[index].id].setThumbnail(true)
           columns[index].classList.add('column_unselected')

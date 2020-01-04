@@ -25,26 +25,23 @@
           :stroke-color="experienceRequired(value.experience[index]).colour"
         />
         <div class="tech-icons">
-          <a-collapse default-active-key="1" :bordered="false">
-            <a-collapse-panel key="1">
-              <div
-                v-for="(tech, index) in value.tech"
-                :key="tech.id"
-                class="inline"
-              >
-                <techicon v-if="index < 3" :tech="tech" />
-                <techicon v-else v-show="hovering" :tech="tech" />
-              </div>
-              <p
-                v-if="value.tech.length > 3"
-                v-show="!hovering"
-                class="elipsis"
-              >
-                ...
-              </p>
-            </a-collapse-panel>
-          </a-collapse>
+          <div
+            v-for="(tech, index) in value.tech"
+            :key="tech.id"
+            class="inline"
+          >
+            <techicon v-if="index < 3" :tech="tech" />
+            <techicon v-else v-show="hovering" :tech="tech" />
+          </div>
+          <p v-if="value.tech.length > 3" v-show="!hovering" class="elipsis">
+            ...
+          </p>
         </div>
+        <a-collapse :active-key="revealing ? 1 : 0" :bordered="false">
+          <a-collapse-panel key="1" :show-arrow="false">
+            text to show
+          </a-collapse-panel>
+        </a-collapse>
         <a-row type="flex" justify="space-around" align="middle">
           <a-col :span="value.locationbased && value.remote ? 4 : 2">
             <a-tooltip v-if="value.locationbased" placement="top">
@@ -95,6 +92,7 @@ export default {
   data() {
     return {
       thumbnailView: false,
+      revealing: false,
       hovering: false,
       google,
       globe,
@@ -104,6 +102,9 @@ export default {
   methods: {
     setThumbnail(value) {
       this.thumbnailView = value
+    },
+    reveal() {
+      this.revealing = true
     },
     onHoverEnter() {
       this.hovering = true
@@ -172,6 +173,7 @@ export default {
 }
 .tech-icons {
   text-align: center;
+  margin-top: 15px;
 }
 .date-posted {
   margin-bottom: 0px;
