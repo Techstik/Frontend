@@ -28,8 +28,12 @@ export default {
         vue,
         node,
         mongo
-      },
-      style: {
+      }
+    }
+  },
+  computed: {
+    style() {
+      return {
         width: `${this.width}px`
       }
     }

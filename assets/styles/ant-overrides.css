@@ -27,3 +27,18 @@ button {
 .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-arrow {
     left: 0px !important;
 }
+
+[class*="ant-col-"] {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.ant-row-flex > [class*="ant-col-"] {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.ant-row, .ant-row-flex {
+    margin-left: -15px;
+    margin-right: -15px;
+}

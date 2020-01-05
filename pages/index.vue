@@ -147,7 +147,7 @@ export default {
 }
 
 .column_unselected {
-  width: 10%;
+  width: 15%;
 }
 
 ._column_selected {
