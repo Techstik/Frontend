@@ -22,3 +22,13 @@
   .inline{
     display: inline-block;
   }
+  .btn-sucess{
+    background: #74d474;
+    color: white;
+    border-color: #74d474;
+  }
+  .btn-sucess:hover, .btn-sucess:focus {
+    color: #74d474;
+    background-color: #fff;
+    border-color: #74d474;
+}

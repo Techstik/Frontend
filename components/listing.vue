@@ -197,7 +197,7 @@
               <a-col span="4"> <h2>$90,000</h2> </a-col>
             </a-row>
             <div class="align-center">
-              <a-button type="success" shape="round"
+              <a-button type="success" shape="round" class="btn-sucess"
                 >Apply For This Position</a-button
               >
             </div>
