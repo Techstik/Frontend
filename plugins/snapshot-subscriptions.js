@@ -7,7 +7,6 @@ export default ({ store }) => {
     .onSnapshot(
       snapshot => {
         var listings = []
-        console.log(snapshot)
         snapshot.forEach(listing => {
           listings.push({ ...listing.data(), id: listing.id })
         })

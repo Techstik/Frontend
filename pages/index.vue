@@ -19,6 +19,7 @@
   </div>
 </template>
 <script>
+import { mapState } from 'vuex'
 import set from '@/components/listings/set'
 import backgroundShape from '@/assets/images/MoonBackground-01.svg'
 import globe from '@/assets/images/planet-earth.svg'
@@ -33,6 +34,14 @@ export default {
       backgroundShape,
       globe,
       pin
+    }
+  },
+  computed: {
+    ...mapState({
+      listings: state => state.listings.all
+    }),
+    chunkedListings() {
+      return this.lodash.chunk(this.listings, 3)
     }
   }
 }

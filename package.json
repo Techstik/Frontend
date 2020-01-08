@@ -20,7 +20,8 @@
     "cross-env": "^5.2.0",
     "express": "^4.16.4",
     "firebase": "^7.6.1",
-    "nuxt": "^2.0.0"
+    "nuxt": "^2.0.0",
+    "vue-lodash": "^2.0.2"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^1.0.1",
