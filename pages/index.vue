@@ -14,87 +14,25 @@
       <a-button type="default">more filters</a-button>
     </div>
     <div class="listings">
-      <a-row
-        type="flex"
-        justify="space-around"
-        :align="listingSelected ? 'top' : 'middle'"
-        class="_row"
-      >
-        <a-col
-          id="_listing_8797"
-          :span="8"
-          class="_column"
-          @click="onListingSelected('_listing_8797')"
-        >
-          <listing ref="_listing_8797" v-model="testlisting" />
-        </a-col>
-        <a-col
-          id="_listing_8798"
-          :span="8"
-          class="_column"
-          @click="onListingSelected('_listing_8798')"
-        >
-          <listing ref="_listing_8798" v-model="testlisting" />
-        </a-col>
-        <a-col
-          id="_listing_8799"
-          :span="8"
-          class="_column"
-          @click="onListingSelected('_listing_8799')"
-        >
-          <listing ref="_listing_8799" v-model="testlisting" />
-        </a-col>
-      </a-row>
+      <set />
     </div>
   </div>
 </template>
 <script>
-import listing from '@/components/listing'
+import set from '@/components/listings/set'
 import backgroundShape from '@/assets/images/MoonBackground-01.svg'
 import globe from '@/assets/images/planet-earth.svg'
 import pin from '@/assets/images/pin.svg'
 
 export default {
   components: {
-    listing
+    set
   },
   data() {
     return {
       backgroundShape,
       globe,
-      pin,
-      listingSelected: false,
-      testlisting: {
-        position: 'Full Stack Developer',
-        company: 'World Wide Technology',
-        website: '',
-        logo: '',
-        experience: ['Senior'],
-        tech: ['vue', 'node', 'mongo', 'mongo'],
-        remote: true,
-        locationbased: false,
-        location: '',
-        dateposted: null
-      }
-    }
-  },
-  methods: {
-    onListingSelected(selectedColumn) {
-      this.listingSelected = true
-
-      var columns = document.getElementsByClassName('_column')
-      for (let index = 0; index < 3; index++) {
-        columns[index].classList.remove('_column_selected')
-
-        if (columns[index].id == selectedColumn) {
-          this.$refs[columns[index].id].setThumbnail(false)
-          columns[index].classList.add('_column_selected')
-          this.$refs[columns[index].id].reveal()
-        } else {
-          this.$refs[columns[index].id].setThumbnail(true)
-          columns[index].classList.add('column_unselected')
-        }
-      }
+      pin
     }
   }
 }
@@ -144,16 +82,5 @@ export default {
   text-align: center;
   margin: auto;
   max-width: 1500px;
-}
-
-.column_unselected {
-  width: 15%;
-}
-
-._column_selected {
-  width: 70%;
-}
-* {
-  transition: all 0.3s ease 0s;
 }
 </style>

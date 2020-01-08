@@ -1,5 +1,10 @@
 <template>
-  <div class="card listing" @mouseover="onHoverEnter" @mouseout="onHoverExit">
+  <div
+    ref="listing"
+    class="card listing"
+    @mouseover="onHoverEnter"
+    @mouseout="onHoverExit"
+  >
     <div class="card-body">
       <div v-if="thumbnailView" class="thumbnail">
         <p class="position">{{ value.position }}</p>
@@ -18,7 +23,12 @@
         <div class="title">
           <img class="company-image" :src="google" />
           <div class="content">
-            <p class="position">{{ value.position }}</p>
+            <p class="position">
+              {{ value.position }}
+              <span v-show="revealing" ref="close" class="float-right"
+                ><a-icon type="close"
+              /></span>
+            </p>
             <p class="company">
               {{ value.company }}
             </p>
@@ -57,7 +67,11 @@
             ...
           </p>
         </div>
-        <a-collapse :active-key="revealing ? 1 : 0" :bordered="false">
+        <a-collapse
+          :active-key="revealing ? 1 : 0"
+          :bordered="false"
+          class="collapse-container"
+        >
           <a-collapse-panel key="1" :show-arrow="false">
             <div class="align-center">
               <a-button type="success" shape="round"
@@ -266,12 +280,32 @@ export default {
       germany
     }
   },
+  mounted() {
+    this.$refs.listing.addEventListener(
+      'click',
+      () => {
+        alert('revealing')
+        this.$emit('revealing', 8788) //TODO: change this to value.id
+      },
+      false
+    )
+    this.$refs.close.addEventListener(
+      'click',
+      () => {
+        alert('closing')
+        this.$emit('collapsing')
+      },
+      false
+    )
+  },
   methods: {
     setThumbnail(value) {
       this.thumbnailView = value
     },
-    reveal() {
-      this.revealing = true
+    setReveal(value) {
+      console.log('setting reveal = ' + value)
+      this.revealing = value
+      if (!value) this.$emit('collapsing')
     },
     onHoverEnter() {
       this.hovering = true
@@ -321,6 +355,7 @@ export default {
 .content {
   display: inline-block;
   margin-left: 60px;
+  width: calc(100% - 60px);
 }
 .content p {
   margin-bottom: 0px;
@@ -363,5 +398,8 @@ export default {
 }
 .location-image {
   max-width: 100px;
+}
+.collapse-container {
+  padding: 0px 15px;
 }
 </style>
