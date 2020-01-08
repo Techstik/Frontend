@@ -32,7 +32,11 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['@/plugins/antd-ui', '@/plugins/firebase'],
+  plugins: [
+    '@/plugins/antd-ui',
+    '@/plugins/firebase',
+    '@/plugins/snapshot-subscriptions'
+  ],
   /*
    ** Nuxt.js dev-modules
    */

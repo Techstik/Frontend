@@ -3,18 +3,21 @@ import firebase from 'firebase'
 export default ({ store }) => {
   firebase
     .firestore()
-    .collection('listings')
-    .where('active', '==', true)
+    .collection('listing')
     .onSnapshot(
       snapshot => {
         var listings = []
+        console.log(snapshot)
         snapshot.forEach(listing => {
           listings.push({ ...listing.data(), id: listing.id })
         })
-        //TODO: comit to store here
+        store.commit('listings/set', {
+          listings
+        })
       },
       error => {
         //TODO: wrtie to bugsnag
+
         console.log(error)
       }
     )
