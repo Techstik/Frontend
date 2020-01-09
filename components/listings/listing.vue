@@ -283,14 +283,6 @@ export default {
     }
   },
   mounted() {
-    this.$refs.listing.addEventListener(
-      'click',
-      () => {
-        alert('revealing')
-        this.$emit('revealing', 8788) //TODO: change this to value.id
-      },
-      false
-    )
     this.$refs.close.addEventListener(
       'click',
       () => {
@@ -305,7 +297,6 @@ export default {
       this.thumbnailView = value
     },
     setReveal(value) {
-      console.log('setting reveal = ' + value)
       this.revealing = value
       if (!value) this.$emit('collapsing')
     },

@@ -3,18 +3,19 @@
     <a-row
       type="flex"
       justify="space-around"
-      :align="listingRevealed ? 'top' : 'middle'"
+      :align="columnRevealed ? 'top' : 'middle'"
       class="_row"
     >
       <a-col
         v-for="(listing, index) in listings"
-        :id="`column_for_listing_${listing.id}`"
+        ref="columns"
         :key="listing.id"
         :span="8"
         class="_column"
+        @click="onColumnReveal(index)"
       >
         <listing
-          :ref="`listing_${listing.id}`"
+          ref="listings"
           v-model="listings[index]"
           @collapsing="resetColumns"
         />
@@ -37,52 +38,35 @@ export default {
   },
   data() {
     return {
-      listingRevealed: false,
-      testlisting: {
-        position: 'Full Stack Developer',
-        company: 'World Wide Technology',
-        website: '',
-        logo: '',
-        experience: ['Senior'],
-        tech: ['vue', 'node', 'mongo', 'mongo'],
-        remote: true,
-        locationbased: false,
-        location: '',
-        dateposted: null
-      }
+      columnRevealed: false
     }
   },
   methods: {
-    onListingReveal(listingId) {
-      if (this.listingRevealed) return
+    onColumnReveal(columnIndex) {
+      this.columnRevealed = true
 
-      this.listingRevealed = true
+      for (let index = 0; index < this.listings.length; index++) {
+        this.$refs.columns[index].$el.classList.remove('_column_selected')
 
-      //TODO: loop through the listings prop instead
-
-      var columns = document.getElementsByClassName('_column')
-      for (let index = 0; index < 3; index++) {
-        //TODO: set this count to the length of the prop array
-        columns[index].classList.remove('_column_selected')
-
-        if (columns[index].id == `column_for_listing_${listingId}`) {
-          this.$refs[columns[index].id].setThumbnail(false)
-          columns[index].classList.add('_column_selected')
+        if (columnIndex == index) {
+          this.$refs.listings[index].setThumbnail(false)
+          this.$refs.listings[index].setReveal(true)
+          this.$refs.columns[index].$el.classList.add('_column_selected')
         } else {
-          this.$refs[columns[index].id].setThumbnail(true)
-          columns[index].classList.add('column_unselected')
+          this.$refs.listings[index].setThumbnail(true)
+          this.$refs.columns[index].$el.classList.add('column_unselected')
         }
       }
     },
     resetColumns() {
-      console.log('hit')
-      this.listingRevealed = false
+      this.columnRevealed = false
 
-      var columns = document.getElementsByClassName('_column')
-      for (let index = 0; index < 3; index++) {
-        //TODO: set this count to the length of the prop array
-        columns[index].classList.remove('_column_selected', 'column_unselected')
-        this.$refs[columns[index].id].setThumbnail(false)
+      for (let index = 0; index < this.listings.length; index++) {
+        this.$refs.columns[index].$el.classList.remove(
+          '_column_selected',
+          'column_unselected'
+        )
+        this.$refs.listings[index].setThumbnail(false)
       }
     }
   }
