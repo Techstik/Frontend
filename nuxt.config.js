@@ -36,7 +36,8 @@ module.exports = {
     '@/plugins/antd-ui',
     '@/plugins/firebase',
     '@/plugins/snapshot-subscriptions',
-    '@/plugins/lodash'
+    '@/plugins/lodash',
+    '@/plugins/moment'
   ],
   /*
    ** Nuxt.js dev-modules
