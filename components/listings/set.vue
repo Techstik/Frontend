@@ -6,25 +6,16 @@
       :align="listingRevealed ? 'top' : 'middle'"
       class="_row"
     >
-      <a-col id="column_for_listing_8797" :span="8" class="_column">
+      <a-col
+        v-for="(listing, index) in listings"
+        :id="`column_for_listing_${listing.id}`"
+        :key="listing.id"
+        :span="8"
+        class="_column"
+      >
         <listing
-          ref="_listing_8797"
-          v-model="testlisting"
-          @collapsing="resetColumns"
-        />
-      </a-col>
-      <a-col id="column_for_listing_8798" :span="8" class="_column">
-        <listing
-          ref="_listing_8798"
-          v-model="testlisting"
-          @revealing="onListingReveal"
-          @collapsing="resetColumns"
-        />
-      </a-col>
-      <a-col id="column_for_listing_8799" :span="8" class="_column">
-        <listing
-          ref="_listing_8799"
-          v-model="testlisting"
+          :ref="`listing_${listing.id}`"
+          v-model="listings[index]"
           @collapsing="resetColumns"
         />
       </a-col>

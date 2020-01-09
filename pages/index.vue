@@ -14,20 +14,24 @@
       <a-button type="default">more filters</a-button>
     </div>
     <div class="listings">
-      <set />
+      <listingSet
+        v-for="chunk in chunkedListings"
+        :key="chunk.id"
+        :listings="chunk"
+      />
     </div>
   </div>
 </template>
 <script>
 import { mapState } from 'vuex'
-import set from '@/components/listings/set'
+import listingSet from '@/components/listings/set'
 import backgroundShape from '@/assets/images/MoonBackground-01.svg'
 import globe from '@/assets/images/planet-earth.svg'
 import pin from '@/assets/images/pin.svg'
 
 export default {
   components: {
-    set
+    listingSet
   },
   data() {
     return {

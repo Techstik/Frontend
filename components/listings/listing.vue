@@ -9,7 +9,7 @@
       <div v-if="thumbnailView" class="thumbnail">
         <p class="position">{{ value.position }}</p>
         <p class="company">
-          {{ value.company }}
+          {{ value.company_name }}
         </p>
         <a-progress
           v-for="(experience, index) in value.experience"
@@ -30,7 +30,7 @@
               /></span>
             </p>
             <p class="company">
-              {{ value.company }}
+              {{ value.company_name }}
             </p>
           </div>
         </div>
@@ -218,10 +218,12 @@
           </a-collapse-panel>
         </a-collapse>
         <a-row type="flex" justify="space-around" align="middle">
-          <a-col :span="value.locationbased && value.remote ? 4 : 2">
-            <a-tooltip v-if="value.locationbased" placement="top">
+          <a-col :span="value.location_based && value.remote ? 4 : 2">
+            <a-tooltip v-if="value.location_based" placement="top">
               <template slot="title">
-                <span>{{ value.location }}</span>
+                <span
+                  >{{ value.location.city }}, {{ value.location.country }}</span
+                >
               </template>
               <img class="location" :src="pin" />
             </a-tooltip>
@@ -231,16 +233,16 @@
               </template>
               <img
                 :class="[
-                  { 'ml-25': value.locationbased && value.remote },
+                  { 'ml-25': value.location_based && value.remote },
                   'location'
                 ]"
                 :src="globe"
               />
             </a-tooltip>
           </a-col>
-          <a-col :span="value.locationbased && value.remote ? 20 : 22">
+          <a-col :span="value.location_based && value.remote ? 20 : 22">
             <a-divider class="date-posted" orientation="right">
-              2 days ago
+              {{ upload.date.toDate() | moment('from', 'now') }}
             </a-divider>
           </a-col>
         </a-row>
