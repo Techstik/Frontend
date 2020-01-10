@@ -25,7 +25,10 @@
           <div class="content">
             <p class="position">
               {{ value.position }}
-              <span v-show="revealing" ref="close" class="float-right"
+              <span
+                v-show="revealing"
+                class="float-right"
+                @click="setReveal(false)"
                 ><a-icon type="close"
               /></span>
             </p>
@@ -218,7 +221,10 @@
           </a-collapse-panel>
         </a-collapse>
         <a-row type="flex" justify="space-around" align="middle">
-          <a-col :span="value.location_based && value.remote ? 4 : 2">
+          <a-col
+            :span="value.location_based && value.remote ? 4 : 2"
+            class="align-center"
+          >
             <a-tooltip v-if="value.location_based" placement="top">
               <template slot="title">
                 <span
@@ -229,15 +235,9 @@
             </a-tooltip>
             <a-tooltip v-if="value.remote" placement="top">
               <template slot="title">
-                <span>remote</span>
+                <span>Remote</span>
               </template>
-              <img
-                :class="[
-                  { 'ml-25': value.location_based && value.remote },
-                  'location'
-                ]"
-                :src="globe"
-              />
+              <img class="location" :src="globe" />
             </a-tooltip>
           </a-col>
           <a-col :span="value.location_based && value.remote ? 20 : 22">
@@ -281,16 +281,6 @@ export default {
       asterisk,
       germany
     }
-  },
-  mounted() {
-    this.$refs.close.addEventListener(
-      'click',
-      () => {
-        alert('closing')
-        this.$emit('collapsing')
-      },
-      false
-    )
   },
   methods: {
     setThumbnail(value) {
@@ -359,7 +349,6 @@ export default {
   font-weight: bold;
 }
 .location {
-  position: absolute;
   width: 20px;
   z-index: 1;
 }

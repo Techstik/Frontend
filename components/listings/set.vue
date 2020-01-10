@@ -38,11 +38,16 @@ export default {
   },
   data() {
     return {
-      columnRevealed: false
+      columnRevealed: false,
+      resettingColumns: false
     }
   },
   methods: {
     onColumnReveal(columnIndex) {
+      if (this.columnRevealed || this.resettingColumns)
+        return (this.resettingColumns = false)
+
+      console.log('oncolumnreveal hit - index = ' + columnIndex)
       this.columnRevealed = true
 
       for (let index = 0; index < this.listings.length; index++) {
@@ -59,6 +64,7 @@ export default {
       }
     },
     resetColumns() {
+      this.resettingColumns = true
       this.columnRevealed = false
 
       for (let index = 0; index < this.listings.length; index++) {
