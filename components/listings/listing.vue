@@ -41,8 +41,8 @@
           v-for="(experience, index) in value.experience"
           :key="experience.id"
           :percent="experienceRequired(value.experience[index]).percentage"
-          :format="() => value.experience[index]"
           :stroke-color="experienceRequired(value.experience[index]).colour"
+          :show-info="false"
         />
         <div class="tech-icons">
           <div

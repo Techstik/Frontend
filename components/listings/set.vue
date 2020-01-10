@@ -1,11 +1,6 @@
 <template>
   <div>
-    <a-row
-      type="flex"
-      justify="space-around"
-      :align="columnRevealed ? 'top' : 'middle'"
-      class="_row"
-    >
+    <a-row type="flex" :align="columnRevealed ? 'top' : 'middle'" class="_row">
       <a-col
         v-for="(listing, index) in listings"
         ref="columns"
@@ -46,7 +41,6 @@ export default {
     onColumnReveal(columnIndex) {
       if (this.resettingColumns) return (this.resettingColumns = false)
 
-      console.log('oncolumnreveal hit - index = ' + columnIndex)
       this.columnRevealed = true
 
       for (let index = 0; index < this.listings.length; index++) {
