@@ -44,8 +44,7 @@ export default {
   },
   methods: {
     onColumnReveal(columnIndex) {
-      if (this.columnRevealed || this.resettingColumns)
-        return (this.resettingColumns = false)
+      if (this.resettingColumns) return (this.resettingColumns = false)
 
       console.log('oncolumnreveal hit - index = ' + columnIndex)
       this.columnRevealed = true

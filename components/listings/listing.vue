@@ -75,7 +75,7 @@
           :bordered="false"
           class="collapse-container"
         >
-          <a-collapse-panel key="1" :show-arrow="false">
+          <a-collapse-panel key="1" :show-arrow="false" header="">
             <div class="align-center">
               <a-button type="success" shape="round"
                 >Apply For This Position</a-button
@@ -223,7 +223,7 @@
         <a-row type="flex" justify="space-around" align="middle">
           <a-col
             :span="value.location_based && value.remote ? 4 : 2"
-            class="align-center"
+            class="align-center mt-13"
           >
             <a-tooltip v-if="value.location_based" placement="top">
               <template slot="title">
@@ -285,6 +285,7 @@ export default {
   methods: {
     setThumbnail(value) {
       this.thumbnailView = value
+      if (value) this.revealing = false
     },
     setReveal(value) {
       this.revealing = value
@@ -383,5 +384,8 @@ export default {
 }
 .collapse-container {
   padding: 0px 15px;
+}
+.mt-13 {
+  margin-top: 13px;
 }
 </style>
