@@ -1,8 +1,5 @@
 <template>
   <div class="background">
-    <div class="top-bar">
-      <a-button type="danger">Post a job</a-button>
-    </div>
     <landing />
     <div class="nuxt-container">
       <nuxt />
@@ -40,12 +37,5 @@ export default {
 .nuxt-container {
   min-height: 100%;
   padding: 50px;
-}
-.top-bar {
-  text-align: right;
-  position: fixed;
-  top: 0;
-  right: 0;
-  margin: 30px;
 }
 </style>

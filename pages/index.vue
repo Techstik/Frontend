@@ -1,5 +1,10 @@
 <template>
   <div class="container">
+    <div class="top-bar">
+      <nuxt-link to="/jobs">
+        <a-button type="danger">Post a job</a-button>
+      </nuxt-link>
+    </div>
     <div class="locations">
       <div class="location">
         <img :src="globe" />
@@ -95,5 +100,12 @@ export default {
   text-align: center;
   margin: auto;
   max-width: 1500px;
+}
+.top-bar {
+  text-align: right;
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin: 30px;
 }
 </style>

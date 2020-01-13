@@ -23,7 +23,7 @@
         <div class="title">
           <img class="company-image" :src="google" />
           <div class="content">
-            <p class="position">
+            <h3 class="position">
               {{ value.position }}
               <span
                 v-show="revealing"
@@ -31,7 +31,7 @@
                 @click="setReveal(false)"
                 ><a-icon type="close"
               /></span>
-            </p>
+            </h3>
             <p class="company">
               {{ value.company_name }}
             </p>
