@@ -29,11 +29,23 @@
         <div class="section">
           <h4>Website URL</h4>
           <a-input default-value="mysite">
-            <a-select slot="addonBefore" default-value="http://">
+            <a-select slot="addonBefore" default-value="https://">
               <a-select-option value="http://">http://</a-select-option>
               <a-select-option value="https://">https://</a-select-option>
             </a-select>
           </a-input>
+        </div>
+        <div class="section">
+          <h4 class="mb-0">Where are you based?</h4>
+          <p>
+            Your company HQ - it's nice to see, even if this is a remote
+            position
+          </p>
+        </div>
+        <div class="navigation">
+          <a-button type="primary" class="f-r">
+            Next Step<a-icon type="right" />
+          </a-button>
         </div>
       </div>
     </div>
@@ -61,7 +73,7 @@ export default {
   max-width: 1500px;
 }
 .card {
-  padding: 15px;
+  padding: 25px;
 }
 .section {
   margin-bottom: 15px;

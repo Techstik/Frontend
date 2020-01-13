@@ -46,8 +46,12 @@
   padding-bottom: 0px;
 }
 
-.mb-0{
+.mb-0 {
   margin-bottom: 0px;
+}
+
+.f-r {
+  float: right;
 }
 
 .ck.ck-editor__editable_inline {
