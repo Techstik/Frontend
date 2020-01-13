@@ -122,15 +122,17 @@ h4 {
 
 .title {
   text-align: center;
-  padding: 10% 0;
+  padding: 5% 0;
   color: white;
-  margin: 0;
+  margin: 0 0 0.2em 0;
   font-size: 250%;
   line-height: 1.05;
 }
 
 .sub-title {
   color: white;
+  font-size: calc(1.1em + 0.25vw);
+  margin-bottom: 1.5em;
 }
 
 .heading {

@@ -27,6 +27,6 @@
 }
 .nuxt-container {
   min-height: 100vh;
-  padding: 50px;
+  padding: 100px;
 }
 </style>
