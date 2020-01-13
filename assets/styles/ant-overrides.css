@@ -46,3 +46,16 @@ button {
 .ant-collapse>.ant-collapse-item>.ant-collapse-header {
     padding: 0px
 }
+
+/* STEPS */
+
+.ant-steps-item-description {
+    color: white !important;
+}
+
+.ant-steps-item-title {
+    color: white !important;
+    font-family: 'Graphik-Bold';
+}
+
+/*  */

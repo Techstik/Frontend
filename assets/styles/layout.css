@@ -129,6 +129,10 @@ h4 {
   line-height: 1.05;
 }
 
+.sub-title {
+  color: white;
+}
+
 .heading {
   font-size: 250%;
   line-height: 1.05;
