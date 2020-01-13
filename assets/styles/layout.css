@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,900&display=swap');
-
 @font-face {
   font-family: 'Graphik';
   font-weight: normal;
@@ -42,58 +41,58 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 2em;
+  font-size: calc(2em + 250%);
   line-height: 1.25;
 }
 
 @media (min-width: 43.75em) {
   h1 {
-    font-size: 2.5em;
+    font-size: calc(2.5em + 250%);
     line-height: 1.125;
   }
 }
 
 @media (min-width: 56.25em) {
   h1 {
-    font-size: 3em;
+    font-size: calc(3em + 250%);
     line-height: 1.05;
   }
 }
 
 h2 {
-  font-size: 1.625em;
+  font-size: calc(1.625em + 160%);
   line-height: 1.15384615;
 }
 
 @media (min-width: 43.75em) {
   h2 {
-    font-size: 2em;
+    font-size: calc(2em + 160%);
     line-height: 1.25;
   }
 }
 
 @media (min-width: 56.25em) {
   h2 {
-    font-size: 2.25em;
+    font-size: calc(2.25em + 160%);
     line-height: 1.25;
   }
 }
 
 h3 {
-  font-size: 1.375em;
+  font-size: calc(1.375em + 120%);
   line-height: 1.13636364;
 }
 
 @media (min-width: 43.75em) {
   h3 {
-    font-size: 1.5em;
+    font-size: calc(1.5em + 120%);
     line-height: 1.25;
   }
 }
 
 @media (min-width: 56.25em) {
   h3 {
-    font-size: 1.75em;
+    font-size: calc(1.75em + 120%);
     line-height: 1.25;
   }
 }
@@ -111,4 +110,54 @@ h4 {
 
 #__nuxt, #__layout {
   height: 100%;
+}
+
+.top-bar {
+  text-align: right;
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin: 30px;
+}
+
+.title {
+  text-align: center;
+  padding: 10% 0;
+  color: white;
+  margin: 0;
+  font-size: 250%;
+  line-height: 1.05;
+}
+
+.heading {
+  font-size: 250%;
+  line-height: 1.05;
+}
+
+@media (min-width: 57.5em) {
+  .heading--x-large {
+    font-size: 450%;
+  }
+}
+
+.heading--xx-large {
+  font-size: 450%;
+}
+
+@media (min-width: 57.5em) {
+  .heading--xx-large {
+    margin: 0 0 0.2em 0;
+    font-size: 490%;
+  }
+}
+
+.heading--xxx-large {
+  font-size: 450%;
+}
+
+@media (min-width: 57.5em) {
+  .heading--xxx-large {
+    margin: 0 0 0.1em 0;
+    font-size: 615%;
+  }
 }

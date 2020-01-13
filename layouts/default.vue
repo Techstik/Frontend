@@ -1,6 +1,5 @@
 <template>
   <div class="background">
-    <landing />
     <div class="nuxt-container">
       <nuxt />
     </div>
@@ -12,15 +11,7 @@
     </div>
   </div>
 </template>
-<script>
-import landing from '@/components/landing'
 
-export default {
-  components: {
-    landing
-  }
-}
-</script>
 <style scoped>
 .background {
   min-height: 100%;
@@ -35,7 +26,7 @@ export default {
   padding: 50px;
 }
 .nuxt-container {
-  min-height: 100%;
+  min-height: 100vh;
   padding: 50px;
 }
 </style>
