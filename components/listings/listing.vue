@@ -289,7 +289,11 @@ export default {
     },
     setReveal(value) {
       this.revealing = value
-      if (!value) this.$emit('collapsing')
+
+      if (!value)
+        setTimeout(() => {
+          this.$emit('collapsing')
+        }, 300)
     },
     onHoverEnter() {
       this.hovering = true

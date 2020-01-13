@@ -1,6 +1,10 @@
 <template>
   <div>
-    <a-row type="flex" :align="columnRevealed ? 'top' : 'middle'" class="_row">
+    <a-row
+      type="flex"
+      :align="columnRevealed > -1 ? 'top' : 'middle'"
+      class="_row"
+    >
       <a-col
         v-for="(listing, index) in listings"
         ref="columns"
@@ -33,23 +37,26 @@ export default {
   },
   data() {
     return {
-      columnRevealed: false,
+      columnRevealed: -1,
       resettingColumns: false
     }
   },
   methods: {
     onColumnReveal(columnIndex) {
-      if (this.resettingColumns) return (this.resettingColumns = false)
+      if (this.resettingColumns || this.columnRevealed == columnIndex)
+        return (this.resettingColumns = false)
 
-      this.columnRevealed = true
+      this.columnRevealed = columnIndex
 
       for (let index = 0; index < this.listings.length; index++) {
         this.$refs.columns[index].$el.classList.remove('_column_selected')
 
         if (columnIndex == index) {
           this.$refs.listings[index].setThumbnail(false)
-          this.$refs.listings[index].setReveal(true)
           this.$refs.columns[index].$el.classList.add('_column_selected')
+          setTimeout(() => {
+            this.$refs.listings[index].setReveal(true)
+          }, 300)
         } else {
           this.$refs.listings[index].setThumbnail(true)
           this.$refs.columns[index].$el.classList.add('column_unselected')
@@ -58,14 +65,16 @@ export default {
     },
     resetColumns() {
       this.resettingColumns = true
-      this.columnRevealed = false
+      this.columnRevealed = -1
 
       for (let index = 0; index < this.listings.length; index++) {
         this.$refs.columns[index].$el.classList.remove(
-          '_column_selected',
-          'column_unselected'
+          'column_unselected',
+          '_column_selected'
         )
-        this.$refs.listings[index].setThumbnail(false)
+        setTimeout(() => {
+          this.$refs.listings[index].setThumbnail(false)
+        }, 200)
       }
     }
   }
