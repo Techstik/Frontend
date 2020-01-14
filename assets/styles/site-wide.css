@@ -49,7 +49,6 @@
 .mb-0 {
   margin-bottom: 0px;
 }
-
 .f-r {
   float: right;
 }
@@ -61,4 +60,7 @@
 .mapboxgl-map{
   height: 100vh;
   max-height: 300px;
+}
+.add-listing-tabs .ant-tabs-bar {
+  display: none;
 }
