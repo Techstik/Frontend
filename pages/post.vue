@@ -41,10 +41,12 @@
             Your company HQ - it's nice to see, even if this is a remote
             position
           </p>
+          <div id="map"></div>
         </div>
         <div class="navigation">
           <a-button type="primary" class="f-r">
-            Next Step<a-icon type="right" />
+            Next Step
+            <a-icon type="right" />
           </a-button>
         </div>
       </div>
@@ -55,16 +57,27 @@
 import CKEditor from '@ckeditor/ckeditor5-vue'
 import ClassicEditor from '@ckeditor/ckeditor5-build-inline'
 
+import 'mapbox-gl/dist/mapbox-gl.css'
+import Mapbox from 'mapbox-gl'
+
 export default {
   components: {
     ckeditor: CKEditor.component
   },
   data() {
     return {
-      editor: ClassicEditor
-
-      // ...
+      editor: ClassicEditor,
+      place: null,
+      map: null
     }
+  },
+  mounted() {
+    Mapbox.accessToken =
+      'pk.eyJ1IjoibWF0dC1ncmVwcGwiLCJhIjoiY2s1ZTYxbHhvMXZvMzNqcmY0amtoMWg2YSJ9.9hJ2XBQZxFIoxhwbB1Pb4w'
+    this.map = new Mapbox.Map({
+      container: 'map',
+      style: 'mapbox://styles/matt-greppl/ck5e63lvc11ir1io1nvyeewxr'
+    })
   }
 }
 </script>
