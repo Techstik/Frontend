@@ -105,14 +105,23 @@ export default {
       return this.activeStep.toString()
     }
   },
-  mounted() {
+  async mounted() {
+    //TODO: move to env variable
     Mapbox.accessToken =
       'pk.eyJ1IjoibWF0dC1ncmVwcGwiLCJhIjoiY2s1ZTYxbHhvMXZvMzNqcmY0amtoMWg2YSJ9.9hJ2XBQZxFIoxhwbB1Pb4w'
 
+    var location = await this.geolocate()
+
+    this.geojson.features[0].geometry.coordinates = [location.lng, location.lat]
+
     this.map = new Mapbox.Map({
       container: 'map',
-      style: 'mapbox://styles/matt-greppl/ck5e63lvc11ir1io1nvyeewxr'
+      style: 'mapbox://styles/matt-greppl/ck5e63lvc11ir1io1nvyeewxr',
+      center: [location.lng, location.lat],
+      zoom: 9
     })
+
+    this.displaySelectedLocation(location)
 
     var canvas = this.map.getCanvasContainer()
 
@@ -183,18 +192,31 @@ export default {
       this.geojson.features[0].geometry.coordinates = [coords.lng, coords.lat]
       this.map.getSource('point').setData(this.geojson)
     },
-    async onMapUp(e) {
+    onMapUp(e) {
       // Print the coordinates of where the point had
       // finished being dragged to on the map.
-      document.getElementById('coordinates').style.display = 'block'
-      document.getElementById(
-        'coordinates'
-      ).innerHTML = await this.reverseGeocode(e.lngLat)
+      this.displaySelectedLocation(e.lngLat)
       this.map.getCanvasContainer().style.cursor = ''
 
       // Unbind mouse/touch events
       this.map.off('mousemove', this.onMapMove)
       this.map.off('touchmove', this.onMapMove)
+    },
+    async displaySelectedLocation(coords) {
+      document.getElementById(
+        'coordinates'
+      ).innerHTML = await this.reverseGeocode(coords)
+      document.getElementById('coordinates').style.display = 'block'
+    },
+    async geolocate() {
+      var API_key = 'AIzaSyDVa0vRTfMXY1qBXz1ctMDHZGpPhC6TRvU' //TODO: move to env variable
+
+      var response = await this.$axios.$post(
+        `https://www.googleapis.com/geolocation/v1/geolocate?key=${API_key}`
+      )
+      //TODO: check for errors here first
+
+      return response.location
     },
     async reverseGeocode(coords) {
       var API_key = 'AIzaSyDVa0vRTfMXY1qBXz1ctMDHZGpPhC6TRvU' //TODO: move to env variable
@@ -205,6 +227,7 @@ export default {
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coords.lat},${coords.lng}&key=${API_key}`
       )
 
+      //TODO: change this to check for admin_level_1 fcity name
       switch (response.results.length) {
         case 0:
           return 'Unknown Location'
