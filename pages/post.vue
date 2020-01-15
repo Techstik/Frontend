@@ -183,19 +183,42 @@ export default {
       this.geojson.features[0].geometry.coordinates = [coords.lng, coords.lat]
       this.map.getSource('point').setData(this.geojson)
     },
-    onMapUp(e) {
-      var coords = e.lngLat
-
+    async onMapUp(e) {
       // Print the coordinates of where the point had
       // finished being dragged to on the map.
       document.getElementById('coordinates').style.display = 'block'
-      document.getElementById('coordinates').innerHTML =
-        'Longitude: ' + coords.lng + '<br />Latitude: ' + coords.lat
+      document.getElementById(
+        'coordinates'
+      ).innerHTML = await this.reverseGeocode(e.lngLat)
       this.map.getCanvasContainer().style.cursor = ''
 
       // Unbind mouse/touch events
       this.map.off('mousemove', this.onMapMove)
       this.map.off('touchmove', this.onMapMove)
+    },
+    async reverseGeocode(coords) {
+      var API_key = 'AIzaSyDVa0vRTfMXY1qBXz1ctMDHZGpPhC6TRvU' //TODO: move to env variable
+
+      //limit this to 10 calls
+
+      var response = await this.$axios.$get(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coords.lat},${coords.lng}&key=${API_key}`
+      )
+
+      switch (response.results.length) {
+        case 0:
+          return 'Unknown Location'
+        case 1:
+          return response.results[0].address_components[0].long_name
+        default:
+          return (
+            response.results[response.results.length - 2].address_components[0]
+              .long_name +
+            ', ' +
+            response.results[response.results.length - 2].address_components[1]
+              .long_name
+          )
+      }
     }
   }
 }
