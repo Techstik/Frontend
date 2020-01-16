@@ -49,18 +49,27 @@
 .mb-0 {
   margin-bottom: 0px;
 }
+
 .f-r {
   float: right;
 }
 
 .ck.ck-editor__editable_inline {
-  border: 1px solid #d9d9d9 !important;
+  border: 2px solid #000000 !important;
   min-height: 100px;
 }
-.mapboxgl-map{
+
+.h-200.ck.ck-editor__editable_inline {
+  min-height: 200px;
+}
+
+.mapboxgl-map {
   height: 100vh;
   max-height: 300px;
+  border: 2px solid #000000 !important;
+    border-radius: 2px;
 }
+
 .add-listing-tabs .ant-tabs-bar {
   display: none;
 }

@@ -48,7 +48,72 @@
               <div id="map"></div>
               <pre id="coordinates" class="coordinates"></pre></div
           ></a-tab-pane>
-          <a-tab-pane key="1" tab="role">Content of Tab 2</a-tab-pane>
+          <a-tab-pane key="1" tab="role">
+            <div class="section">
+              <h4 class="mb-0">
+                About the role
+                <a-badge
+                  count="required"
+                  :number-style="{ backgroundColor: '#52c41a' }"
+                />
+              </h4>
+              <p>Some text here (keep it short)</p>
+              <ckeditor :editor="editor" class="h-200 "></ckeditor>
+            </div>
+            <a-row>
+              <a-col span="12">
+                <div class="section">
+                  <h4>
+                    Experience Level(s)
+                    <a-badge
+                      count="required"
+                      :number-style="{ backgroundColor: '#52c41a' }"
+                    />
+                  </h4>
+                  <div class="experience-level">
+                    <a-checkbox @change="onChange"></a-checkbox>
+                    <a-progress
+                      stroke-width="15"
+                      :percent="33"
+                      :show-info="false"
+                    />
+                  </div>
+                  <div class="experience-level">
+                    <a-checkbox @change="onChange"></a-checkbox>
+                    <a-progress
+                      stroke-width="15"
+                      stroke-color="orange"
+                      :percent="66"
+                      :show-info="false"
+                    />
+                  </div>
+                  <div class="experience-level">
+                    <a-checkbox @change="onChange"></a-checkbox>
+                    <a-progress
+                      stroke-width="15"
+                      stroke-color="black"
+                      :percent="100"
+                      :show-info="false"
+                    />
+                  </div>
+                </div>
+              </a-col>
+              <a-col span="12">
+                <div class="section">
+                  <h4>
+                    Requirements
+                    <a-badge
+                      count="3 minimum"
+                      :number-style="{ backgroundColor: '#52c41a' }"
+                    />
+                  </h4>
+                  <div class="requirements">
+                    <a-input v-for="n in 3" :key="n" />
+                  </div>
+                </div>
+              </a-col>
+            </a-row>
+          </a-tab-pane>
         </a-tabs>
         <div class="navigation">
           <a-button v-if="activeStep > 0" type="primary" @click="previousStep">
@@ -271,5 +336,27 @@ export default {
   line-height: 18px;
   border-radius: 3px;
   display: none;
+}
+
+.requirements input {
+  border: 2px solid black;
+  margin-bottom: 10px;
+  height: 45px;
+  border-radius: 2px;
+}
+
+.requirements input:last-child {
+  margin-bottom: 0px;
+}
+
+.experience-level div {
+  position: relative;
+  width: calc(100% - 30px);
+  font-size: 14px;
+  float: right;
+}
+
+.experience-level {
+  margin-bottom: 10px;
 }
 </style>
