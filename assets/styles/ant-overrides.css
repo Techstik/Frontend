@@ -60,10 +60,10 @@
 
 .ant-btn:hover, .ant-btn:focus {
     color: #ffa500;
-    background-color: #1d2d35;
+    background-color: #19262d;
     cursor: pointer;
     text-decoration: none;
-    border-color: #1d2d35;
+    border-color: #19262d;
 }
 
 .ant-btn {
@@ -73,7 +73,7 @@
     transition-property: color, background-color, border-color;
     display: inline-block;
     padding: 0.5em 1em;
-    background-color: #1d2d35;
+    background-color: #19262d;
     color: #fff;
     font-size: 100%;
     font-weight: bold;
@@ -81,6 +81,51 @@
     text-align: center;
     line-height: normal;
     -webkit-appearance: none;
-    border: 0.1em solid #1d2d35;
+    border: 0.1em solid #19262d;
     border-radius: 0;
+}
+
+.ant-checkbox-inner, .ant-radio-inner {
+    height: 25px;
+    width: 25px;
+}
+
+.ant-checkbox-inner::after {
+    height: 12.142857px;
+    left: 28%;
+}
+
+.ant-checkbox-checked .ant-checkbox-inner {
+    background-color: #19262d;
+    border-color: #19262d;
+}
+
+.ant-checkbox-wrapper:hover .ant-checkbox-inner, .ant-checkbox:hover .ant-checkbox-inner, .ant-checkbox-input:focus+.ant-checkbox-inner, .ant-radio-wrapper:hover .ant-radio, .ant-radio:hover .ant-radio-inner, .ant-radio-input:focus+.ant-radio-inner, .ant-radio-checked .ant-radio-inner {
+    border-color: #19262d;
+}
+
+.ant-radio-inner::after {
+    top: 0px;
+    left: 0px;
+    width: 23px;
+    height: 23px;
+    background-color: #19262d;
+    border-radius: 100px;
+}
+
+.ant-input {
+    border: 2px solid black;
+    margin-bottom: 10px;
+    height: 45px;
+    border-radius: 2px;
+}
+
+.ant-input:hover, .ant-input:focus, .ant-input-affix-wrapper:hover .ant-input:not(.ant-input-disabled) {
+    border-right-width: 2px !important;
+    border-color: black !important;
+    box-shadow: none !important
+}
+
+.ant-input:focus {
+    border-color: #ffa500 !important;
 }
