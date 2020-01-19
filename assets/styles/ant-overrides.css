@@ -54,4 +54,33 @@
     font-family: 'Graphik-Bold';
 }
 
-/*  */
+.ant-radio-group {
+    width: 100%;
+}
+
+.ant-btn:hover, .ant-btn:focus {
+    color: #ffa500;
+    background-color: #1d2d35;
+    cursor: pointer;
+    text-decoration: none;
+    border-color: #1d2d35;
+}
+
+.ant-btn {
+    height: unset;
+    font-family: 'Graphik-Bold';
+    transition: all 0.2s ease;
+    transition-property: color, background-color, border-color;
+    display: inline-block;
+    padding: 0.5em 1em;
+    background-color: #1d2d35;
+    color: #fff;
+    font-size: 100%;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+    line-height: normal;
+    -webkit-appearance: none;
+    border: 0.1em solid #1d2d35;
+    border-radius: 0;
+}

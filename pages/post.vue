@@ -8,9 +8,9 @@
       <a-steps :current="activeStep" class="mb-30">
         <a-step title="Your Company" />
         <a-step title="The Role" />
-        <a-step title="Responsibilities" />
-        <a-step title="Salary" />
-        <a-step title="Finalise" />
+        <a-step title="Requirements" />
+        <a-step title="How To Apply" />
+        <a-step title="finalize" />
       </a-steps>
       <div class="card">
         <a-tabs
@@ -52,80 +52,111 @@
             <div class="section">
               <h4 class="mb-0">
                 About the role
-                <a-badge
-                  count="required"
-                  :number-style="{ backgroundColor: '#52c41a' }"
-                />
               </h4>
               <p>Some text here (keep it short)</p>
               <ckeditor :editor="editor" class="h-200 "></ckeditor>
             </div>
-            <a-row>
-              <a-col span="12">
-                <div class="section">
-                  <h4>
-                    Experience Level(s)
-                    <a-badge
-                      count="required"
-                      :number-style="{ backgroundColor: '#52c41a' }"
-                    />
-                  </h4>
-                  <div class="experience-level">
-                    <a-checkbox @change="onChange"></a-checkbox>
-                    <a-progress
-                      stroke-width="15"
-                      :percent="33"
-                      :show-info="false"
-                    />
-                  </div>
-                  <div class="experience-level">
-                    <a-checkbox @change="onChange"></a-checkbox>
-                    <a-progress
-                      stroke-width="15"
-                      stroke-color="orange"
-                      :percent="66"
-                      :show-info="false"
-                    />
-                  </div>
-                  <div class="experience-level">
-                    <a-checkbox @change="onChange"></a-checkbox>
-                    <a-progress
-                      stroke-width="15"
-                      stroke-color="black"
-                      :percent="100"
-                      :show-info="false"
-                    />
-                  </div>
-                </div>
-              </a-col>
-              <a-col span="12">
-                <div class="section">
-                  <h4>
-                    Requirements
-                    <a-badge
-                      count="3 minimum"
-                      :number-style="{ backgroundColor: '#52c41a' }"
-                    />
-                  </h4>
-                  <div class="requirements">
-                    <a-input v-for="n in 3" :key="n" />
-                  </div>
-                </div>
-              </a-col>
-            </a-row>
+            <div class="section">
+              <h4>
+                Responsibilities
+              </h4>
+              <div class="requirements">
+                <a-input v-for="n in 3" :key="n" />
+              </div>
+            </div>
+            <div class="section">
+              <h4>
+                Salary
+              </h4>
+              <a-radio-group name="radioGroup" :default-value="1">
+                <a-row>
+                  <a-col span="12">
+                    <div class="salary-block">
+                      <a-radio :value="1"><h4>Set amount</h4></a-radio>
+                      <a-input placeholder="Basic usage">
+                        <span slot="prefix">USD </span>
+                      </a-input>
+                    </div>
+                  </a-col>
+                  <a-col span="12">
+                    <div class="salary-block">
+                      <a-radio :value="2"
+                        ><h4>Experience Dependent</h4></a-radio
+                      >
+                      <a-input-group>
+                        <a-row>
+                          <a-col :span="11">
+                            <a-input placeholder="From">
+                              <span slot="prefix">USD </span>
+                            </a-input>
+                          </a-col>
+                          <a-col span="2" class="align-center">
+                            -
+                          </a-col>
+                          <a-col :span="11">
+                            <a-input placeholder="To">
+                              <span slot="prefix">USD </span>
+                            </a-input>
+                          </a-col>
+                        </a-row>
+                      </a-input-group>
+                    </div>
+                  </a-col>
+                </a-row>
+              </a-radio-group>
+            </div>
           </a-tab-pane>
+          <a-tab-pane key="2" tab="requirements">
+            <div class="section">
+              <h4>
+                Experience Level(s) Required
+              </h4>
+              <div class="experience-level">
+                <a-checkbox @change="onChange"></a-checkbox>
+                <a-progress
+                  stroke-width="15"
+                  :percent="33"
+                  :show-info="false"
+                />
+              </div>
+              <div class="experience-level">
+                <a-checkbox @change="onChange"></a-checkbox>
+                <a-progress
+                  stroke-width="15"
+                  stroke-color="orange"
+                  :percent="66"
+                  :show-info="false"
+                />
+              </div>
+              <div class="experience-level">
+                <a-checkbox @change="onChange"></a-checkbox>
+                <a-progress
+                  stroke-width="15"
+                  stroke-color="black"
+                  :percent="100"
+                  :show-info="false"
+                />
+              </div>
+            </div>
+            <div class="section">
+              <h4 class="mb-0">
+                Requirements
+              </h4>
+              <p>Some text here (keep it short)</p>
+              <div class="requirements">
+                <a-input v-for="n in 3" :key="n" />
+              </div>
+            </div>
+          </a-tab-pane>
+          <a-tab-pane key="2" tab="application"> </a-tab-pane>
+          <a-tab-pane key="2" tab="finalize"> </a-tab-pane>
         </a-tabs>
         <div class="navigation">
-          <a-button v-if="activeStep > 0" type="primary" @click="previousStep">
+          <a-button v-if="activeStep > 0" @click="previousStep">
             <a-icon type="left" />
             Previous
           </a-button>
-          <a-button
-            v-if="activeStep < 4"
-            type="primary"
-            class="f-r"
-            @click="nextStep"
-          >
+          <a-button v-if="activeStep < 4" class="f-r" @click="nextStep">
             Next
             <a-icon type="right" />
           </a-button>
@@ -358,5 +389,16 @@ export default {
 
 .experience-level {
   margin-bottom: 10px;
+}
+.salary-block {
+  padding: 15px;
+  border: 2px solid black;
+  border-radius: 2px;
+}
+.salary-block label {
+  margin-bottom: 10px;
+}
+.salary-block h4 {
+  display: inherit;
 }
 </style>

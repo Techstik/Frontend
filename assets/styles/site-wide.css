@@ -67,9 +67,15 @@
   height: 100vh;
   max-height: 300px;
   border: 2px solid #000000 !important;
-    border-radius: 2px;
+  border-radius: 2px;
 }
 
 .add-listing-tabs .ant-tabs-bar {
   display: none;
+}
+
+.button-secondary {
+  background-color: transparent;
+  color: #1d2d35;
+  border-color: #1d2d35;
 }
