@@ -79,3 +79,7 @@
   color: #1d2d35;
   border-color: #1d2d35;
 }
+
+.ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-rounded-corners {
+  border-radius: 5px !important;
+}

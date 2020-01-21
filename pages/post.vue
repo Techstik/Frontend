@@ -369,13 +369,6 @@ export default {
   display: none;
 }
 
-.requirements input {
-  border: 2px solid black;
-  margin-bottom: 10px;
-  height: 45px;
-  border-radius: 2px;
-}
-
 .requirements input:last-child {
   margin-bottom: 0px;
 }

@@ -117,7 +117,7 @@
     border: 2px solid black;
     margin-bottom: 10px;
     height: 45px;
-    border-radius: 2px;
+    border-radius: 5px;
 }
 
 .ant-input:hover, .ant-input:focus, .ant-input-affix-wrapper:hover .ant-input:not(.ant-input-disabled) {
@@ -128,4 +128,28 @@
 
 .ant-input:focus {
     border-color: #ffa500 !important;
+}
+
+.ant-steps-item-wait .ant-steps-item-icon {
+    background-color: #B4DFE5;
+    border-color: #B4DFE5;
+}
+.ant-steps-item-wait .ant-steps-item-icon > .ant-steps-icon, .ant-steps-item-process .ant-steps-item-icon > .ant-steps-icon {
+    color: #303c6c;
+}
+.ant-steps-item-process .ant-steps-item-icon {
+    background: #f3976b;
+}
+.ant-steps-item-process .ant-steps-item-icon {
+    border-color: #f3976b;
+}
+.ant-steps-item-finish .ant-steps-item-icon {
+    background-color: #f3976b;
+    border-color: #f3976b;
+}
+.ant-steps-item-finish > .ant-steps-item-content > .ant-steps-item-title::after {
+    background-color: #f3976b;
+}
+.ant-steps-item-finish .ant-steps-item-icon > .ant-steps-icon {
+    color: #fbe8a6;
 }
