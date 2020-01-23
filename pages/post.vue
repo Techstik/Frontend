@@ -27,7 +27,7 @@
                   :number-style="{ backgroundColor: '#52c41a' }"
                 />
               </h4>
-              <p>Some text here (keep it short)</p>
+              <small>Some text here (keep it short)</small>
               <ckeditor :editor="editor"></ckeditor>
             </div>
             <div class="section">
@@ -41,10 +41,10 @@
             </div>
             <div class="section">
               <h4 class="mb-0">Where are you based?</h4>
-              <p>
+              <small>
                 Your company HQ - it's nice to see, even if this is a remote
                 position
-              </p>
+              </small>
               <div id="map"></div>
               <pre id="coordinates" class="coordinates"></pre></div
           ></a-tab-pane>
@@ -53,7 +53,7 @@
               <h4 class="mb-0">
                 About the role
               </h4>
-              <p>Some text here (keep it short)</p>
+              <small>Some text here (keep it short)</small>
               <ckeditor :editor="editor" class="h-200 "></ckeditor>
             </div>
             <div class="section">

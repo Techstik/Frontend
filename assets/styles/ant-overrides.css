@@ -127,7 +127,7 @@
 }
 
 .ant-input:focus {
-    border-color: #ffa500 !important;
+    border-color: #f3976b !important;
 }
 
 .ant-steps-item-wait .ant-steps-item-icon {
@@ -152,4 +152,7 @@
 }
 .ant-steps-item-finish .ant-steps-item-icon > .ant-steps-icon {
     color: #fbe8a6;
+}
+.ant-tabs{
+    font-size: unset;
 }

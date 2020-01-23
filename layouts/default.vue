@@ -1,7 +1,14 @@
 <template>
   <div class="background">
     <div class="header">
-      <img :src="whiteLogo" />
+      <nuxt-link to="/">
+        <img :src="whiteLogo" />
+      </nuxt-link>
+      <nuxt-link to="/post">
+        <a-button type="danger" class="btn-sm f-r btn-outline"
+          >Post a job</a-button
+        >
+      </nuxt-link>
     </div>
     <div class="nuxt-container">
       <nuxt />
@@ -31,26 +38,32 @@ export default {
   background-attachment: scroll;
   background-repeat: no-repeat;
   background-size: cover; */
-  background: #303c6c;
+  background: #161d2d;
 }
 .header {
   padding: 30px 40px 20px;
   position: fixed;
   width: 100%;
   z-index: 1000;
-  background: #303c6c;
+  background: rgba(22, 29, 45, 0.96);
   opacity: 0.95;
 }
 .header img {
   width: 150px;
 }
 .footer {
-  background-color: #161d2d;
-  color: white;
+  background-color: #f49c73;
+  color: #171e2d;
   padding: 50px;
 }
 .nuxt-container {
   min-height: 100vh;
   padding: 100px;
+}
+
+.btn-outline {
+  background-color: transparent !important;
+  color: #f3976b !important;
+  border-color: #f3976b !important;
 }
 </style>
