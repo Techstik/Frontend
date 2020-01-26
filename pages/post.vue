@@ -33,7 +33,7 @@
             </div>
             <div class="section">
               <h4>Website URL</h4>
-              <a-input default-value="mysite">
+              <a-input>
                 <a-select slot="addonBefore" default-value="https://">
                   <a-select-option value="http://">http://</a-select-option>
                   <a-select-option value="https://">https://</a-select-option>
@@ -111,11 +111,19 @@
             <div class="section">
               <h4>
                 Experience Level(s) Required
+                <span class="cursor-pointer">
+                  <a-tooltip>
+                    <template slot="title">
+                      Add some text here explaing how we got to these
+                      values</template
+                    ><a-icon type="info-circle"/></a-tooltip
+                ></span>
               </h4>
               <div class="experience-level">
                 <a-checkbox @change="onChange"></a-checkbox>
                 <a-progress
                   stroke-width="15"
+                  stroke-color="#b4dfe5"
                   :percent="33"
                   :show-info="false"
                 />
@@ -124,7 +132,7 @@
                 <a-checkbox @change="onChange"></a-checkbox>
                 <a-progress
                   stroke-width="15"
-                  stroke-color="orange"
+                  stroke-color="#f3976b"
                   :percent="66"
                   :show-info="false"
                 />
@@ -133,7 +141,7 @@
                 <a-checkbox @change="onChange"></a-checkbox>
                 <a-progress
                   stroke-width="15"
-                  stroke-color="black"
+                  stroke-color="#161d2d"
                   :percent="100"
                   :show-info="false"
                 />
@@ -392,11 +400,6 @@ export default {
 
 .experience-level {
   margin-bottom: 10px;
-}
-.salary-block {
-  padding: 15px;
-  border: 2px solid black;
-  border-radius: 2px;
 }
 .salary-block label {
   margin-bottom: 10px;

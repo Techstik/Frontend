@@ -109,7 +109,7 @@
     left: 0px;
     width: 23px;
     height: 23px;
-    background-color: #19262d;
+    background-color: #f3976b;
     border-radius: 100px;
 }
 
@@ -155,4 +155,11 @@
 }
 .ant-tabs{
     font-size: unset;
+}
+.ant-tooltip-inner{
+    background-color: #fbe8a6;
+    color: black;
+}
+.ant-tooltip-placement-top .ant-tooltip-arrow, .ant-tooltip-placement-topLeft .ant-tooltip-arrow, .ant-tooltip-placement-topRight .ant-tooltip-arrow{
+    border-top-color: #fbe8a6 ;
 }
