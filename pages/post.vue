@@ -3,8 +3,9 @@
     <h1 class="title heading heading--x-large pb-0">
       Make your search available to the tech world
     </h1>
-    <div class="container">
-      <p class="align-center sub-title">Add some text here</p>
+    <p class="align-center sub-title">Add some text here</p>
+
+    <div id="container" class="container">
       <a-steps :current="activeStep" class="mb-30">
         <a-step title="Your Company" />
         <a-step title="The Role" />
@@ -24,7 +25,7 @@
                 A quick intro of your company
                 <a-badge
                   count="required"
-                  :number-style="{ backgroundColor: '#52c41a' }"
+                  :number-style="{ backgroundColor: '#f4976c' }"
                 />
               </h4>
               <small>Some text here (keep it short)</small>
@@ -148,15 +149,24 @@
               </div>
             </div>
           </a-tab-pane>
-          <a-tab-pane key="2" tab="application"> </a-tab-pane>
-          <a-tab-pane key="2" tab="finalize"> </a-tab-pane>
+          <a-tab-pane key="3" tab="application"> </a-tab-pane>
+          <a-tab-pane key="4" tab="finalize"> </a-tab-pane>
         </a-tabs>
         <div class="navigation">
-          <a-button v-if="activeStep > 0" @click="previousStep">
+          <a-button
+            v-if="activeStep > 0"
+            v-scroll-to="'#container'"
+            @click="previousStep"
+          >
             <a-icon type="left" />
             Previous
           </a-button>
-          <a-button v-if="activeStep < 4" class="f-r" @click="nextStep">
+          <a-button
+            v-if="activeStep < 4"
+            v-scroll-to="'#container'"
+            class="f-r"
+            @click="nextStep"
+          >
             Next
             <a-icon type="right" />
           </a-button>
@@ -212,7 +222,7 @@ export default {
 
     this.map = new Mapbox.Map({
       container: 'map',
-      style: 'mapbox://styles/matt-greppl/ck5e63lvc11ir1io1nvyeewxr',
+      style: 'mapbox://styles/matt-greppl/ck5s4wwut3c1p1ir8df8xwlcj',
       center: [location.lng, location.lat],
       zoom: 9
     })

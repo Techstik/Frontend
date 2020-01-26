@@ -5,9 +5,7 @@
         <img :src="whiteLogo" />
       </nuxt-link>
       <nuxt-link to="/post">
-        <a-button type="danger" class="btn-sm f-r btn-outline"
-          >Post a job</a-button
-        >
+        <a-button class="btn-sm f-r btn-outline">Post a job</a-button>
       </nuxt-link>
     </div>
     <div class="nuxt-container">
@@ -52,8 +50,8 @@ export default {
   width: 150px;
 }
 .footer {
-  background-color: #f49c73;
-  color: #171e2d;
+  background-color: #303c6c;
+  color: white;
   padding: 50px;
 }
 .nuxt-container {
@@ -63,7 +61,11 @@ export default {
 
 .btn-outline {
   background-color: transparent !important;
-  color: #f3976b !important;
-  border-color: #f3976b !important;
+  color: #f3976b;
+  border-color: #f3976b;
+}
+
+.btn-outline:hover {
+  border-color: #fbe8a6;
 }
 </style>

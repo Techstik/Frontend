@@ -131,11 +131,11 @@
 }
 
 .ant-steps-item-wait .ant-steps-item-icon {
-    background-color: #B4DFE5;
-    border-color: #B4DFE5;
+    background-color: #fbe8a6;
+    border-color: #fbe8a6;
 }
 .ant-steps-item-wait .ant-steps-item-icon > .ant-steps-icon, .ant-steps-item-process .ant-steps-item-icon > .ant-steps-icon {
-    color: #303c6c;
+    color: black;
 }
 .ant-steps-item-process .ant-steps-item-icon {
     background: #f3976b;
