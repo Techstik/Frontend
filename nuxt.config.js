@@ -52,7 +52,8 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    ['vue-scrollto/nuxt', { duration: 300, offset: -100 }]
+    ['vue-scrollto/nuxt', { duration: 300, offset: -100 }],
+    'vue-currency-input/nuxt'
   ],
   /*
    ** Axios module configuration

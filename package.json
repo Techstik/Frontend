@@ -25,6 +25,7 @@
     "firebase": "^7.6.1",
     "mapbox-gl": "^1.6.1",
     "nuxt": "^2.0.0",
+    "vue-currency-input": "^1.16.0",
     "vue-lodash": "^2.0.2",
     "vue-moment": "^4.1.0",
     "vue-scrollto": "^2.17.1"

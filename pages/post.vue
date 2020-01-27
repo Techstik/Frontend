@@ -53,6 +53,10 @@
             <div class="section">
               <h4 class="mb-0">
                 About the role
+                <a-badge
+                  count="required"
+                  :number-style="{ backgroundColor: '#f4976c' }"
+                />
               </h4>
               <small>Some text here (keep it short)</small>
               <ckeditor :editor="editor" class="h-200 "></ckeditor>
@@ -60,6 +64,10 @@
             <div class="section">
               <h4>
                 Responsibilities
+                <a-badge
+                  count="3+ required"
+                  :number-style="{ backgroundColor: '#f4976c' }"
+                />
               </h4>
               <div class="requirements">
                 <a-input v-for="n in 3" :key="n" />
@@ -74,9 +82,25 @@
                   <a-col span="12">
                     <div class="salary-block">
                       <a-radio :value="1"><h4>Set amount</h4></a-radio>
-                      <a-input placeholder="Basic usage">
-                        <span slot="prefix">USD </span>
-                      </a-input>
+                      <a-input-number
+                        :default-value="1000"
+                        class="full-width"
+                        decimal-separator="."
+                        :formatter="
+                          value =>
+                            `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                        "
+                        :parser="value => value.replace(/\$\s?|(,*)/g, '')"
+                      >
+                        <a-select slot="addonBefore" default-value="https://">
+                          <a-select-option value="http://"
+                            >http://</a-select-option
+                          >
+                          <a-select-option value="https://"
+                            >https://</a-select-option
+                          >
+                        </a-select>
+                      </a-input-number>
                     </div>
                   </a-col>
                   <a-col span="12">
@@ -87,17 +111,39 @@
                       <a-input-group>
                         <a-row>
                           <a-col :span="11">
-                            <a-input placeholder="From">
-                              <span slot="prefix">USD </span>
-                            </a-input>
+                            <a-input-number
+                              :default-value="1000"
+                              class="full-width"
+                              :formatter="
+                                value =>
+                                  `$ ${value}`.replace(
+                                    /\B(?=(\d{3})+(?!\d))/g,
+                                    ','
+                                  )
+                              "
+                              :parser="
+                                value => value.replace(/\$\s?|(,*)/g, '')
+                              "
+                            />
                           </a-col>
                           <a-col span="2" class="align-center">
                             -
                           </a-col>
                           <a-col :span="11">
-                            <a-input placeholder="To">
-                              <span slot="prefix">USD </span>
-                            </a-input>
+                            <a-input-number
+                              :default-value="1000"
+                              class="full-width"
+                              :formatter="
+                                value =>
+                                  `$ ${value}`.replace(
+                                    /\B(?=(\d{3})+(?!\d))/g,
+                                    ','
+                                  )
+                              "
+                              :parser="
+                                value => value.replace(/\$\s?|(,*)/g, '')
+                              "
+                            />
                           </a-col>
                         </a-row>
                       </a-input-group>
@@ -118,6 +164,10 @@
                       values</template
                     ><a-icon type="info-circle"/></a-tooltip
                 ></span>
+                <a-badge
+                  count="required"
+                  :number-style="{ backgroundColor: '#f4976c' }"
+                />
               </h4>
               <div class="experience-level">
                 <a-checkbox @change="onChange"></a-checkbox>
@@ -150,6 +200,10 @@
             <div class="section">
               <h4 class="mb-0">
                 Requirements
+                <a-badge
+                  count="3+ required"
+                  :number-style="{ backgroundColor: '#f4976c' }"
+                />
               </h4>
               <p>Some text here (keep it short)</p>
               <div class="requirements">
