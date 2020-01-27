@@ -1,10 +1,13 @@
 <template>
   <div>
-    <h1 class="title heading heading--x-large pb-0">
-      Make your search available to the tech world
-    </h1>
-    <p class="align-center sub-title">Add some text here</p>
-
+    <div class="grid grid--centered grid--formatted centered-medium">
+      <h1
+        class="heading heading--x-large flush--top grid__item grid__item--large title"
+      >
+        Make your search available to the tech world
+      </h1>
+      <p class="align-center sub-title">Add some text here</p>
+    </div>
     <div id="container" class="container">
       <a-steps :current="activeStep" class="mb-30">
         <a-step title="Your Company" />

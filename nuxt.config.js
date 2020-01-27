@@ -27,7 +27,8 @@ module.exports = {
     'ant-design-vue/dist/antd.css',
     '@/assets/styles/layout.css',
     '@/assets/styles/ant-overrides.css',
-    '@/assets/styles/site-wide.css'
+    '@/assets/styles/site-wide.css',
+    '@/assets/styles/grid.css'
   ],
   /*
    ** Plugins to load before mounting the App
