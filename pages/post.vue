@@ -11,7 +11,7 @@
         <a-step title="The Role" />
         <a-step title="Requirements" />
         <a-step title="How To Apply" />
-        <a-step title="finalize" />
+        <a-step title="Finalize" />
       </a-steps>
       <div class="card">
         <a-tabs
@@ -21,7 +21,7 @@
         >
           <a-tab-pane key="0" tab="company-info">
             <div class="section">
-              <label class="mb-0">
+              <label class="d-block">
                 A quick intro of your company
                 <a-badge
                   count="required"
@@ -32,7 +32,7 @@
               <ckeditor :editor="editor"></ckeditor>
             </div>
             <div class="section">
-              <h4>Website URL</h4>
+              <label class="mb-10 d-block">Website URL</label>
               <a-input>
                 <a-select slot="addonBefore" default-value="https://">
                   <a-select-option value="http://">http://</a-select-option>
@@ -41,7 +41,7 @@
               </a-input>
             </div>
             <div class="section">
-              <h4 class="mb-0">Where are you based?</h4>
+              <label class="d-block">Where are you based?</label>
               <small>
                 Your company HQ - it's nice to see, even if this is a remote
                 position
@@ -51,37 +51,37 @@
           ></a-tab-pane>
           <a-tab-pane key="1" tab="role">
             <div class="section">
-              <h4 class="mb-0">
+              <label class="d-block">
                 About the role
                 <a-badge
                   count="required"
                   :number-style="{ backgroundColor: '#f4976c' }"
                 />
-              </h4>
+              </label>
               <small>Some text here (keep it short)</small>
-              <ckeditor :editor="editor" class="h-200 "></ckeditor>
+              <ckeditor :editor="editor" class="h-200"></ckeditor>
             </div>
             <div class="section">
-              <h4>
+              <label class="mb-10 d-block">
                 Responsibilities
                 <a-badge
                   count="3+ required"
                   :number-style="{ backgroundColor: '#f4976c' }"
                 />
-              </h4>
+              </label>
               <div class="requirements">
                 <a-input v-for="n in 3" :key="n" />
               </div>
             </div>
             <div class="section">
-              <h4>
+              <label class="mb-10 d-block">
                 Salary
-              </h4>
+              </label>
               <a-radio-group name="radioGroup" :default-value="1">
                 <a-row>
                   <a-col span="12">
                     <div class="salary-block">
-                      <a-radio :value="1"><h4>Set amount</h4></a-radio>
+                      <a-radio :value="1"><label>Set amount</label></a-radio>
                       <a-input-number
                         :default-value="1000"
                         class="full-width"
@@ -106,7 +106,7 @@
                   <a-col span="12">
                     <div class="salary-block">
                       <a-radio :value="2"
-                        ><h4>Experience Dependent</h4></a-radio
+                        ><label>Experience Dependent</label></a-radio
                       >
                       <a-input-group>
                         <a-row>
@@ -155,7 +155,7 @@
           </a-tab-pane>
           <a-tab-pane key="2" tab="requirements">
             <div class="section">
-              <h4>
+              <label class="mb-10 d-block">
                 Experience Level(s) Required
                 <span class="cursor-pointer">
                   <a-tooltip>
@@ -168,7 +168,7 @@
                   count="required"
                   :number-style="{ backgroundColor: '#f4976c' }"
                 />
-              </h4>
+              </label>
               <div class="experience-level">
                 <a-checkbox @change="onChange"></a-checkbox>
                 <a-progress
@@ -198,20 +198,32 @@
               </div>
             </div>
             <div class="section">
-              <h4 class="mb-0">
+              <label class="d-block">
                 Requirements
                 <a-badge
                   count="3+ required"
                   :number-style="{ backgroundColor: '#f4976c' }"
                 />
-              </h4>
-              <p>Some text here (keep it short)</p>
+              </label>
+              <small>Some text here (keep it short)</small>
               <div class="requirements">
                 <a-input v-for="n in 3" :key="n" />
               </div>
             </div>
           </a-tab-pane>
-          <a-tab-pane key="3" tab="application"> </a-tab-pane>
+          <a-tab-pane key="3" tab="application">
+            <div class="section">
+              <label class="d-block mb-10">
+                Application URL
+              </label>
+              <a-input />
+              <label class="d-block">
+                Instructions
+              </label>
+              <small>Some text here (keep it short)</small>
+              <ckeditor :editor="editor" class="h-200"></ckeditor>
+            </div>
+          </a-tab-pane>
           <a-tab-pane key="4" tab="finalize"> </a-tab-pane>
         </a-tabs>
         <div class="navigation">
@@ -417,12 +429,16 @@ export default {
 <style scoped>
 .container {
   max-width: 1500px;
+  margin: auto;
 }
 .card {
   padding: 25px;
 }
 .section {
   margin-bottom: 15px;
+}
+.mb-10 {
+  margin-bottom: 10px;
 }
 .mb-30 {
   margin-bottom: 30px;
@@ -450,6 +466,7 @@ export default {
   width: calc(100% - 30px);
   font-size: 14px;
   float: right;
+  margin-top: 5px;
 }
 
 .experience-level {
@@ -460,5 +477,9 @@ export default {
 }
 .salary-block h4 {
   display: inherit;
+}
+small {
+  display: block;
+  margin-bottom: 10px;
 }
 </style>

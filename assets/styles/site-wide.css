@@ -30,6 +30,10 @@
   display: inline-block;
 }
 
+.d-block {
+  display: block;
+}
+
 .btn-sucess {
   background: #74d474;
   color: white;
@@ -83,11 +87,20 @@
 .ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-rounded-corners {
   border-radius: 5px !important;
   transition: all 0.3s;
+  font-size: 70%;
+  padding-top: 4px;
+  padding-right: 11px;
+  padding-bottom: 4px;
+  padding-left: 11px;
 }
 
 .ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-focused {
   box-shadow: none !important;
   border-color: #f3976b !important;
+}
+
+.ck-content *{
+margin: 0px;
 }
 
 .btn-sm {

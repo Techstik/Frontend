@@ -75,7 +75,7 @@
     padding: 0.5em 1em;
     background-color: #19262d;
     color: #fff;
-    font-size: 100%;
+    font-size: 75%;
     font-weight: bold;
     text-decoration: none;
     text-align: center;
@@ -118,7 +118,7 @@
     margin-bottom: 10px;
     height: 45px;
     border-radius: 5px;
-    font-size: 85%;
+    font-size: 70%;
     color: black;
 }
 
@@ -169,6 +169,7 @@
 
 .ant-tabs {
     font-size: unset;
+    line-height: inherit;
 }
 
 .ant-tooltip-inner {
@@ -181,4 +182,7 @@
 }
 .ant-input-group-addon .ant-select-open .ant-select-selection, .ant-input-group-addon .ant-select-focused .ant-select-selection{
     color: #f3976b;
+}
+.ant-radio-group.ant-radio-group-outline.ant-radio-group-default input, .ant-radio-group.ant-radio-group-outline.ant-radio-group-default label {
+    font-size: initial;
 }
