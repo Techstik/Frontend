@@ -1,9 +1,9 @@
 <template>
   <div class="background">
+    <nuxt-link to="/">
+      <img :src="whiteLogo" />
+    </nuxt-link>
     <div class="header">
-      <nuxt-link to="/">
-        <img :src="whiteLogo" />
-      </nuxt-link>
       <nuxt-link to="/post">
         <a-button class="btn-sm f-r btn-outline">Post a job</a-button>
       </nuxt-link>
@@ -20,7 +20,7 @@
   </div>
 </template>
 <script>
-import whiteLogo from '@/assets/images/logos/yellow-background.svg'
+import whiteLogo from '@/assets/images/logos/SmallWhiteSplashSolid.svg'
 export default {
   data() {
     return {
@@ -46,8 +46,12 @@ export default {
   background: rgba(22, 29, 45, 0.96);
   opacity: 0.95;
 }
-.header img {
-  width: 150px;
+img {
+  width: 75px;
+  margin-left: 45px;
+  margin-top: 30px;
+  position: absolute;
+  z-index: 100000;
 }
 .footer {
   background-color: #303c6c;

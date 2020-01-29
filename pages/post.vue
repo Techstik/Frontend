@@ -21,13 +21,13 @@
         >
           <a-tab-pane key="0" tab="company-info">
             <div class="section">
-              <h4 class="mb-0">
+              <label class="mb-0">
                 A quick intro of your company
                 <a-badge
                   count="required"
                   :number-style="{ backgroundColor: '#f4976c' }"
                 />
-              </h4>
+              </label>
               <small>Some text here (keep it short)</small>
               <ckeditor :editor="editor"></ckeditor>
             </div>

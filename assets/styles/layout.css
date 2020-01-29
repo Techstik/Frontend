@@ -16,6 +16,7 @@
 html {
   overflow: hidden;
   height: 100%;
+  font-size: 10px;
 }
 
 body {
@@ -24,20 +25,13 @@ body {
   background-size: cover;
   height: 100%;
   overflow: auto;
-  font-size: 1em;
+  font-size: calc(1.6em + 0.5vw);
   line-height: 1.25;
-}
-
-@media (min-width: 43.75em) {
-  body {
-    font-size: 1em;
-    line-height: 1.375;
-  }
 }
 
 @media (min-width: 57.5em) {
   body {
-    font-size: 1.1em;
+    font-size: calc(1.1em + 0.85vw);
   }
 }
 
@@ -143,39 +137,39 @@ h4 {
 
 .sub-title {
   color: white;
-  font-size: calc(1.1em + 0.25vw);
   margin-bottom: 1.5em;
 }
 
 .heading {
+  margin: 0 0 0.25em 0;
   font-size: 250%;
   line-height: 1.05;
 }
 
 @media (min-width: 57.5em) {
   .heading--x-large {
-    font-size: 450%;
+    font-size: 330%;
   }
 }
 
 .heading--xx-large {
-  font-size: 450%;
+  font-size: 330%;
 }
 
 @media (min-width: 57.5em) {
   .heading--xx-large {
     margin: 0 0 0.2em 0;
-    font-size: 490%;
+    font-size: 390%;
   }
 }
 
 .heading--xxx-large {
-  font-size: 450%;
+  font-size: 330%;
 }
 
 @media (min-width: 57.5em) {
   .heading--xxx-large {
     margin: 0 0 0.1em 0;
-    font-size: 615%;
+    font-size: 515%;
   }
 }
