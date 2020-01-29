@@ -1,10 +1,8 @@
 <template>
-  <div class="container">
-    <div class="top-bar">
-      <nuxt-link to="/post">
-        <a-button type="danger">Post a job</a-button>
-      </nuxt-link>
-    </div>
+  <div>
+    <h1 class="title heading heading--x-large pb-0">
+      Welcome to the world's opportunities
+    </h1>
     <div class="locations">
       <div class="location">
         <img :src="globe" />
@@ -64,12 +62,6 @@ export default {
   height: 100%;
   z-index: -2;
 }
-.title {
-  text-align: center;
-  padding: 10% 0;
-  color: white;
-  margin: 0;
-}
 .locations {
   text-align: center;
 }
@@ -100,5 +92,8 @@ export default {
   text-align: center;
   margin: auto;
   max-width: 1500px;
+}
+.title {
+  margin-bottom: 100px;
 }
 </style>
