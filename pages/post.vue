@@ -32,27 +32,29 @@
                 </label>
                 <a-input v-model.trim="$v.listing.company_name.$model" />
               </div>
-              <label class="d-block">
-                A quick intro
-                <a-badge
-                  count="required"
-                  :number-style="{ backgroundColor: '#f4976c' }"
-                />
-              </label>
-              <small>Some text here (keep it short)</small>
-              <ckeditor
-                v-model="listing.company_intro"
-                :editor="editor"
-              ></ckeditor>
+              <div :class="{ error: $v.listing_info.company_intro.$error }">
+                <label class="d-block">
+                  A quick intro
+                  <a-badge
+                    count="required"
+                    :number-style="{ backgroundColor: '#f4976c' }"
+                  />
+                </label>
+                <small>Some text here (keep it short)</small>
+                <ckeditor
+                  v-model.trim="$v.listing_info.company_intro.$model"
+                  :editor="editor"
+                ></ckeditor>
+              </div>
             </div>
             <div class="section">
-              <label class="mb-10 d-block">Website URL</label>
-              <a-input>
-                <a-select slot="addonBefore" default-value="https://">
-                  <a-select-option value="http://">http://</a-select-option>
-                  <a-select-option value="https://">https://</a-select-option>
-                </a-select>
-              </a-input>
+              <div :class="{ error: $v.listing.company_website.$error }">
+                <label class="mb-10 d-block">Website URL</label>
+                <a-input
+                  v-model.trim="$v.listing.company_website.$model"
+                  placeholder="https://yourwebsite.com"
+                />
+              </div>
             </div>
             <div class="section">
               <label class="d-block">Where are you based?</label>
@@ -84,7 +86,14 @@
                 />
               </label>
               <div class="requirements">
-                <a-input v-for="n in 3" :key="n" />
+                <div
+                  v-for="(v, index) in $v.listing_info.responsibilities.$each
+                    .$iter"
+                  :key="`req_${index}`"
+                  :class="{ error: v.$error }"
+                >
+                  <a-input v-model.trim="v.responsibility.$model" />
+                </div>
               </div>
             </div>
             <div class="section">
@@ -186,7 +195,7 @@
               <div class="experience-level">
                 <a-checkbox></a-checkbox>
                 <a-progress
-                  stroke-width="15"
+                  :stroke-width="15"
                   stroke-color="#b4dfe5"
                   :percent="33"
                   :show-info="false"
@@ -195,7 +204,7 @@
               <div class="experience-level">
                 <a-checkbox></a-checkbox>
                 <a-progress
-                  stroke-width="15"
+                  :stroke-width="15"
                   stroke-color="#f3976b"
                   :percent="66"
                   :show-info="false"
@@ -204,7 +213,7 @@
               <div class="experience-level">
                 <a-checkbox></a-checkbox>
                 <a-progress
-                  stroke-width="15"
+                  :stroke-width="15"
                   stroke-color="#161d2d"
                   :percent="100"
                   :show-info="false"
@@ -221,7 +230,13 @@
               </label>
               <small>Some text here (keep it short)</small>
               <div class="requirements">
-                <a-input v-for="n in 2" :key="n" />
+                <div
+                  v-for="(v, index) in $v.listing_info.requirements.$each.$iter"
+                  :key="`req_${index}`"
+                  :class="{ error: v.$error }"
+                >
+                  <a-input v-model.trim="v.requirement.$model" />
+                </div>
               </div>
             </div>
           </a-tab-pane>
@@ -269,7 +284,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-inline'
 
 import 'mapbox-gl/dist/mapbox-gl.css'
 import Mapbox from 'mapbox-gl'
-import { required } from 'vuelidate/lib/validators'
+import { required, requiredIf, minLength, url } from 'vuelidate/lib/validators'
 
 export default {
   components: {
@@ -285,7 +300,6 @@ export default {
         active: false,
         company_logo: '',
         company_name: '',
-        company_intro: '',
         company_website: '',
         date_listed: null,
         experience: [],
@@ -296,6 +310,28 @@ export default {
         location_based: true,
         remote: false,
         tech: []
+      },
+      listing_info: {
+        company_intro: '',
+        requirements: [
+          {
+            requirement: ''
+          },
+          {
+            requirement: ''
+          }
+        ],
+        responsibilities: [
+          {
+            responsibility: ''
+          },
+          {
+            responsibility: ''
+          },
+          {
+            responsibility: ''
+          }
+        ]
       },
       geojson: {
         type: 'FeatureCollection',
@@ -315,6 +351,35 @@ export default {
     listing: {
       company_name: {
         required
+      },
+      company_website: {
+        required: requiredIf(website => {
+          return website.length
+        }),
+        url
+      }
+    },
+    listing_info: {
+      company_intro: {
+        required
+      },
+      requirements: {
+        required,
+        minLength: minLength(2),
+        $each: {
+          requirement: {
+            required
+          }
+        }
+      },
+      responsibilities: {
+        required,
+        minLength: minLength(3),
+        $each: {
+          responsibility: {
+            required
+          }
+        }
       }
     }
   },
@@ -394,6 +459,26 @@ export default {
   },
   methods: {
     nextStep() {
+      this.$v.$touch()
+
+      switch (this.activeStep) {
+        case 0:
+          if (
+            this.$v.listing.company_name.$invalid ||
+            this.$v.listing.company_website.$invalid ||
+            this.$v.listing_info.company_intro.$invalid
+          )
+            return
+          break
+        case 1:
+          if (this.$v.listing_info.responsibilities.$invalid) return
+          break
+        case 2:
+          if (this.$v.listing_info.requirements.$invalid) return
+          break
+      }
+
+      this.$v.$reset()
       ++this.activeStep
     },
     previousStep() {
@@ -495,7 +580,11 @@ export default {
   display: none;
 }
 
-.requirements input:last-child {
+.requirements input {
+  margin-bottom: 10px;
+}
+
+.requirements div:last-child input {
   margin-bottom: 0px;
 }
 

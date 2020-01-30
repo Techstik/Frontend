@@ -192,11 +192,13 @@ h4 {
   animation-timing-function: ease-in-out;
 }
 
-.error label {
+.error label,
+.error small {
   color: #f4976c;
 }
-.error input{
-  border-color: #f4976c;
+.error input,
+.error .ck.ck-editor__editable_inline {
+  border-color: #f4976c !important;
 }
 
 @keyframes shakeError {
