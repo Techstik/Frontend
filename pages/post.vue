@@ -1,9 +1,7 @@
 <template>
   <div>
-    <div class="grid grid--centered grid--formatted centered-medium">
-      <h1
-        class="heading heading--x-large flush--top grid__item grid__item--large title"
-      >
+    <div>
+      <h1 class="heading heading--x-large flush--top title">
         Make your search available to the tech world
       </h1>
       <p class="align-center sub-title">Add some text here</p>
@@ -24,15 +22,26 @@
         >
           <a-tab-pane key="0" tab="company-info">
             <div class="section">
+              <label class="mb-10 d-block">
+                Company Name
+                <a-badge
+                  count="required"
+                  :number-style="{ backgroundColor: '#f4976c' }"
+                />
+              </label>
+              <a-input v-model="listing.company_name" />
               <label class="d-block">
-                A quick intro of your company
+                A quick intro
                 <a-badge
                   count="required"
                   :number-style="{ backgroundColor: '#f4976c' }"
                 />
               </label>
               <small>Some text here (keep it short)</small>
-              <ckeditor :editor="editor"></ckeditor>
+              <ckeditor
+                v-model="listing.company_intro"
+                :editor="editor"
+              ></ckeditor>
             </div>
             <div class="section">
               <label class="mb-10 d-block">Website URL</label>
@@ -162,10 +171,10 @@
                 Experience Level(s) Required
                 <span class="cursor-pointer">
                   <a-tooltip>
-                    <template slot="title">
+                    <!-- <template slot="title">
                       Add some text here explaing how we got to these
                       values</template
-                    ><a-icon type="info-circle"/></a-tooltip
+                    >--><a-icon type="info-circle"/></a-tooltip
                 ></span>
                 <a-badge
                   count="required"
@@ -204,13 +213,13 @@
               <label class="d-block">
                 Requirements
                 <a-badge
-                  count="3+ required"
+                  count="2+ required"
                   :number-style="{ backgroundColor: '#f4976c' }"
                 />
               </label>
               <small>Some text here (keep it short)</small>
               <div class="requirements">
-                <a-input v-for="n in 3" :key="n" />
+                <a-input v-for="n in 2" :key="n" />
               </div>
             </div>
           </a-tab-pane>
@@ -269,6 +278,22 @@ export default {
       place: null,
       map: null,
       activeStep: 0,
+      listing: {
+        active: false,
+        company_logo: '',
+        company_name: '',
+        company_intro: '',
+        company_website: '',
+        date_listed: null,
+        experience: [],
+        location: {
+          city: '',
+          country: ''
+        },
+        location_based: true,
+        remote: false,
+        tech: []
+      },
       geojson: {
         type: 'FeatureCollection',
         features: [
@@ -484,5 +509,6 @@ export default {
 small {
   display: block;
   margin-bottom: 10px;
+  font-size: 70%;
 }
 </style>

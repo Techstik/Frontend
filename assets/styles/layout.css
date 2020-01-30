@@ -136,7 +136,7 @@ h4 {
 
 .title {
   text-align: center;
-  padding: 5% 0;
+  padding-top: 5%;
   color: white;
   margin: 0 0 0.2em 0;
 }
@@ -144,6 +144,7 @@ h4 {
 .sub-title {
   color: white;
   margin-bottom: 1.5em;
+  padding-bottom: 4%;
 }
 
 .heading {
