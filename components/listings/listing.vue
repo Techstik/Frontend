@@ -7,7 +7,7 @@
   >
     <div class="card-body">
       <div v-if="thumbnailView" class="thumbnail">
-        <p class="position">{{ value.position }}</p>
+        <label class="position position-thumb">{{ value.position }}</label>
         <p class="company">
           {{ value.company_name }}
         </p>
@@ -20,10 +20,10 @@
         />
       </div>
       <div v-else>
-        <div class="title">
+        <div>
           <img class="company-image" :src="google" />
           <div class="content">
-            <h3 class="position">
+            <label class="position">
               {{ value.position }}
               <span
                 v-show="revealing"
@@ -31,7 +31,7 @@
                 @click="setReveal(false)"
                 ><a-icon type="close"
               /></span>
-            </h3>
+            </label>
             <p class="company">
               {{ value.company_name }}
             </p>
@@ -349,9 +349,11 @@ export default {
   margin-bottom: 0px;
 }
 .position {
-  font-size: 21px;
   color: black;
   font-weight: bold;
+}
+.position-thumb {
+  font-size: 85%;
 }
 .location {
   width: 20px;
@@ -391,5 +393,8 @@ export default {
 }
 .mt-13 {
   margin-top: 13px;
+}
+.card-body {
+  padding: 2.25rem;
 }
 </style>
