@@ -44,7 +44,13 @@ body {
   }
 }
 
-h1, h2, h3, h4, h5, h6, label {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+label {
   font-family: 'Graphik-Bold';
   font-weight: 600;
 }
@@ -176,5 +182,46 @@ h4 {
   .heading--xxx-large {
     margin: 0 0 0.1em 0;
     font-size: 515%;
+  }
+}
+
+.error {
+  animation-name: shakeError;
+  animation-fill-mode: forwards;
+  animation-duration: 0.6s;
+  animation-timing-function: ease-in-out;
+}
+
+.error label {
+  color: #f4976c;
+}
+.error input{
+  border-color: #f4976c;
+}
+
+@keyframes shakeError {
+  0% {
+    transform: translateX(0);
+  }
+  15% {
+    transform: translateX(0.375rem);
+  }
+  30% {
+    transform: translateX(-0.375rem);
+  }
+  45% {
+    transform: translateX(0.375rem);
+  }
+  60% {
+    transform: translateX(-0.375rem);
+  }
+  75% {
+    transform: translateX(0.375rem);
+  }
+  90% {
+    transform: translateX(-0.375rem);
+  }
+  100% {
+    transform: translateX(0);
   }
 }

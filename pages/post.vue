@@ -22,14 +22,16 @@
         >
           <a-tab-pane key="0" tab="company-info">
             <div class="section">
-              <label class="mb-10 d-block">
-                Company Name
-                <a-badge
-                  count="required"
-                  :number-style="{ backgroundColor: '#f4976c' }"
-                />
-              </label>
-              <a-input v-model="listing.company_name" />
+              <div :class="{ error: $v.listing.company_name.$error }">
+                <label class="mb-10 d-block">
+                  Company Name
+                  <a-badge
+                    count="required"
+                    :number-style="{ backgroundColor: '#f4976c' }"
+                  />
+                </label>
+                <a-input v-model.trim="$v.listing.company_name.$model" />
+              </div>
               <label class="d-block">
                 A quick intro
                 <a-badge
@@ -182,7 +184,7 @@
                 />
               </label>
               <div class="experience-level">
-                <a-checkbox @change="onChange"></a-checkbox>
+                <a-checkbox></a-checkbox>
                 <a-progress
                   stroke-width="15"
                   stroke-color="#b4dfe5"
@@ -191,7 +193,7 @@
                 />
               </div>
               <div class="experience-level">
-                <a-checkbox @change="onChange"></a-checkbox>
+                <a-checkbox></a-checkbox>
                 <a-progress
                   stroke-width="15"
                   stroke-color="#f3976b"
@@ -200,7 +202,7 @@
                 />
               </div>
               <div class="experience-level">
-                <a-checkbox @change="onChange"></a-checkbox>
+                <a-checkbox></a-checkbox>
                 <a-progress
                   stroke-width="15"
                   stroke-color="#161d2d"
@@ -267,6 +269,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-inline'
 
 import 'mapbox-gl/dist/mapbox-gl.css'
 import Mapbox from 'mapbox-gl'
+import { required } from 'vuelidate/lib/validators'
 
 export default {
   components: {
@@ -305,6 +308,13 @@ export default {
             }
           }
         ]
+      }
+    }
+  },
+  validations: {
+    listing: {
+      company_name: {
+        required
       }
     }
   },

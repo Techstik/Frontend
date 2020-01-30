@@ -38,7 +38,8 @@ module.exports = {
     '@/plugins/firebase',
     '@/plugins/snapshot-subscriptions',
     '@/plugins/lodash',
-    '@/plugins/moment'
+    '@/plugins/moment',
+    '@/plugins/vuelidate'
   ],
   /*
    ** Nuxt.js dev-modules
