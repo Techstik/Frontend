@@ -117,10 +117,10 @@ export default {
       this.map.off('touchmove', this.onMapMove)
     },
     async displaySelectedLocation(coords) {
-      document.getElementById(
-        'coordinates'
-      ).innerHTML = await this.reverseGeocode(coords)
+      var location = await this.reverseGeocode(coords)
+      document.getElementById('coordinates').innerHTML = location
       document.getElementById('coordinates').style.display = 'block'
+      this.$emit('location-updated', location)
     },
     async geolocate() {
       var API_key = 'AIzaSyDVa0vRTfMXY1qBXz1ctMDHZGpPhC6TRvU' //TODO: move to env variable
