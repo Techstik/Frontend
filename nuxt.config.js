@@ -1,8 +1,8 @@
 module.exports = {
   mode: 'spa',
-  /*
-   ** Headers of the page
-   */
+  env: {
+    DEVELOPMENT: process.env.NODE_ENV !== 'production'
+  },
   head: {
     title: process.env.npm_package_name || '',
     meta: [
@@ -69,7 +69,7 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {
+    extend(config) {
       config.resolve.alias['vue'] = 'vue/dist/vue.common'
     }
   }
