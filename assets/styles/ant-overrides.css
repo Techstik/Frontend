@@ -118,8 +118,11 @@
     margin-bottom: 10px;
     height: 45px;
     border-radius: 5px;
-    font-size: 70%;
     color: black;
+}
+
+.ant-input-number {
+    font-size: 70%;
 }
 
 .ant-input-number-input {
@@ -185,4 +188,7 @@
 }
 .ant-radio-group.ant-radio-group-outline.ant-radio-group-default input, .ant-radio-group.ant-radio-group-outline.ant-radio-group-default label {
     font-size: initial;
+}
+.ant-input-affix-wrapper .ant-input-suffix {
+    padding-bottom: 8px;
 }

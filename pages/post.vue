@@ -95,10 +95,24 @@
                   v-for="(v, index) in $v.listing_info.responsibilities.$each
                     .$iter"
                   :key="`req_${index}`"
-                  :class="{ error: v.$error }"
+                  :class="{ error: v.$error && index < 3 }"
                 >
-                  <a-input v-model.trim="v.responsibility.$model" />
+                  <a-input v-model.trim="v.responsibility.$model">
+                    <a-icon
+                      v-if="index >= 3"
+                      slot="suffix"
+                      type="delete"
+                      @click="removeResponsibility(index)"
+                    />
+                  </a-input>
                 </div>
+                <a-button
+                  class="btn-sm btn-outline-dark"
+                  @click="addResponsibility"
+                >
+                  <a-icon type="plus" />
+                  Add
+                </a-button>
               </div>
             </div>
             <div class="section">
@@ -238,10 +252,24 @@
                 <div
                   v-for="(v, index) in $v.listing_info.requirements.$each.$iter"
                   :key="`req_${index}`"
-                  :class="{ error: v.$error }"
+                  :class="{ error: v.$error && index < 2 }"
                 >
-                  <a-input v-model.trim="v.requirement.$model" />
+                  <a-input v-model.trim="v.requirement.$model">
+                    <a-icon
+                      v-if="index >= 2"
+                      slot="suffix"
+                      type="delete"
+                      @click="removeRequirement(index)"
+                    />
+                  </a-input>
                 </div>
+                <a-button
+                  class="btn-sm btn-outline-dark"
+                  @click="addRequirement"
+                >
+                  <a-icon type="plus" />
+                  Add
+                </a-button>
               </div>
             </div>
           </a-tab-pane>
@@ -391,19 +419,19 @@ export default {
 
       switch (this.activeStep) {
         case 0:
-          if (
-            this.$v.listing.company_name.$invalid ||
-            this.$v.listing.company_website.$invalid ||
-            this.$v.listing_info.company_intro.$invalid
-          )
-            return
+          // if (
+          //   this.$v.listing.company_name.$invalid ||
+          //   this.$v.listing.company_website.$invalid ||
+          //   this.$v.listing_info.company_intro.$invalid
+          // )
+          //   return
           break
         case 1:
-          if (
-            this.$v.listing_info.responsibilities.$invalid ||
-            this.$v.listing_info.role.$invalid
-          )
-            return
+          // if (
+          //   this.$v.listing_info.responsibilities.$invalid ||
+          //   this.$v.listing_info.role.$invalid
+          // )
+          //   return
           break
         case 2:
           if (this.$v.listing_info.requirements.$invalid) return
@@ -415,6 +443,18 @@ export default {
     },
     previousStep() {
       --this.activeStep
+    },
+    addResponsibility() {
+      this.listing_info.responsibilities.push({ responsibility: '' })
+    },
+    removeResponsibility(index) {
+      this.listing_info.responsibilities.splice(index, 1)
+    },
+    addRequirement() {
+      this.listing_info.requirements.push({ requirement: '' })
+    },
+    removeRequirement(index) {
+      this.listing_info.requirements.splice(index, 1)
     }
   }
 }

@@ -5,7 +5,7 @@
     </nuxt-link>
     <div class="header">
       <nuxt-link to="/post">
-        <a-button class="btn-sm f-r btn-outline">Post a job</a-button>
+        <a-button class="btn-sm f-r btn-outline-orange">Post a job</a-button>
       </nuxt-link>
     </div>
     <div class="nuxt-container">
@@ -61,15 +61,5 @@ img {
 .nuxt-container {
   min-height: 100vh;
   padding: 100px;
-}
-
-.btn-outline {
-  background-color: transparent !important;
-  color: #f3976b;
-  border-color: #f3976b;
-}
-
-.btn-outline:hover {
-  border-color: #fbe8a6;
 }
 </style>

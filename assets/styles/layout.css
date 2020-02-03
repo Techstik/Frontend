@@ -227,3 +227,25 @@ h4 {
     transform: translateX(0);
   }
 }
+
+.btn-sm{
+  font-size: 12px !important;
+}
+.btn-outline-orange {
+  background-color: transparent !important;
+  color: #f3976b !important;
+  border-color: #f3976b !important;
+}
+
+.btn-outline-orange:hover {
+  border-color: #fbe8a6 !important;
+}
+.btn-outline-dark {
+  background-color: transparent !important;
+  color: #19262d !important;
+}
+
+.btn-outline-dark:hover {
+  background-color: #19262d !important;
+  color: white !important;
+}
