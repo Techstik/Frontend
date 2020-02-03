@@ -62,7 +62,7 @@
                 Your company HQ - it's nice to see, even if this is a remote
                 position
               </small>
-              <Map @location-updated="" /></div
+              <Map /></div
           ></a-tab-pane>
           <a-tab-pane key="1" tab="role">
             <div class="section">
