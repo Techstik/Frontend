@@ -1,0 +1,9 @@
+{
+  "create_payment_intent": {
+    "stripe_secrect_key_dev": "sk_test_NPauJg1IIZDBG63PumdKAiY1007n7nJynP",
+    "stripe_publishable_key_dev": "pk_test_30FHQUHqtO2LVy8KXvUknGDr00p9KeSeXQ"
+  },
+  "payment_hook": {
+    "stripe_signing_secret_key": "whsec_aUGn3GCfwDDyYNpWFTAWll5EXpfYxczY"
+  }
+}

@@ -7,20 +7,23 @@
     "shell": "firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
-    "logs": "firebase functions:log"
+    "logs": "firebase functions:log",
+    "test": "jest test/"
   },
   "engines": {
     "node": "8"
   },
   "dependencies": {
-    "axios": "^0.19.2",
-    "firebase-admin": "^8.6.0",
-    "firebase-functions": "^3.3.0"
+    "firebase-admin": "^8.9.2",
+    "firebase-functions": "^3.3.0",
+    "stripe": "^8.20.0"
   },
   "devDependencies": {
     "eslint": "^5.12.0",
     "eslint-plugin-promise": "^4.0.1",
-    "firebase-functions-test": "^0.1.6"
+    "firebase-functions-test": "^0.1.7",
+    "jest": "^25.1.0",
+    "supertest": "^4.0.2"
   },
   "private": true
 }
