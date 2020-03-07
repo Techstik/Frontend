@@ -4,8 +4,8 @@ module.exports = {
     DEVELOPMENT: process.env.NODE_ENV !== 'production',
     GOOGLE_API_KEY: 'AIzaSyDVa0vRTfMXY1qBXz1ctMDHZGpPhC6TRvU',
     LOCATION_IQ_API_KEY: '96fbe635b05579',
-    reCAPTCHA_SITE_KEY: '6LcuONkUAAAAACcZcOapQiTVOWz52mAUWU-G2Daj',
-    reCAPTCHA_SECRET_KEY: '6LcuONkUAAAAAK2Rej6Gr7AvR9B2ZjUYMPQC9N8r'
+    MAPBOX_ACCESS_TOKEN:
+      'pk.eyJ1IjoibWF0dC1ncmVwcGwiLCJhIjoiY2s1ZTYxbHhvMXZvMzNqcmY0amtoMWg2YSJ9.9hJ2XBQZxFIoxhwbB1Pb4w'
   },
   head: {
     title: process.env.npm_package_name || '',
