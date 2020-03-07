@@ -6,3 +6,298 @@
     </h1>
   </div>
 </template>
+<script>
+import { db } from '@/plugins/firebase'
+
+export default {
+  data() {
+    return {
+      tech: [
+        {
+          name: 'Amazon Web Services'
+        },
+        {
+          name: 'Android'
+        },
+        {
+          name: 'Angular js'
+        },
+        {
+          name: 'Apache'
+        },
+        {
+          name: 'Appcelerator'
+        },
+        {
+          name: 'Atom'
+        },
+        {
+          name: 'Babel'
+        },
+        {
+          name: 'Backbone js'
+        },
+        {
+          name: 'BitBucket'
+        },
+        {
+          name: 'Bootstrap'
+        },
+        {
+          name: 'Bower'
+        },
+        {
+          name: 'C'
+        },
+        {
+          name: 'CodeIgniter'
+        },
+        {
+          name: 'CoffeeScript'
+        },
+        {
+          name: 'Confluence'
+        },
+        {
+          name: 'C++',
+          iconname: 'cplusplus-plain'
+        },
+        {
+          name: 'C#',
+          iconname: 'csharp-plain'
+        },
+        {
+          name: 'CSS',
+          iconname: 'css3-plain'
+        },
+        {
+          name: 'Cucumber'
+        },
+        {
+          name: 'd3 js'
+        },
+        {
+          name: 'Debian'
+        },
+        {
+          name: 'Django'
+        },
+        {
+          name: 'Docker'
+        },
+        {
+          name: 'Doctrine'
+        },
+        {
+          name: '.NET',
+          iconname: 'dot-net-plain'
+        },
+        {
+          name: 'Drupal'
+        },
+        {
+          name: 'Erlang'
+        },
+        {
+          name: 'Express',
+          iconname: 'express-original'
+        },
+        {
+          name: 'Foundation'
+        },
+        {
+          name: 'Gatling'
+        },
+        {
+          name: 'Gimp'
+        },
+        {
+          name: 'Git'
+        },
+        {
+          name: 'GitHub'
+        },
+        {
+          name: 'GitLab'
+        },
+        {
+          name: 'Go'
+        },
+        {
+          name: 'Gradle'
+        },
+        {
+          name: 'Grunt'
+        },
+        {
+          name: 'Gulp'
+        },
+        {
+          name: 'Heroku'
+        },
+        {
+          name: 'HTML',
+          iconname: 'html5-plain'
+        },
+        {
+          name: 'Illustrator'
+        },
+        {
+          name: 'Inkscape'
+        },
+        {
+          name: 'Intellij'
+        },
+        {
+          name: 'Java'
+        },
+        {
+          name: 'Jasmine'
+        },
+        {
+          name: 'Javascript'
+        },
+        {
+          name: 'Jeet'
+        },
+        {
+          name: 'JQuery'
+        },
+        {
+          name: 'Kraken js'
+        },
+        {
+          name: 'Laravel'
+        },
+        {
+          name: 'Less',
+          iconname: 'less-plain-wordmark'
+        },
+        {
+          name: 'Linux'
+        },
+        {
+          name: 'Meteor'
+        },
+        {
+          name: 'Mocha'
+        },
+        {
+          name: 'MongoDB'
+        },
+        {
+          name: 'Moodle'
+        },
+        {
+          name: 'MySQL'
+        },
+        {
+          name: 'Nginx'
+        },
+        {
+          name: 'Node js'
+        },
+        {
+          name: 'Node Web Kit'
+        },
+        {
+          name: 'Oracle'
+        },
+        {
+          name: 'Photoshop'
+        },
+        {
+          name: 'PHP'
+        },
+        {
+          name: 'Protractor'
+        },
+        {
+          name: 'PostgreSQL'
+        },
+        {
+          name: 'Python'
+        },
+        {
+          name: 'Pycharm'
+        },
+        {
+          name: 'Rails'
+        },
+        {
+          name: 'React'
+        },
+        {
+          name: 'Redhat'
+        },
+        {
+          name: 'Redis'
+        },
+        {
+          name: 'Ruby'
+        },
+        {
+          name: 'Sass'
+        },
+        {
+          name: 'Sequelize'
+        },
+        {
+          name: 'Slack'
+        },
+        {
+          name: 'SourceTree'
+        },
+        {
+          name: 'Swift'
+        },
+        {
+          name: 'Symfony'
+        },
+        {
+          name: 'TomCat',
+          iconname: 'tomcat-line'
+        },
+        {
+          name: 'Travis'
+        },
+        {
+          name: 'Trello'
+        },
+        {
+          name: 'TypeScript'
+        },
+        {
+          name: 'Ubuntu'
+        },
+        {
+          name: 'Vue js'
+        },
+        {
+          name: 'Webpack'
+        },
+        {
+          name: 'Wordpress'
+        },
+        {
+          name: 'Yii'
+        },
+        {
+          name: 'Zend'
+        }
+      ]
+    }
+  },
+
+  mounted() {
+    // this.tech.forEach(tech => {
+    //   db.collection('tech')
+    //     .add(tech)
+    //     .then(function() {})
+    //     .catch(function(error) {
+    //       console.error('Error adding document: ', error)
+    //     })
+    // })
+  }
+}
+</script>

@@ -242,7 +242,11 @@
           </a-col>
           <a-col :span="value.location_based && value.remote ? 20 : 22">
             <a-divider class="date-posted" orientation="right">
-              {{ value.date_listed.toDate() | moment('from', 'now') }}
+              {{
+                value.date_listed
+                  ? value.date_listed.toDate()
+                  : new Date() | moment('from', 'now')
+              }}
             </a-divider>
           </a-col>
         </a-row>

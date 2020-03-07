@@ -1,7 +1,11 @@
 module.exports = {
   mode: 'spa',
   env: {
-    DEVELOPMENT: process.env.NODE_ENV !== 'production'
+    DEVELOPMENT: process.env.NODE_ENV !== 'production',
+    GOOGLE_API_KEY: 'AIzaSyDVa0vRTfMXY1qBXz1ctMDHZGpPhC6TRvU',
+    LOCATION_IQ_API_KEY: '96fbe635b05579',
+    reCAPTCHA_SITE_KEY: '6LcuONkUAAAAACcZcOapQiTVOWz52mAUWU-G2Daj',
+    reCAPTCHA_SECRET_KEY: '6LcuONkUAAAAAK2Rej6Gr7AvR9B2ZjUYMPQC9N8r'
   },
   head: {
     title: process.env.npm_package_name || '',
@@ -39,7 +43,9 @@ module.exports = {
     '@/plugins/snapshot-subscriptions',
     '@/plugins/lodash',
     '@/plugins/moment',
-    '@/plugins/vuelidate'
+    '@/plugins/vuelidate',
+    '@/plugins/vue-select',
+    '@/plugins/devicon'
   ],
   /*
    ** Nuxt.js dev-modules
@@ -54,8 +60,12 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
+    '@nuxtjs/toast',
     ['vue-scrollto/nuxt', { duration: 300, offset: -100 }],
-    'vue-currency-input/nuxt'
+    [
+      'vue-currency-input/nuxt',
+      { globalOptions: { allowNegative: false, currency: null } }
+    ]
   ],
   /*
    ** Axios module configuration

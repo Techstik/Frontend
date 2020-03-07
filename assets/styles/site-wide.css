@@ -2,8 +2,20 @@
   text-align: center;
 }
 
+.align-right {
+  text-align: right;
+}
+
+.align-left {
+  text-align: left;
+}
+
 .float-right {
   float: right;
+}
+
+.underline {
+  text-decoration: underline;
 }
 
 .card {
@@ -12,7 +24,7 @@
   flex-direction: column;
   min-width: 0;
   word-wrap: break-word;
-  background-color: #fff;
+  background-color: #f2f2f2;
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.25rem;
@@ -59,8 +71,14 @@
 }
 
 .ck.ck-editor__editable_inline {
-  border: 2px solid #000000 !important;
+  border: 2px solid #ffffff !important;
   min-height: 100px;
+  background-color: white;
+  font-family: Graphik-Bold;
+}
+
+.ck.ck-editor__editable_inline:hover {
+  border-color: #e4e4e4 !important;
 }
 
 .h-200.ck.ck-editor__editable_inline {
@@ -85,13 +103,10 @@
 }
 
 .ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-rounded-corners {
-  border-radius: 5px !important;
+  border-radius: 10px !important;
   transition: all 0.3s;
-  font-size: 70%;
-  padding-top: 4px;
-  padding-right: 11px;
-  padding-bottom: 4px;
-  padding-left: 11px;
+  font-size: 14px;
+  padding: 0 10px 0 35px;
 }
 
 .ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-focused {
@@ -99,13 +114,22 @@
   border-color: #f3976b !important;
 }
 
-.ck-content *{
-margin: 0px;
+.ck-content * {
+  margin: 0px;
 }
+
 .cursor-pointer {
   cursor: pointer;
 }
 
 .full-width {
   width: 100%;
+}
+
+.filepond--panel-root {
+  background-color: #ffffff !important;
+}
+
+.toasted {
+  font-family: 'Graphik-Bold';
 }
