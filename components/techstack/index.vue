@@ -163,8 +163,8 @@ export default {
 }
 .tech-icon-active {
   border-width: 2px;
-  background-color: #fbe8a6;
-  border-color: #fbe8a6;
+  background-color: #fcd669;
+  border-color: #fcd669;
 }
 .tech-block {
   position: relative;

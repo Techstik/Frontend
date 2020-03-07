@@ -18,7 +18,8 @@ module.exports = {
         content: process.env.npm_package_description || ''
       }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    script: [{ src: 'https://js.stripe.com/v3/' }]
   },
   /*
    ** Customize the progress-bar color
@@ -45,7 +46,10 @@ module.exports = {
     '@/plugins/moment',
     '@/plugins/vuelidate',
     '@/plugins/vue-select',
-    '@/plugins/devicon'
+    '@/plugins/devicon',
+    //==== INJECTIONS =======
+    '@plugins/injections/storage',
+    '@plugins/injections/firestore'
   ],
   /*
    ** Nuxt.js dev-modules
@@ -67,6 +71,13 @@ module.exports = {
       { globalOptions: { allowNegative: false, currency: null } }
     ]
   ],
+
+  toast: {
+    position: 'top-center',
+    duration: 3000,
+    keepOnHover: true,
+    className: 'toast'
+  },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options

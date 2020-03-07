@@ -38,3 +38,4 @@ export const db = app.firestore()
 export const storage = app.storage()
 export const functions = app.functions()
 export const auth = app.auth()
+export const fullpackage = firebase

@@ -5,6 +5,7 @@ module.exports = {
     '^vue$': 'vue/dist/vue.common.js'
   },
   moduleFileExtensions: ['js', 'vue', 'json'],
+  snapshotSerializers: ['jest-serializer-vue'],
   transform: {
     '^.+\\.js$': 'babel-jest',
     '.*\\.(vue)$': 'vue-jest'

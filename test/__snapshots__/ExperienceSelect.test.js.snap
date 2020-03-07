@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Experience Select matches snapshot 1`] = `
+<div>
+  <div
+    class="experience-level"
+  >
+    <a-checkbox />
+     
+    <p>
+      Entry-level
+    </p>
+     
+    <a-progress
+      percent="33"
+      stroke-color="#b4dfe5"
+      stroke-width="15"
+    />
+  </div>
+   
+  <div
+    class="experience-level"
+  >
+    <a-checkbox />
+     
+    <p>
+      Intermediate
+    </p>
+     
+    <a-progress
+      percent="66"
+      stroke-color="#f3976b"
+      stroke-width="15"
+    />
+  </div>
+   
+  <div
+    class="experience-level"
+  >
+    <a-checkbox />
+     
+    <p>
+      Senior
+    </p>
+     
+    <a-progress
+      percent="100"
+      stroke-color="#161d2d"
+      stroke-width="15"
+    />
+  </div>
+</div>
+`;

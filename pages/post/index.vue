@@ -28,7 +28,7 @@
               />
             </div>
             <div class="section">
-              <div :class="{ error: $v.listing.company_name.$error }">
+              <div :class="{ validation_error: $v.post.company_name.$error }">
                 <label class="mb-10 d-block">
                   Company Name
                   <a-badge
@@ -36,10 +36,14 @@
                     :number-style="{ backgroundColor: '#f4976c' }"
                   />
                 </label>
-                <a-input v-model="$v.listing.company_name.$model" />
+                <a-input v-model="$v.post.company_name.$model" />
               </div>
               <div class="section">
-                <div :class="{ error: $v.listing_info.company_intro.$error }">
+                <div
+                  :class="{
+                    validation_error: $v.post_info.company_intro.$error
+                  }"
+                >
                   <label class="d-block">
                     A quick intro
                     <a-badge
@@ -49,7 +53,7 @@
                   </label>
                   <small>Some text here (keep it short)</small>
                   <ckeditor
-                    v-model="$v.listing_info.company_intro.$model"
+                    v-model="$v.post_info.company_intro.$model"
                     :editor="editor"
                     placeholder="Some text here (keep it short)"
                   ></ckeditor>
@@ -57,10 +61,12 @@
               </div>
             </div>
             <div class="section">
-              <div :class="{ error: $v.listing.company_website.$error }">
+              <div
+                :class="{ validation_error: $v.post.company_website.$error }"
+              >
                 <label class="mb-10 d-block">Website URL</label>
                 <a-input
-                  v-model="$v.listing.company_website.$model"
+                  v-model="$v.post.company_website.$model"
                   placeholder="https://yourwebsite.com"
                 />
               </div>
@@ -70,7 +76,7 @@
                 <a-col :span="12">
                   <div
                     :class="[
-                      { 'selection-block-active': !listing.location_based },
+                      { 'selection-block-active': !post.location_based },
                       'selection-block f-r'
                     ]"
                     @click="setLocationRemote(true)"
@@ -81,7 +87,7 @@
                 <a-col :span="12">
                   <div
                     :class="[
-                      { 'selection-block-active': listing.location_based },
+                      { 'selection-block-active': post.location_based },
                       'selection-block'
                     ]"
                     @click="setLocationRemote(false)"
@@ -91,7 +97,7 @@
                 </a-col>
               </a-row>
             </div>
-            <div v-if="listing.location_based" class="section">
+            <div v-if="post.location_based" class="section">
               <label class="d-block">Where are you based?</label>
               <small>
                 Your company HQ - it's nice to see, even if this is a remote
@@ -102,7 +108,7 @@
           </a-tab-pane>
           <a-tab-pane key="1" tab="role">
             <div class="section">
-              <div :class="{ error: $v.listing.position.$error }">
+              <div :class="{ validation_error: $v.post.position.$error }">
                 <label class="mb-10 d-block">
                   Position
                   <a-badge
@@ -110,9 +116,9 @@
                     :number-style="{ backgroundColor: '#f4976c' }"
                   />
                 </label>
-                <a-input v-model="$v.listing.position.$model"></a-input>
+                <a-input v-model="$v.post.position.$model"></a-input>
               </div>
-              <div :class="{ error: $v.listing_info.position.$error }">
+              <div :class="{ validation_error: $v.post_info.position.$error }">
                 <label class="d-block">
                   About the position
                   <a-badge
@@ -122,7 +128,7 @@
                 </label>
                 <small>Some text here (keep it short)</small>
                 <ckeditor
-                  v-model="$v.listing_info.position.$model"
+                  v-model="$v.post_info.position.$model"
                   :editor="editor"
                   class="h-200"
                 ></ckeditor>
@@ -138,10 +144,10 @@
               </label>
               <div class="requirements">
                 <div
-                  v-for="(v, index) in $v.listing_info.responsibilities.$each
+                  v-for="(v, index) in $v.post_info.responsibilities.$each
                     .$iter"
                   :key="`req_${index}`"
-                  :class="{ error: v.$error && index < 3 }"
+                  :class="{ validation_error: v.$error && index < 3 }"
                 >
                   <a-input v-model="v.responsibility.$model">
                     <a-icon
@@ -165,7 +171,7 @@
                 <a-col :span="12">
                   <div
                     :class="[
-                      { 'selection-block-active': listing.salary.set },
+                      { 'selection-block-active': post.salary.set },
                       'selection-block f-r'
                     ]"
                     @click="setSalary(true)"
@@ -176,7 +182,7 @@
                 <a-col :span="12">
                   <div
                     :class="[
-                      { 'selection-block-active': !listing.salary.set },
+                      { 'selection-block-active': !post.salary.set },
                       'selection-block'
                     ]"
                     @click="setSalary(false)"
@@ -190,28 +196,28 @@
               <a-col :span="12">
                 <div class="currency-select">
                   <v-select
-                    v-model="listing.salary.currency"
+                    v-model="post.salary.currency"
                     label="name"
                     :options="currencies"
                   ></v-select>
                 </div>
               </a-col>
               <a-col :span="12">
-                <div v-show="listing.salary.set">
+                <div v-show="post.salary.set">
                   <input
-                    v-model="listing.salary.maximum"
+                    v-model="post.salary.maximum"
                     v-currency="{
                       precision: 0
                     }"
                     class="ant-input"
                   />
                 </div>
-                <div v-show="!listing.salary.set">
+                <div v-show="!post.salary.set">
                   <a-input-group>
                     <a-row>
                       <a-col :span="11">
                         <input
-                          v-model="listing.salary.minimum"
+                          v-model="post.salary.minimum"
                           v-currency="{
                             precision: 0
                           }"
@@ -221,7 +227,7 @@
                       <a-col span="2" class="align-center">-</a-col>
                       <a-col :span="11">
                         <input
-                          v-model="listing.salary.maximum"
+                          v-model="post.salary.maximum"
                           v-currency="{
                             precision: 0
                           }"
@@ -246,7 +252,7 @@
                   Select a few technologies you use and rank them from most
                   used.
                 </small>
-                <TechStack v-model="listing.tech" />
+                <TechStack v-model="post.tech" />
               </div>
             </div>
           </a-tab-pane>
@@ -268,7 +274,7 @@
                   :number-style="{ backgroundColor: '#f4976c' }"
                 />
               </label>
-              <ExperienceSelect v-model="listing.experience" />
+              <ExperienceSelect v-model="post.experience" />
             </div>
             <div class="section">
               <label class="d-block">
@@ -281,9 +287,9 @@
               <small>Some text here (keep it short)</small>
               <div class="requirements">
                 <div
-                  v-for="(v, index) in $v.listing_info.requirements.$each.$iter"
+                  v-for="(v, index) in $v.post_info.requirements.$each.$iter"
                   :key="`req_${index}`"
-                  :class="{ error: v.$error && index < 2 }"
+                  :class="{ validation_error: v.$error && index < 2 }"
                 >
                   <a-input v-model="v.requirement.$model">
                     <a-icon
@@ -313,58 +319,68 @@
             </div>
           </a-tab-pane>
           <a-tab-pane key="4" tab="finalize">
-            <div class="section">
-              <label class="mb-10 d-block">Select an option</label>
-              <a-row class="price-blocks">
-                <a-col :span="12">
-                  <div
-                    :class="[
-                      { active: listing.type == 'standard' },
-                      'price-block'
-                    ]"
-                    @click="listing.type = 'standard'"
-                  >
-                    <h2 class="subheading">Standard</h2>
-                    <div class="features small">
-                      <p>Feature 1</p>
-                      <p>Feature 2</p>
+            <div v-show="!displayCheckout">
+              <div class="section">
+                <label class="mb-10 d-block">Select an option</label>
+                <a-row class="price-blocks">
+                  <a-col :span="12">
+                    <div
+                      :class="[
+                        { active: post.type == 'standard' },
+                        'price-block'
+                      ]"
+                      @click="post.type = 'standard'"
+                    >
+                      <h2 class="subheading">Standard</h2>
+                      <div class="features small">
+                        <p>Feature 1</p>
+                        <p>Feature 2</p>
+                      </div>
+                      <p class="price">$0.00</p>
                     </div>
-                    <p class="price">$0.00</p>
-                  </div>
-                </a-col>
-                <a-col :span="12">
-                  <div
-                    :class="[
-                      { active: listing.type == 'professional' },
-                      'price-block'
-                    ]"
-                    @click="listing.type = 'professional'"
-                  >
-                    <h2 class="subheading">Professional</h2>
-                    <div class="features small">
-                      <p>Feature 1</p>
-                      <p>Feature 2</p>
+                  </a-col>
+                  <a-col :span="12">
+                    <div
+                      :class="[
+                        { active: post.type == 'professional' },
+                        'price-block'
+                      ]"
+                      @click="post.type = 'professional'"
+                    >
+                      <h2 class="subheading">Professional</h2>
+                      <div class="features small">
+                        <p>Feature 1</p>
+                        <p>Feature 2</p>
+                      </div>
+                      <p class="price">$0.00</p>
                     </div>
-                    <p class="price">$0.00</p>
-                  </div>
-                </a-col>
-              </a-row>
-            </div>
-            <div class="section">
-              <label class="mb-10 d-block">Preview</label>
-              <div class="preview-container">
-                <ListingPreview v-model="listing" />
+                  </a-col>
+                </a-row>
               </div>
+              <div class="section">
+                <label class="mb-10 d-block">Preview</label>
+                <div class="preview-container">
+                  <ListingPreview v-model="post" />
+                </div>
+              </div>
+            </div>
+            <div v-if="displayCheckout">
+              <Checkout
+                :amount="200"
+                currency="usd"
+                @submitting="hideButtons = true"
+                @paymentIntentCreated="onPaymentInitiated"
+              />
             </div>
           </a-tab-pane>
         </a-tabs>
         <div class="navigation">
           <a-button
-            v-if="activeStep > 0"
+            v-if="activeStep > 0 && !hideButtons"
             v-scroll-to="'#container'"
             @click="previousStep"
           >
-            <a-icon type="left" />Previous
+            <a-icon type="left" />{{ displayCheckout ? 'Back' : 'Previous' }}
           </a-button>
           <a-button
             v-if="activeStep < 4"
@@ -376,7 +392,7 @@
             <a-icon type="right" />
           </a-button>
           <a-button
-            v-show="activeStep == 4"
+            v-show="activeStep == 4 && !displayCheckout"
             id="proceed_to_payment"
             class="f-r"
           >
@@ -395,9 +411,10 @@ import Map from '@/components/map'
 import TechStack from '@/components/techstack'
 import ExperienceSelect from '@/components/experienceselect'
 import ListingPreview from '@/components/listings/preview'
+import Checkout from '@/components/cardcheckout'
 import { required, requiredIf, minLength, url } from 'vuelidate/lib/validators'
 // eslint-disable-next-line no-unused-vars
-import { storage, auth } from '@/plugins/firebase'
+import { auth, db } from '@/plugins/firebase'
 import firebase from 'firebase'
 import { mapState } from 'vuex'
 
@@ -408,7 +425,8 @@ export default {
     FilePond,
     TechStack,
     ExperienceSelect,
-    ListingPreview
+    ListingPreview,
+    Checkout
   },
   data() {
     return {
@@ -416,14 +434,15 @@ export default {
       place: null,
       map: null,
       activeStep: 3,
-      listing: {
+      post_doc_id: null,
+      postinfo_doc_id: null,
+      post: {
         active: false,
         type: 'standard',
         position: '',
         company_logo: '',
         company_name: '',
         company_website: '',
-        date_listed: null,
         experience: [],
         location: {
           city: '',
@@ -440,9 +459,13 @@ export default {
             name: 'United States Dollar',
             code: 'USD'
           }
+        },
+        payment_details: {
+          stripe_payment_intent_id: '',
+          paid: false
         }
       },
-      listing_info: {
+      post_info: {
         company_intro: '',
         position: '',
         requirements: [
@@ -465,12 +488,17 @@ export default {
           }
         ]
       },
-      listing_logo: null,
-      listing_gallery: []
+      post_logo: {
+        file: null,
+        updated: false
+      },
+      post_gallery: [],
+      displayCheckout: false,
+      hideButtons: false
     }
   },
   validations: {
-    listing: {
+    post: {
       company_name: {
         required
       },
@@ -484,7 +512,7 @@ export default {
         url
       }
     },
-    listing_info: {
+    post_info: {
       company_intro: {
         required
       },
@@ -524,8 +552,9 @@ export default {
       'proceed_to_payment',
       {
         size: 'invisible',
-        callback: function(response) {
-          //TODO: redirect to paygate
+        // eslint-disable-next-line no-unused-vars
+        callback: response => {
+          this.displayCheckout = true
         }
       }
     )
@@ -538,21 +567,21 @@ export default {
       switch (this.activeStep) {
         case 0:
           // if (
-          //   this.$v.listing.company_name.$invalid ||
-          //   this.$v.listing.company_website.$invalid ||
-          //   this.$v.listing_info.company_intro.$invalid
+          //   this.$v.post.company_name.$invalid ||
+          //   this.$v.post.company_website.$invalid ||
+          //   this.$v.post_info.company_intro.$invalid
           // )
           //   return
           break
         case 1:
           // if (
-          //   this.$v.listing_info.responsibilities.$invalid ||
-          //   this.$v.listing_info.role.$invalid
+          //   this.$v.post_info.responsibilities.$invalid ||
+          //   this.$v.post_info.role.$invalid
           // )
           //   return
           break
         case 2:
-          // if (this.$v.listing_info.requirements.$invalid) return
+          // if (this.$v.post_info.requirements.$invalid) return
           break
       }
 
@@ -560,48 +589,74 @@ export default {
       ++this.activeStep
     },
     previousStep() {
-      --this.activeStep
+      if (this.displayCheckout) {
+        this.displayCheckout = false
+        window.recaptchaVerifier.reset()
+      } else --this.activeStep
     },
     addResponsibility() {
-      this.listing_info.responsibilities.push({ responsibility: '' })
+      this.post_info.responsibilities.push({ responsibility: '' })
     },
     removeResponsibility(index) {
-      this.listing_info.responsibilities.splice(index, 1)
+      this.post_info.responsibilities.splice(index, 1)
     },
     addRequirement() {
-      this.listing_info.requirements.push({ requirement: '' })
+      this.post_info.requirements.push({ requirement: '' })
     },
     removeRequirement(index) {
-      this.listing_info.requirements.splice(index, 1)
+      this.post_info.requirements.splice(index, 1)
     },
     onLocationUpdated(location) {
-      this.listing.location.city = location[0]
-      this.listing.location.country = location[1]
+      this.post.location.city = location[0]
+      this.post.location.country = location[1]
     },
     setLocationRemote(value) {
-      this.listing.remote = value
-      this.listing.location_based = !value
+      this.post.remote = value
+      this.post.location_based = !value
     },
     setSalary(value) {
-      this.listing.salary.set = value
+      this.post.salary.set = value
     },
     onFileUpdated(file) {
-      //only save this image on final submit
-      this.listing_logo = file ? file : null
+      this.post_logo.file = file ? file : null
+      this.post_logo.updated = true
     },
-    uploadDoc() {
-      // storage
-      //   .ref(`/Companies/Logo/${file.name}`)
-      //   .put(file)
-      //   .then(snapshot => {
-      //     snapshot.ref
-      //       .getDownloadURL()
-      //       .then(url => {
-      //         this.listing.company_logo = url
-      //       })
-      //       .catch(error => console.log(error))
-      //   })
-      //   .catch(error => console.log(error))
+    addPost() {
+      this.$toast.info('Saving post...')
+
+      this.$addDocument('posts', this.post)
+        .then(postRef => {
+          this.post_doc_id = postRef.id
+          this.post_info.post_ref = postRef
+
+          this.$addDocument('postdetails', this.post_info).then(postinfoRef => {
+            this.postinfo_doc_id = postinfoRef.id
+          })
+        })
+        .catch(error => {
+          this.$toast.error(`Error: ${JSON.stringify(error)}`)
+        })
+    },
+    updatePost() {
+      this.$toast.info('Updating post...')
+
+      this.$updateDocument('posts', this.post_doc_id, this.post, true)
+        .then(() => {
+          this.$updateDocument(
+            'postdetails',
+            this.postinfo_doc_id,
+            this.post_info,
+            true
+          )
+        })
+        .catch(error => {
+          this.$toast.error(`Error: ${JSON.stringify(error)}`)
+        })
+    },
+    onPaymentInitiated(payment_intent_id) {
+      this.post.payment_details.stripe_payment_intent_id = payment_intent_id
+      if (this.post_doc_id) this.updatePost()
+      else this.addPost()
     }
   }
 }
@@ -653,8 +708,8 @@ small {
 .selection-block:hover,
 .selection-block-active {
   border-width: 2px;
-  background-color: #fbe8a6;
-  border-color: #fbe8a6;
+  background-color: #fcd669;
+  border-color: #fcd669;
   width: 22vw;
 }
 .logo-upload {
@@ -679,7 +734,7 @@ small {
 }
 .price-block.active,
 .price-block:hover {
-  background: #fbe8a6;
+  background: #fcd669;
 }
 .price-block h2 {
   text-align: center;

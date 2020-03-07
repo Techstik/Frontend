@@ -55,6 +55,7 @@ export default {
               status: 'completed'
             })
             .catch(error => {
+              console.log(error)
               //TODO: report to bugsnag
             })
           return true
@@ -74,6 +75,7 @@ export default {
           feedback: this.feedback
         })
         .catch(error => {
+          console.log(error)
           //TODO: report to bugsnag
         })
     }

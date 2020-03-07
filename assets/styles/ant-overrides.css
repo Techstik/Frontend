@@ -144,8 +144,8 @@
 }
 
 .ant-steps-item-wait .ant-steps-item-icon {
-    background-color: #fbe8a6;
-    border-color: #fbe8a6;
+    background-color: #fcd669;
+    border-color: #fcd669;
 }
 
 .ant-steps-item-wait .ant-steps-item-icon>.ant-steps-icon, .ant-steps-item-process .ant-steps-item-icon>.ant-steps-icon {
@@ -170,7 +170,7 @@
 }
 
 .ant-steps-item-finish .ant-steps-item-icon>.ant-steps-icon {
-    color: #fbe8a6;
+    color: #161d2e
 }
 
 .ant-tabs {
@@ -179,12 +179,12 @@
 }
 
 .ant-tooltip-inner {
-    background-color: #fbe8a6;
+    background-color: #fcd669;
     color: black;
 }
 
 .ant-tooltip-placement-top .ant-tooltip-arrow, .ant-tooltip-placement-topLeft .ant-tooltip-arrow, .ant-tooltip-placement-topRight .ant-tooltip-arrow {
-    border-top-color: #fbe8a6;
+    border-top-color: #fcd669;
 }
 .ant-input-group-addon .ant-select-open .ant-select-selection, .ant-input-group-addon .ant-select-focused .ant-select-selection{
     color: #f3976b;
@@ -197,4 +197,10 @@
 }
 .ant-badge-count, .ant-divider-inner-text{
     font-family: 'Graphik-Bold';
+}
+a {
+    color: #f3976b !important;
+}
+a:hover {
+    color: #19262d !important;
 }

@@ -26,9 +26,7 @@ export default {
     }
   },
   async mounted() {
-    //TODO: move to env variable
-    Mapbox.accessToken =
-      'pk.eyJ1IjoibWF0dC1ncmVwcGwiLCJhIjoiY2s1ZTYxbHhvMXZvMzNqcmY0amtoMWg2YSJ9.9hJ2XBQZxFIoxhwbB1Pb4w'
+    Mapbox.accessToken = process.env.MAPBOX_ACCESS_TOKEN
 
     var location = await this.geolocate()
 
