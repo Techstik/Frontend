@@ -118,44 +118,36 @@ export default {
     },
     async displaySelectedLocation(coords) {
       var location = await this.reverseGeocode(coords)
-      document.getElementById('coordinates').innerHTML = location
+      document.getElementById(
+        'coordinates'
+      ).innerHTML = `${location[0]}, ${location[1]}`
       document.getElementById('coordinates').style.display = 'block'
       this.$emit('location-updated', location)
     },
     async geolocate() {
-      var API_key = 'AIzaSyDVa0vRTfMXY1qBXz1ctMDHZGpPhC6TRvU' //TODO: move to env variable
-
       var response = await this.$axios.$post(
-        `https://www.googleapis.com/geolocation/v1/geolocate?key=${API_key}`
+        `https://www.googleapis.com/geolocation/v1/geolocate?key=${process.env.GOOGLE_API_KEY}`
       )
       //TODO: check for errors here first
 
       return response.location
     },
     async reverseGeocode(coords) {
-      var API_key = 'AIzaSyDVa0vRTfMXY1qBXz1ctMDHZGpPhC6TRvU' //TODO: move to env variable
-
-      //limit this to 10 calls
+      //TODO: limit this to 10 calls
 
       var response = await this.$axios.$get(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coords.lat},${coords.lng}&key=${API_key}`
+        `https://us1.locationiq.com/v1/reverse.php?key=${process.env.LOCATION_IQ_API_KEY}&lat=${coords.lat}&lon=${coords.lng}&format=json`
       )
 
-      //TODO: change this to check for admin_level_1 fcity name
-      switch (response.results.length) {
-        case 0:
-          return 'Unknown Location'
-        case 1:
-          return response.results[0].address_components[0].long_name
-        default:
-          return (
-            response.results[response.results.length - 2].address_components[0]
-              .long_name +
-            ', ' +
-            response.results[response.results.length - 2].address_components[1]
-              .long_name
-          )
-      }
+      let city = response.address.city
+        ? response.address.city
+        : response.address.state
+        ? response.address.state
+        : response.address.region
+        ? response.address.region
+        : ''
+
+      return [city, response.address.country]
     }
   }
 }

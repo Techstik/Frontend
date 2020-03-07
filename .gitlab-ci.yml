@@ -7,9 +7,6 @@ stages:
 include:
   - template: Code-Quality.gitlab-ci.yml
 
-# before_script:
-#   - npm install
-
 code_quality:
   stage: format
   image: docker:stable
@@ -28,7 +25,6 @@ code_quality:
        --volume /var/run/docker.sock:/var/run/docker.sock 
        --volume /tmp/cc:/tmp/cc 
        codeclimate/codeclimate:0.85.2 analyze -f html > gl-code-quality-report.json
-    #- cat report.html
   artifacts:
     paths: [gl-code-quality-report.json]
     expire_in: 10 weeks

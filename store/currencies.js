@@ -3,7 +3,7 @@ export const state = () => ({
 })
 
 export const mutations = {
-  set(state, { listings }) {
-    state.all = listings
+  set(state, { currencies }) {
+    state.all = currencies
   }
 }
