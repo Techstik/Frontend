@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="map"></div>
+    <div id="map" ref="map_container" class="loading"></div>
     <pre id="coordinates" class="coordinates"></pre>
   </div>
 </template>
@@ -36,7 +36,9 @@ export default {
       container: 'map',
       style: 'mapbox://styles/matt-greppl/ck5s4wwut3c1p1ir8df8xwlcj',
       center: [location.lng, location.lat],
-      zoom: 9
+      zoom: 9,
+      minZoom: 1,
+      maxZoom: 15
     })
 
     this.displaySelectedLocation(location)
@@ -90,6 +92,8 @@ export default {
         this.map.on('touchmove', this.onMapMove)
         this.map.once('touchend', this.onMapUp)
       })
+
+      this.$refs.map_container.classList.remove('loading')
     })
   },
   methods: {
@@ -163,5 +167,9 @@ export default {
   line-height: 18px;
   border-radius: 3px;
   display: none;
+  font-family: Graphik;
+}
+.loading {
+  opacity: 0;
 }
 </style>
