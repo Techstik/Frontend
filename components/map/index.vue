@@ -1,5 +1,8 @@
 <template>
   <div>
+    <p v-if="loading" class="loading-text">
+      Loading a map, give us a second...
+    </p>
     <div id="map" ref="map_container" class="loading"></div>
     <pre id="coordinates" class="coordinates"></pre>
   </div>
@@ -11,6 +14,7 @@ import Mapbox from 'mapbox-gl'
 export default {
   data() {
     return {
+      loading: true,
       geojson: {
         type: 'FeatureCollection',
         features: [
@@ -94,6 +98,7 @@ export default {
       })
 
       this.$refs.map_container.classList.remove('loading')
+      this.loading = false
     })
   },
   methods: {
@@ -171,5 +176,9 @@ export default {
 }
 .loading {
   opacity: 0;
+}
+.loading-text {
+  text-align: center;
+  padding: 45px 0px;
 }
 </style>
