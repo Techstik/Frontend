@@ -23,6 +23,7 @@
           <a-tab-pane key="0" tab="company-info">
             <div class="section logo-upload">
               <FilePond
+                label="Drop logo here"
                 @file-added="onFileUpdated"
                 @file-removed="onFileUpdated"
               />
@@ -460,7 +461,7 @@ export default {
       editor: ClassicEditor,
       place: null,
       map: null,
-      activeStep: 3,
+      activeStep: 0,
       post_doc_id: null,
       postinfo_doc_id: null,
       post: {

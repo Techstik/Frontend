@@ -2,11 +2,13 @@
   <client-only>
     <FilePond
       ref="filepond"
-      label-idle="Drop logo here or <span class='filepond--label-action browse-btn'>Browse</span>"
-      :allow-multiple="false"
+      :label-idle="
+        `${label} or <span class='filepond--label-action browse-btn'>Browse</span>`
+      "
+      :allow-multiple="allowMultipleFiles"
       accepted-file-types="image/jpeg, image/png"
       server="/api"
-      max-file-size="1MB"
+      :max-file-size="`${maxFileSize}MB`"
       :files="myFiles"
       @init="handleFilePondInit"
       @processfile="onFileAdded"
@@ -35,6 +37,20 @@ const FilePond = vueFilePond(
 export default {
   components: {
     FilePond
+  },
+  props: {
+    maxFileSize: {
+      type: Number,
+      default: 1
+    },
+    allowMultipleFiles: {
+      type: Boolean,
+      default: false
+    },
+    label: {
+      type: String,
+      default: ''
+    }
   },
   data() {
     return {
