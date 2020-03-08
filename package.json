@@ -23,6 +23,7 @@
     "@nuxtjs/toast": "^3.3.0",
     "ant-design-vue": "^1.1.10",
     "cross-env": "^5.2.0",
+    "currency-flags": "^2.1.1",
     "devicon": "^2.2.0",
     "express": "^4.16.4",
     "filepond": "^4.9.5",

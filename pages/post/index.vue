@@ -199,7 +199,32 @@
                     v-model="post.salary.currency"
                     label="name"
                     :options="currencies"
-                  ></v-select>
+                    :clearable="false"
+                  >
+                    <template
+                      v-slot:selected-option="option"
+                      v-bind="
+                        typeof option === 'object'
+                          ? option
+                          : { [label]: option }
+                      "
+                    >
+                      <span
+                        :class="
+                          `currency-flag currency-flag-${option.code.toLowerCase()} mr-15`
+                        "
+                      ></span>
+                      {{ option.name }}
+                    </template>
+                    <template v-slot:option="option">
+                      <span
+                        :class="
+                          `currency-flag currency-flag-${option.code.toLowerCase()} mr-15`
+                        "
+                      ></span>
+                      {{ option.name }}
+                    </template>
+                  </v-select>
                 </div>
               </a-col>
               <a-col :span="12">

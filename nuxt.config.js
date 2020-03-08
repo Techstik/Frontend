@@ -33,7 +33,8 @@ module.exports = {
     '@/assets/styles/layout.css',
     '@/assets/styles/ant-overrides.css',
     '@/assets/styles/site-wide.css',
-    '@/assets/styles/grid.css'
+    '@/assets/styles/grid.css',
+    '@/assets/styles/currency-flags.min.css'
   ],
   /*
    ** Plugins to load before mounting the App
