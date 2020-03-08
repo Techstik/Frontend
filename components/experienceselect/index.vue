@@ -1,7 +1,10 @@
 <template>
   <div>
     <div class="experience-level">
-      <a-checkbox @change="updateSelection('entry-level')"></a-checkbox>
+      <a-checkbox
+        :default-checked="true"
+        @change="updateSelection('entry-level')"
+      ></a-checkbox>
       <p>Entry-level</p>
       <a-progress
         :stroke-width="15"
@@ -42,7 +45,7 @@ export default {
   },
   data() {
     return {
-      selectedExperience: []
+      selectedExperience: ['entry-level']
     }
   },
   methods: {

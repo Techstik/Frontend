@@ -159,6 +159,7 @@
                   </a-input>
                 </div>
                 <a-button
+                  v-if="post_info.responsibilities.length < 8"
                   class="btn-sm btn-outline-dark"
                   @click="addResponsibility"
                 >
@@ -275,7 +276,7 @@
                 </label>
                 <small>
                   Select a few technologies you use and rank them from most
-                  used.
+                  important
                 </small>
                 <TechStack v-model="post.tech" />
               </div>
@@ -326,6 +327,7 @@
                   </a-input>
                 </div>
                 <a-button
+                  v-if="post_info.requirements.length < 8"
                   class="btn-sm btn-outline-dark"
                   @click="addRequirement"
                 >
