@@ -336,6 +336,60 @@
                 </a-button>
               </div>
             </div>
+            <div class="section">
+              <label class="d-block">
+                Residing Restrictions
+              </label>
+              <small
+                >If applicants should reside in close proximity, certain
+                countries or timezones</small
+              >
+              <a-row type="flex" align="middle">
+                <a-col :span="8">
+                  <div
+                    :class="[
+                      {
+                        'selection-block-active':
+                          !post.residing_restrictions.by_country.restricted &&
+                          !post.residing_restrictions.by_timezone.restricted
+                      },
+                      'selection-block'
+                    ]"
+                    @click="setResidingRestriction('none')"
+                  >
+                    <h5>No Restrictions</h5>
+                  </div>
+                </a-col>
+                <a-col :span="8">
+                  <div
+                    :class="[
+                      {
+                        'selection-block-active':
+                          post.residing_restrictions.by_country.restricted
+                      },
+                      'selection-block'
+                    ]"
+                    @click="setResidingRestriction('country')"
+                  >
+                    <h5>Certain Countries</h5>
+                  </div>
+                </a-col>
+                <a-col :span="8">
+                  <div
+                    :class="[
+                      {
+                        'selection-block-active':
+                          post.residing_restrictions.by_timezone.restricted
+                      },
+                      'selection-block'
+                    ]"
+                    @click="setResidingRestriction('timezone')"
+                  >
+                    <h5>Certain Timezones</h5>
+                  </div>
+                </a-col>
+              </a-row>
+            </div>
           </a-tab-pane>
           <a-tab-pane key="3" tab="application">
             <div class="section">
@@ -491,6 +545,16 @@ export default {
         payment_details: {
           stripe_payment_intent_id: '',
           paid: false
+        },
+        residing_restrictions: {
+          by_country: {
+            restricted: false,
+            countries: []
+          },
+          by_timezone: {
+            restricted: false,
+            timezones: []
+          }
         }
       },
       post_info: {
@@ -644,6 +708,18 @@ export default {
     },
     setSalary(value) {
       this.post.salary.set = value
+    },
+    setResidingRestriction(restr) {
+      this.post.residing_restrictions.by_country.restricted = false
+      this.post.residing_restrictions.by_timezone.restricted = false
+      switch (restr) {
+        case 'country':
+          this.post.residing_restrictions.by_country.restricted = true
+          break
+        case 'timezone':
+          this.post.residing_restrictions.by_timezone.restricted = true
+          break
+      }
     },
     onFileUpdated(file) {
       this.post_logo.file = file ? file : null
