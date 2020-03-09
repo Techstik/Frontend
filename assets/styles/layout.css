@@ -256,7 +256,15 @@ h4 {
   font-size: 16px;
   font-family: 'Graphik-Bold';
   height: 47.5px;
+}
+
+.vs__dropdown-toggle{
   padding: 0 35px 0 35px !important;
+}
+
+.vs--open .vs__dropdown-toggle{
+  border-bottom-left-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
 }
 
 .vs__dropdown-menu {
@@ -266,19 +274,37 @@ h4 {
   border-bottom-right-radius: 10px !important;
   font-size: 16px;
   font-family: 'Graphik-Bold';
+  box-shadow: unset !important
 }
 
 .vs__actions {
   cursor: pointer;
 }
 
-.vs__selected{
+.vs__selected {
   margin: none !important;
+}
+
+.vs__deselect {
+  fill: white!important;
+}
+
+.vs-multiple .vs__selected {
+  background-color: #fcd668;
+  border: 1px solid #fcd668;
+  color: black;
+  margin: 8px 5px;
+  padding: 0px 0.5em;
+}
+
+.vs-multiple .vs__dropdown-menu{
+  position: unset !important;
 }
 
 .small {
   font-size: 85%;
 }
+
 b {
   font-family: Graphik-Bold;
 }

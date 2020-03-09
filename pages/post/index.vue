@@ -389,6 +389,45 @@
                   </div>
                 </a-col>
               </a-row>
+              <div
+                v-show="post.residing_restrictions.by_timezone.restricted"
+                class="mt-15"
+              >
+                <v-select
+                  v-model="post.residing_restrictions.by_timezone.timezones"
+                  class="vs-multiple"
+                  label="name"
+                  placeholder="Select the timezone(s) here"
+                  multiple
+                  :close-on-select="false"
+                  :options="[
+                    'UTC -11',
+                    'UTC -10',
+                    'UTC -9',
+                    'UTC -8',
+                    'UTC -7',
+                    'UTC -6',
+                    'UTC -5',
+                    'UTC -4',
+                    'UTC -3',
+                    'UTC -2',
+                    'UTC -1',
+                    'UTC +0',
+                    'UTC +1',
+                    'UTC +2',
+                    'UTC +3',
+                    'UTC +4',
+                    'UTC +5',
+                    'UTC +6',
+                    'UTC +7',
+                    'UTC +8',
+                    'UTC +9',
+                    'UTC +10',
+                    'UTC +11'
+                  ]"
+                >
+                </v-select>
+              </div>
             </div>
           </a-tab-pane>
           <a-tab-pane key="3" tab="application">
@@ -515,7 +554,7 @@ export default {
       editor: ClassicEditor,
       place: null,
       map: null,
-      activeStep: 0,
+      activeStep: 2,
       post_doc_id: null,
       postinfo_doc_id: null,
       post: {
