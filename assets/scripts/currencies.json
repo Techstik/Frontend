@@ -1,0 +1,737 @@
+[
+    {
+        "code": "AFN",
+        "name": "Afghan Afghani",
+        "id": "4qMlzsIePvrNwFwGe7py"
+    },
+    {
+        "code": "ALL",
+        "name": "Albanian Lek",
+        "id": "vUbzGqEC5hiu0JiGUY4u"
+    },
+    {
+        "code": "DZD",
+        "name": "Algerian Dinar",
+        "id": "NkDzbB8tjvnC5zXKZk7L"
+    },
+    {
+        "code": "AOA",
+        "name": "Angolan Kwanza",
+        "id": "2YmKVQewelLhzmLJjGgb"
+    },
+    {
+        "code": "ARS",
+        "name": "Argentine Peso",
+        "id": "CIrAavthDjUWDNcEuQLt"
+    },
+    {
+        "code": "AMD",
+        "name": "Armenian Dram",
+        "id": "1afTWNtQSW1WOd1RPSiM"
+    },
+    {
+        "code": "AWG",
+        "name": "Aruban Florin",
+        "id": "IQuH8TtCCbkDrKVtq1x0"
+    },
+    {
+        "code": "AUD",
+        "name": "Australian Dollar",
+        "id": "MnOuqeDjeWj9q0Yw9KeY"
+    },
+    {
+        "code": "AZN",
+        "name": "Azerbaijani Manat",
+        "id": "b3dp7XXfRynAan3X9tk9"
+    },
+    {
+        "code": "BSD",
+        "name": "Bahamian Dollar",
+        "id": "4D1rcBTFaqzROef5VEy8"
+    },
+    {
+        "code": "BHD",
+        "name": "Bahraini Dinar",
+        "id": "uau3kFYClan1C6q5Q54G"
+    },
+    {
+        "code": "BDT",
+        "name": "Bangladeshi Taka",
+        "id": "y6V53mm3OB0lu2tSJDhu"
+    },
+    {
+        "code": "BBD",
+        "name": "Barbadian Dollar",
+        "id": "o1E8t0dITFagDXh9ATan"
+    },
+    {
+        "code": "BZD",
+        "name": "Belize Dollar",
+        "id": "Rr4hM0C0fZjFnxOfFzUH"
+    },
+    {
+        "code": "BMD",
+        "name": "Bermudian Dollar",
+        "id": "mJ5CvZHV33gH0ARnViry"
+    },
+    {
+        "code": "BTN",
+        "name": "Bhutanese Ngultrum",
+        "id": "JPMEc713bHxTsFmdY2E6"
+    },
+    {
+        "code": "BOB",
+        "name": "Bolivian Boliviano",
+        "id": "4HKIIVtK7TFReNlARpZf"
+    },
+    {
+        "code": "BAM",
+        "name": "Bosnia And Herzegovina Convertible Mark",
+        "id": "CKWqOguWzXIEVcdlmku1"
+    },
+    {
+        "code": "BWP",
+        "name": "Botswana Pula",
+        "id": "q4KsyPJbwmMOhAU597BE"
+    },
+    {
+        "code": "BRL",
+        "name": "Brazilian Real",
+        "id": "aSlBU7WCAryDmo2wZ98b"
+    },
+    {
+        "code": "GBP",
+        "name": "British Pound",
+        "id": "lV1gpeIYWpmiTF1aemGV"
+    },
+    {
+        "code": "BND",
+        "name": "Brunei Dollar",
+        "id": "d4uToT2XUnTz3CpB4Ccj"
+    },
+    {
+        "code": "BGN",
+        "name": "Bulgarian Lev",
+        "id": "fXqrXAt82MZiZr2z7vBA"
+    },
+    {
+        "code": "MMK",
+        "name": "Burmese Kyat",
+        "id": "Mf0EOLofrFGNm7NTnGEY"
+    },
+    {
+        "code": "BIF",
+        "name": "Burundian Franc",
+        "id": "nocQzRZP71Wtlf7PEIIj"
+    },
+    {
+        "code": "XPF",
+        "name": "CFP Franc",
+        "id": "o7VRB7gQRJDqFWQjFa9t"
+    },
+    {
+        "code": "KHR",
+        "name": "Cambodian Riel",
+        "id": "gSt5rOHLLMY9YGm3gmAg"
+    },
+    {
+        "code": "CAD",
+        "name": "Canadian Dollar",
+        "id": "u98Coe5H5EHI5JE867kK"
+    },
+    {
+        "code": "CVE",
+        "name": "Cape Verdean Escudo",
+        "id": "j3GQtCsInzaq3hfVG0R5"
+    },
+    {
+        "code": "KYD",
+        "name": "Cayman Islands Dollar",
+        "id": "2RMqVeAkOQhx6yIxUdos"
+    },
+    {
+        "code": "XAF",
+        "name": "Central African CFA Franc",
+        "id": "rc4GusiSg2oqcABxN1ek"
+    },
+    {
+        "code": "CLP",
+        "name": "Chilean Peso",
+        "id": "dfd7lf3W2W85BuPCC3WI"
+    },
+    {
+        "code": "CNY",
+        "name": "Chinese Yuan",
+        "id": "bv672UlPuLa1xPZCH4ki"
+    },
+    {
+        "code": "COP",
+        "name": "Colombian Peso",
+        "id": "7P7ioTQDbgFayjkPOv4j"
+    },
+    {
+        "code": "KMF",
+        "name": "Comorian Franc",
+        "id": "wvHvqYndE1f3A7bgTyaB"
+    },
+    {
+        "code": "CDF",
+        "name": "Congolese Franc",
+        "id": "hPZhZAVGspPNgctZLiyh"
+    },
+    {
+        "code": "CRC",
+        "name": "Costa Rican Colon",
+        "id": "hLFriqC1GMpP4s7CKqk7"
+    },
+    {
+        "code": "HRK",
+        "name": "Croatian Kuna",
+        "id": "T5aj1BS113QPIiwJQo7z"
+    },
+    {
+        "code": "CZK",
+        "name": "Czech Koruna",
+        "id": "UVApETkf25BcU5oNsjox"
+    },
+    {
+        "code": "DKK",
+        "name": "Danish Krone",
+        "id": "4Pf4pYB5UjNiBvAUUhB4"
+    },
+    {
+        "code": "DJF",
+        "name": "Djiboutian Franc",
+        "id": "zKKy7L8yfUObFl0czUlK"
+    },
+    {
+        "code": "DOP",
+        "name": "Dominican Peso",
+        "id": "16nUp5PxSqWCFsOYmDfc"
+    },
+    {
+        "code": "XCD",
+        "name": "East Caribbean Dollar",
+        "id": "vraz7DLh6vM9j6XtegDm"
+    },
+    {
+        "code": "EGP",
+        "name": "Egyptian Pound",
+        "id": "cz6jOQlFw5wxtt67h8Px"
+    },
+    {
+        "code": "ERN",
+        "name": "Eritrean Nakfa",
+        "id": "J278TBCJ3EsIUSjVPJo3"
+    },
+    {
+        "code": "ETB",
+        "name": "Ethiopian Birr",
+        "id": "ANBvrXefSdmpxtIS2oYy"
+    },
+    {
+        "code": "EUR",
+        "name": "Euro",
+        "id": "PRC8vZ8XyRxtnxTBHd1J"
+    },
+    {
+        "code": "FKP",
+        "name": "Falkland Islands Pound",
+        "id": "qmN8N02wwV0iDsos5eqf"
+    },
+    {
+        "code": "FJD",
+        "name": "Fijian Dollar",
+        "id": "aRA0U21jjZRvvDzgNG1d"
+    },
+    {
+        "code": "GMD",
+        "name": "Gambian Dalasi",
+        "id": "p1N5iymyypUYdLjg2oOO"
+    },
+    {
+        "code": "GEL",
+        "name": "Georgian Lari",
+        "id": "rC3nw5HEKwfaixZQCmRn"
+    },
+    {
+        "code": "GHS",
+        "name": "Ghanaian Cedi",
+        "id": "u6up0ZNmfH8dPgWHB7P7"
+    },
+    {
+        "code": "GIP",
+        "name": "Gibraltar Pound",
+        "id": "cRSua9tm3u6Qi295t5NY"
+    },
+    {
+        "code": "GTQ",
+        "name": "Guatemalan Quetzal",
+        "id": "2RUQrowYyyBszSbbxnIo"
+    },
+    {
+        "code": "GNF",
+        "name": "Guinean Franc",
+        "id": "EesZWNoNdxYB3fUvawfO"
+    },
+    {
+        "code": "GYD",
+        "name": "Guyanese Dollar",
+        "id": "0x3D71wuocvVs1bnYZij"
+    },
+    {
+        "code": "HTG",
+        "name": "Haitian Gourde",
+        "id": "5z3aIG78Nigr1vY0knwB"
+    },
+    {
+        "code": "HNL",
+        "name": "Honduran Lempira",
+        "id": "pFNHiqZUvOwlFNg4pmHc"
+    },
+    {
+        "code": "HKD",
+        "name": "Hong Kong Dollar",
+        "id": "ybHSpFhZ3pLZy6Spetge"
+    },
+    {
+        "code": "HUF",
+        "name": "Hungarian Forint",
+        "id": "7GtpU9l3wq6wj6RtCWXr"
+    },
+    {
+        "code": "ISK",
+        "name": "Icelandic Krona",
+        "id": "OROMeQ6x8jjjJs8dGIeB"
+    },
+    {
+        "code": "INR",
+        "name": "Indian Rupee",
+        "id": "AZAKtR9vDh36ae1HYNQb"
+    },
+    {
+        "code": "IDR",
+        "name": "Indonesian Rupiah",
+        "id": "Je0xISZsEeHVL70JKi7T"
+    },
+    {
+        "code": "IRR",
+        "name": "Iranian Rial",
+        "id": "0yM4mVyKXsBL45yLL4nh"
+    },
+    {
+        "code": "IQD",
+        "name": "Iraqi Dinar",
+        "id": "8jpDSvIW5Lp19DKQ1B50"
+    },
+    {
+        "code": "ILS",
+        "name": "Israeli New Shekel",
+        "id": "Bl1eHf3TPt5LovIM7ku0"
+    },
+    {
+        "code": "JMD",
+        "name": "Jamaican Dollar",
+        "id": "YzaKkW8aCONijytqE93S"
+    },
+    {
+        "code": "JPY",
+        "name": "Japanese Yen",
+        "id": "YZiZxsiEFxOmkVoP5t82"
+    },
+    {
+        "code": "JOD",
+        "name": "Jordanian Dinar",
+        "id": "GoOdki5ixXJJinyCVEKl"
+    },
+    {
+        "code": "KZT",
+        "name": "Kazakhstani Tenge",
+        "id": "u3fa4gMyx7doeHDq1vmL"
+    },
+    {
+        "code": "KES",
+        "name": "Kenyan Shilling",
+        "id": "947uzcW0WSjBdDPg2Hx5"
+    },
+    {
+        "code": "KWD",
+        "name": "Kuwaiti Dinar",
+        "id": "U7FQ1CWAEVe9BIaDBFlI"
+    },
+    {
+        "code": "KGS",
+        "name": "Kyrgyzstani Som",
+        "id": "thzKHNUPvGnepxg3txmv"
+    },
+    {
+        "code": "LAK",
+        "name": "Lao Kip",
+        "id": "sGD4lS6OEexlV2ttK0pC"
+    },
+    {
+        "code": "LBP",
+        "name": "Lebanese Pound",
+        "id": "k3kcLajH6NkqEDyks3fv"
+    },
+    {
+        "code": "LRD",
+        "name": "Liberian Dollar",
+        "id": "L5iwHmPvx9eMJgbpUUou"
+    },
+    {
+        "code": "LYD",
+        "name": "Libyan Dinar",
+        "id": "gpwL9N5O6G8SqjSR2Op0"
+    },
+    {
+        "code": "MOP",
+        "name": "Macanese Pataca",
+        "id": "yuRVyeBlXSsgLoRitHVS"
+    },
+    {
+        "code": "MKD",
+        "name": "Macedonian Denar",
+        "id": "VExMGNiyFBKenb3E59eq"
+    },
+    {
+        "code": "MGA",
+        "name": "Malagasy Ariary",
+        "id": "YxWNw38sFAGMfVyTDIkk"
+    },
+    {
+        "code": "MWK",
+        "name": "Malawian Kwacha",
+        "id": "4Kph4Ap6iWCAV3fu7BFK"
+    },
+    {
+        "code": "MYR",
+        "name": "Malaysian Ringgit",
+        "id": "YXzxz4zyXJ3AT1bGvt82"
+    },
+    {
+        "code": "MVR",
+        "name": "Maldivian Rufiyaa",
+        "id": "1qykC9bqgGob9aIxFRuE"
+    },
+    {
+        "code": "MRO",
+        "name": "Mauritanian Ouguiya",
+        "id": "KA4ChQlxJyizImkgvcRX"
+    },
+    {
+        "code": "MUR",
+        "name": "Mauritian Rupee",
+        "id": "Ab0f7lMT7kX3sQVgG4Bd"
+    },
+    {
+        "code": "MXN",
+        "name": "Mexican Peso",
+        "id": "eqNDLwOixqkzAjq7oTx0"
+    },
+    {
+        "code": "MDL",
+        "name": "Moldovan Leu",
+        "id": "wOrlthqGiYMJw037Ql00"
+    },
+    {
+        "code": "MNT",
+        "name": "Mongolian Togrog",
+        "id": "XU5rEzsl8lfM5hXXRIIB"
+    },
+    {
+        "code": "MAD",
+        "name": "Moroccan Dirham",
+        "id": "Pyqr3Mxus07awfzx8REO"
+    },
+    {
+        "code": "MZN",
+        "name": "Mozambican Metical",
+        "id": "99xtnkj8lYAjKcCrsteI"
+    },
+    {
+        "code": "NAD",
+        "name": "Namibian Dollar",
+        "id": "DtVuEv48FkhAFeaqVzJT"
+    },
+    {
+        "code": "NPR",
+        "name": "Nepalese Rupee",
+        "id": "iBOxhojaTtFdtpwR37HB"
+    },
+    {
+        "code": "ANG",
+        "name": "Netherlands Antillean Guilder",
+        "id": "10jEC2JIqMpvvStf4E3F"
+    },
+    {
+        "code": "BYN",
+        "name": "New Belarusian Ruble",
+        "id": "VpI5dJxYQdDKQDGeJptf"
+    },
+    {
+        "code": "TWD",
+        "name": "New Taiwan Dollar",
+        "id": "HZvbCfJm4abc3xyWBrRx"
+    },
+    {
+        "code": "NZD",
+        "name": "New Zealand Dollar",
+        "id": "QcqMb3oj1P1CGzF9X1Xx"
+    },
+    {
+        "code": "NIO",
+        "name": "Nicaraguan Cordoba",
+        "id": "AngAZLRvhfqw6MNGtVen"
+    },
+    {
+        "code": "NGN",
+        "name": "Nigerian Naira",
+        "id": "JrH6rYD65XHeY3KYGOWs"
+    },
+    {
+        "code": "KPW",
+        "name": "North Korean Won",
+        "id": "a4Xc0sIYxrBNgaeti0DB"
+    },
+    {
+        "code": "NOK",
+        "name": "Norwegian Krone",
+        "id": "4wexcKaECFTN8zA4x579"
+    },
+    {
+        "code": "OMR",
+        "name": "Omani Rial",
+        "id": "750tFkCZLtjteYmIDcsN"
+    },
+    {
+        "code": "PKR",
+        "name": "Pakistani Rupee",
+        "id": "55Dthhe6T2sO1vrYH9rq"
+    },
+    {
+        "code": "PGK",
+        "name": "Papua New Guinean Kina",
+        "id": "YudWUufbCAoh8xqvcPIx"
+    },
+    {
+        "code": "PYG",
+        "name": "Paraguayan Guarani",
+        "id": "0afyymKjztw5UpLIUYNe"
+    },
+    {
+        "code": "PEN",
+        "name": "Peruvian Sol",
+        "id": "FIpZ10CPOEKTZXN2geD7"
+    },
+    {
+        "code": "PHP",
+        "name": "Philippine Peso",
+        "id": "euogvJyQDuxEzPahgyu0"
+    },
+    {
+        "code": "PLN",
+        "name": "Polish Zloty",
+        "id": "zN7S08mxQsBfmJHp2egT"
+    },
+    {
+        "code": "QAR",
+        "name": "Qatari Riyal",
+        "id": "X4xiPUxqgv6d1Z5qbg5u"
+    },
+    {
+        "code": "RON",
+        "name": "Romanian Leu",
+        "id": "em99wfcbrX5nXVbwzMyT"
+    },
+    {
+        "code": "RUB",
+        "name": "Russian Ruble",
+        "id": "KYgft6KtWjj1W8qsUaFs"
+    },
+    {
+        "code": "RWF",
+        "name": "Rwandan Franc",
+        "id": "VzgIemckPFj42VpHErPb"
+    },
+    {
+        "code": "SHP",
+        "name": "Saint Helena Pound",
+        "id": "TyDIMJp0M0uWsatU6kZi"
+    },
+    {
+        "code": "WST",
+        "name": "Samoan Tala",
+        "id": "bDifsNNlQYSwe0rsjmtJ"
+    },
+    {
+        "code": "STD",
+        "name": "Sao Tome And Principe Dobra",
+        "id": "Djq6wNb1LYPvVZXY1b33"
+    },
+    {
+        "code": "SAR",
+        "name": "Saudi Riyal",
+        "id": "Zkn0tVKlcCCrcbY4U77I"
+    },
+    {
+        "code": "RSD",
+        "name": "Serbian Dinar",
+        "id": "fTJ30VTYOm52vURDZS1J"
+    },
+    {
+        "code": "SCR",
+        "name": "Seychellois Rupee",
+        "id": "ruI6qNC4XEz2ZG8gRHnU"
+    },
+    {
+        "code": "SLL",
+        "name": "Sierra Leonean Leone",
+        "id": "Q04EYSNQmpTBH77YMmBZ"
+    },
+    {
+        "code": "SBD",
+        "name": "Solomon Islands Dollar",
+        "id": "Jvv4dMdIXXyTRwcd4600"
+    },
+    {
+        "code": "SOS",
+        "name": "Somali Shilling",
+        "id": "zJxLSr2VUieJerk0Fhyr"
+    },
+    {
+        "code": "ZAR",
+        "name": "South African Rand",
+        "id": "014Y1bHuOfCvnEwRVlxH"
+    },
+    {
+        "code": "KRW",
+        "name": "South Korean Won",
+        "id": "HpqlxxdaQOeQAyLeF4Aw"
+    },
+    {
+        "code": "LKR",
+        "name": "Sri Lankan Rupee",
+        "id": "lEgbFvzAhRvBKBRGJlaz"
+    },
+    {
+        "code": "SRD",
+        "name": "Surinamese Dollar",
+        "id": "uqfQ172ku5x5FPRe2Qpz"
+    },
+    {
+        "code": "SZL",
+        "name": "Swazi Lilangeni",
+        "id": "6dlQKIIbzBzvPhR6Zs0S"
+    },
+    {
+        "code": "SEK",
+        "name": "Swedish Krona",
+        "id": "7zcgLbRjweDxYUZUz3AE"
+    },
+    {
+        "code": "CHF",
+        "name": "Swiss Franc",
+        "id": "1TrXlfRCGcu7ee5yM30X"
+    },
+    {
+        "code": "SYP",
+        "name": "Syrian Pound",
+        "id": "nycMvKcbMkx9IpspMsb7"
+    },
+    {
+        "code": "TJS",
+        "name": "Tajikistani Somoni",
+        "id": "tXphDghUyIze0oby1mlc"
+    },
+    {
+        "code": "TZS",
+        "name": "Tanzanian Shilling",
+        "id": "qf0sgYGgjfqfGh4iFuKl"
+    },
+    {
+        "code": "THB",
+        "name": "Thai Baht",
+        "id": "XWVnGcqLmLbe1WpczbMD"
+    },
+    {
+        "code": "TOP",
+        "name": "Tongan Paʻanga",
+        "id": "nP97TnCWWcy4LjkohdjR"
+    },
+    {
+        "code": "TTD",
+        "name": "Trinidad And Tobago Dollar",
+        "id": "MsvUJHGQkx3GmGgY4tdG"
+    },
+    {
+        "code": "TND",
+        "name": "Tunisian Dinar",
+        "id": "yJi1jYC4FPiWUrVbTzgq"
+    },
+    {
+        "code": "TRY",
+        "name": "Turkish Lira",
+        "id": "5H5lJFThtQ5pIezwda5p"
+    },
+    {
+        "code": "UGX",
+        "name": "Ugandan Shilling",
+        "id": "utPzdFHLQWVISDekITQQ"
+    },
+    {
+        "code": "UAH",
+        "name": "Ukrainian Hryvnia",
+        "id": "L5q98GzGr9oB2yiFGr5o"
+    },
+    {
+        "code": "AED",
+        "name": "United Arab Emirates Dirham",
+        "id": "p9M1xK8D3Yc1HXnhSTKK"
+    },
+    {
+        "code": "USD",
+        "name": "United States Dollar",
+        "id": "vFM5JavRVkRpsG6Z0Y6X"
+    },
+    {
+        "code": "UYU",
+        "name": "Uruguayan Peso",
+        "id": "bBRJ5eCrtnAFVvXxEYIt"
+    },
+    {
+        "code": "UZS",
+        "name": "Uzbekistani Som",
+        "id": "4HCaNfPJmXUL9uVrJvq2"
+    },
+    {
+        "code": "VUV",
+        "name": "Vanuatu Vatu",
+        "id": "bnF5Alcts3z9MuS3ELne"
+    },
+    {
+        "code": "VEF",
+        "name": "Venezuelan Bolivar",
+        "id": "BKp4Hi5fXaNWd1Lb9a0D"
+    },
+    {
+        "code": "VND",
+        "name": "Vietnamese Dồng",
+        "id": "wpnAf1Y738DxlKDHIKLg"
+    },
+    {
+        "code": "XOF",
+        "name": "West African CFA Franc",
+        "id": "KZODDlLQ16h0y5POGMcL"
+    },
+    {
+        "code": "YER",
+        "name": "Yemeni Rial",
+        "id": "IZ2l3yACulWHZsARYEI8"
+    },
+    {
+        "code": "ZMW",
+        "name": "Zambian Kwacha",
+        "id": "ph5dZaqsr8DLo9dRY8i5"
+    }
+]
