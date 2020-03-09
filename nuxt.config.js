@@ -43,7 +43,7 @@ module.exports = {
   plugins: [
     '@/plugins/antd-ui',
     '@/plugins/firebase',
-    '@/plugins/snapshot-subscriptions',
+    '@/plugins/vuex-seed',
     '@/plugins/lodash',
     '@/plugins/moment',
     '@/plugins/vuelidate',
