@@ -55,11 +55,7 @@
       class="search"
     />
     <div
-      v-for="technology in !searchWord
-        ? tech
-        : tech.filter(_tech => {
-            return _tech.name.toLowerCase().includes(searchWord)
-          })"
+      v-for="technology in searchedTech"
       :key="technology.name"
       :class="[
         {
@@ -82,6 +78,15 @@
         ]"
       ></i>
       <p>{{ technology.name }}</p>
+    </div>
+    <div v-if="!searchedTech.length">
+      <p>
+        Whoops - we dont seem to have what you're looking for, but you may still
+        select it!
+      </p>
+      <a-button class="btn-sm btn-outline-dark" @click="addUnknown">
+        <a-icon type="plus" /> Select '{{ searchWord }}'</a-button
+      >
     </div>
   </div>
 </template>
@@ -111,6 +116,13 @@ export default {
     }),
     placeholdersRequired() {
       return this.selectedTech.length > 2 ? 0 : 2 - this.selectedTech.length
+    },
+    searchedTech() {
+      return !this.searchWord
+        ? this.tech
+        : this.tech.filter(_tech => {
+            return _tech.name.toLowerCase().includes(this.searchWord)
+          })
     }
   },
   methods: {
@@ -119,10 +131,14 @@ export default {
         this.selectedTech = this.lodash.remove(this.selectedTech, existing => {
           return existing !== tech
         })
-      } else {
+      } else if (this.selectedTech.length < 8) {
         this.selectedTech.push(tech)
       }
       this.emitChange()
+    },
+    addUnknown() {
+      this.updateTech({ iconname: '', name: this.searchWord })
+      this.searchWord = ''
     },
     emitChange() {
       this.$emit(

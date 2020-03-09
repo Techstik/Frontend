@@ -276,8 +276,8 @@
                   />
                 </label>
                 <small>
-                  Select a few technologies you use and rank them from most
-                  important
+                  Select a few technologies you use (max 8) and rank them from
+                  most important
                 </small>
                 <TechStack v-model="post.tech" />
               </div>
