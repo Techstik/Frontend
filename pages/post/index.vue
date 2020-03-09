@@ -390,6 +390,42 @@
                 </a-col>
               </a-row>
               <div
+                v-show="post.residing_restrictions.by_country.restricted"
+                class="mt-15"
+              >
+                <v-select
+                  v-model="post.residing_restrictions.by_country.countries"
+                  class="vs-multiple"
+                  label="name"
+                  placeholder="Select the countries here"
+                  multiple
+                  :close-on-select="false"
+                  :options="countries"
+                >
+                  <template
+                    v-slot:selected-option="option"
+                    v-bind="
+                      typeof option === 'object' ? option : { [label]: option }
+                    "
+                  >
+                    <span
+                      :class="
+                        `flag-icon flag-icon-${option.code.toLowerCase()} mr-15`
+                      "
+                    ></span>
+                    {{ option.name }}
+                  </template>
+                  <template v-slot:option="option">
+                    <span
+                      :class="
+                        `flag-icon flag-icon-${option.code.toLowerCase()} mr-15`
+                      "
+                    ></span>
+                    {{ option.name }}
+                  </template>
+                </v-select>
+              </div>
+              <div
                 v-show="post.residing_restrictions.by_timezone.restricted"
                 class="mt-15"
               >
@@ -672,7 +708,8 @@ export default {
   },
   computed: {
     ...mapState({
-      currencies: state => state.currencies.all
+      currencies: state => state.currencies.all,
+      countries: state => state.countries.all
     }),
     activeStepToString() {
       return this.activeStep.toString()

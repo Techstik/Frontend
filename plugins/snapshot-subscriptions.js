@@ -34,4 +34,21 @@ export default ({ store }) => {
       //TODO: wrtie to bugsnag
       console.log(error)
     })
+
+  db.collection('countries')
+    .orderBy('name')
+    .get()
+    .then(querySnapshot => {
+      var countries = []
+      querySnapshot.forEach(doc => {
+        countries.push({ ...doc.data(), id: doc.id })
+      })
+      store.commit('countries/set', {
+        countries
+      })
+    })
+    .catch(error => {
+      //TODO: wrtie to bugsnag
+      console.log(error)
+    })
 }
