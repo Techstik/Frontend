@@ -21,7 +21,7 @@
     },
     {
         "code": "AD",
-        "name": "AndorrA",
+        "name": "Andorra",
         "id": "9xcOHJLcJ7eUhvZMKy88"
     },
     {
@@ -155,6 +155,11 @@
         "id": "4gGTjaH2uNJyedV0POT0"
     },
     {
+        "code": "VG",
+        "name": "British Virgin Islands",
+        "id": "4j6MUGWdYBcXIKeyL5mm"
+    },
+    {
         "code": "BN",
         "name": "Brunei Darussalam",
         "id": "mijdHF5YIfsz5wlRxb3G"
@@ -245,11 +250,6 @@
         "id": "oGFlCmTtDVVblYS87dHa"
     },
     {
-        "code": "CD",
-        "name": "Congo, The Democratic Republic of the",
-        "id": "iUe0aoVPaFhsL9ZLXS1a"
-    },
-    {
         "code": "CK",
         "name": "Cook Islands",
         "id": "6yzawNdcSopc2Ugi10Ob"
@@ -283,6 +283,16 @@
         "code": "CZ",
         "name": "Czech Republic",
         "id": "DB2Xj5nm7exR9cS2nCXC"
+    },
+    {
+        "code": "KP",
+        "name": "Democratic People's Republic of Korea",
+        "id": "B2luaj8vw5g6d5jr2FgB"
+    },
+    {
+        "code": "CD",
+        "name": "Democratic Republic of the Congo",
+        "id": "iUe0aoVPaFhsL9ZLXS1a"
     },
     {
         "code": "DK",
@@ -341,13 +351,18 @@
     },
     {
         "code": "FK",
-        "name": "Falkland Islands (Malvinas)",
+        "name": "Falkland Islands (Islas Malvinas)",
         "id": "gXYVk3kiPZj6kj6AtAQl"
     },
     {
         "code": "FO",
         "name": "Faroe Islands",
         "id": "PMccRrfoACtFB6khyNHV"
+    },
+    {
+        "code": "FM",
+        "name": "Federated States of Micronesia",
+        "id": "NGvcyr7idrN4oxAvtceV"
     },
     {
         "code": "FJ",
@@ -470,11 +485,6 @@
         "id": "XrnCHWpZKyrapkQskEWm"
     },
     {
-        "code": "VA",
-        "name": "Holy See (Vatican City State)",
-        "id": "qIfgAgZy4iXPJMrKVrDA"
-    },
-    {
         "code": "HN",
         "name": "Honduras",
         "id": "is5V6juyoWI5CaE16vty"
@@ -505,11 +515,6 @@
         "id": "mANrBWCeU8WyRvDsY08z"
     },
     {
-        "code": "IR",
-        "name": "Iran, Islamic Republic Of",
-        "id": "SHxorEEopWlSNQxBSSgK"
-    },
-    {
         "code": "IQ",
         "name": "Iraq",
         "id": "F1zsIJSsjGvJ9NNyHCYJ"
@@ -518,6 +523,11 @@
         "code": "IE",
         "name": "Ireland",
         "id": "NRsrCQYOmvxRDrolxPtz"
+    },
+    {
+        "code": "IR",
+        "name": "Islamic Republic of Iran",
+        "id": "SHxorEEopWlSNQxBSSgK"
     },
     {
         "code": "IM",
@@ -570,16 +580,6 @@
         "id": "pPNogRaOJiFigf4ZEmMm"
     },
     {
-        "code": "KP",
-        "name": "Korea, Democratic People's Republic of",
-        "id": "B2luaj8vw5g6d5jr2FgB"
-    },
-    {
-        "code": "KR",
-        "name": "Korea, Republic of",
-        "id": "Nvob3anKXtvkM0IlPIyH"
-    },
-    {
         "code": "KW",
         "name": "Kuwait",
         "id": "93eHgfWiP2pDdgIKHabV"
@@ -591,7 +591,7 @@
     },
     {
         "code": "LA",
-        "name": "Lao People's Democratic Republic",
+        "name": "Laos",
         "id": "F8VJ14CXPQlx6AoTT3YY"
     },
     {
@@ -616,7 +616,7 @@
     },
     {
         "code": "LY",
-        "name": "Libyan Arab Jamahiriya",
+        "name": "Libya",
         "id": "MW9QCVek6QHUsHMFEsGb"
     },
     {
@@ -638,11 +638,6 @@
         "code": "MO",
         "name": "Macao",
         "id": "rOjPxs18kaqAedRm80Ve"
-    },
-    {
-        "code": "MK",
-        "name": "Macedonia, The Former Yugoslav Republic of",
-        "id": "vDcCInGaZajwtPOwXWPW"
     },
     {
         "code": "MG",
@@ -703,16 +698,6 @@
         "code": "MX",
         "name": "Mexico",
         "id": "DhQxRjTJM7l3Bsm9BOI4"
-    },
-    {
-        "code": "FM",
-        "name": "Micronesia, Federated States of",
-        "id": "NGvcyr7idrN4oxAvtceV"
-    },
-    {
-        "code": "MD",
-        "name": "Moldova, Republic of",
-        "id": "ma8K3SBSARtxdfRBOOJz"
     },
     {
         "code": "MC",
@@ -805,6 +790,11 @@
         "id": "YiGt3Xkc83OxZJYmPNV3"
     },
     {
+        "code": "MK",
+        "name": "North Macedonia",
+        "id": "vDcCInGaZajwtPOwXWPW"
+    },
+    {
         "code": "NO",
         "name": "Norway",
         "id": "Q7VF8ltmspqTeUPZq7px"
@@ -824,11 +814,7 @@
         "name": "Palau",
         "id": "s1SaoH5jeDoqQbANmgEQ"
     },
-    {
-        "code": "PS",
-        "name": "Palestinian Territory, Occupied",
-        "id": "7VMogPEmWxYbORrngk8Q"
-    },
+
     {
         "code": "PA",
         "name": "Panama",
@@ -881,8 +867,18 @@
     },
     {
         "code": "RW",
-        "name": "RWANDA",
+        "name": "Rwanda",
         "id": "7mJKqY8wDIJS0f0u80V1"
+    },
+    {
+        "code": "KR",
+        "name": "Republic of Korea",
+        "id": "Nvob3anKXtvkM0IlPIyH"
+    },
+    {
+        "code": "MD",
+        "name": "Republic of Moldova",
+        "id": "ma8K3SBSARtxdfRBOOJz"
     },
     {
         "code": "RE",
@@ -1005,6 +1001,11 @@
         "id": "s2pVVPdL3rOngTigUSSV"
     },
     {
+        "code": "PS",
+        "name": "State of Palestine",
+        "id": "7VMogPEmWxYbORrngk8Q"
+    },
+    {
         "code": "SD",
         "name": "Sudan",
         "id": "Q5ELRvmbrnE2zlpk7GiY"
@@ -1016,7 +1017,7 @@
     },
     {
         "code": "SJ",
-        "name": "Svalbard and Jan Mayen",
+        "name": "Svalbard",
         "id": "tpINf2kKcGqkPnR4npAe"
     },
     {
@@ -1041,18 +1042,13 @@
     },
     {
         "code": "TW",
-        "name": "Taiwan, Province of China",
+        "name": "Taiwan",
         "id": "84dsPacg64pHXKJzWJ4r"
     },
     {
         "code": "TJ",
         "name": "Tajikistan",
         "id": "bR1DSSIL5TDOxxUdp4e0"
-    },
-    {
-        "code": "TZ",
-        "name": "Tanzania, United Republic of",
-        "id": "QX9m23HPn2xPau7ieguT"
     },
     {
         "code": "TH",
@@ -1130,9 +1126,19 @@
         "id": "EGGLBIfXS4DFCtttGQUx"
     },
     {
+        "code": "TZ",
+        "name": "United Republic of Tanzania",
+        "id": "QX9m23HPn2xPau7ieguT"
+    },
+    {
         "code": "US",
         "name": "United States",
         "id": "kHwPIq3KirmE56Enc9Yw"
+    },
+    {
+        "code": "VI",
+        "name": "U.S. Virgin Islands",
+        "id": "tfnOkkX7FHctZkDjAwPs"
     },
     {
         "code": "UM",
@@ -1155,24 +1161,19 @@
         "id": "7gaGAd2DZQV3a3Zh5ATZ"
     },
     {
+        "code": "VA",
+        "name": "Vatican City",
+        "id": "qIfgAgZy4iXPJMrKVrDA"
+    },
+    {
         "code": "VE",
         "name": "Venezuela",
         "id": "QLcNpWdvQU3mv7qdjsiS"
     },
     {
         "code": "VN",
-        "name": "Viet Nam",
+        "name": "Vietnam",
         "id": "4ZBFAtgQG96jcEzOjzIL"
-    },
-    {
-        "code": "VG",
-        "name": "Virgin Islands, British",
-        "id": "4j6MUGWdYBcXIKeyL5mm"
-    },
-    {
-        "code": "VI",
-        "name": "Virgin Islands, U.S.",
-        "id": "tfnOkkX7FHctZkDjAwPs"
     },
     {
         "code": "WF",
