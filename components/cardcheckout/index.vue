@@ -226,23 +226,23 @@ export default {
     })
   },
   mounted() {
-    // this.$refs.container.classList.add('submitting')
-    // var create_payment_intent = functions.httpsCallable(
-    //   'stripe-create_payment_intent'
-    // )
-    // create_payment_intent({
-    //   amount: this.amount,
-    //   currency: this.currency
-    // })
-    //   .then(response => {
-    //     this.payment_intent_id = response.data.data.paymentIntentId
-    //     this.$emit('paymentIntentCreated', response.data.data.paymentIntentId)
-    //     this.clientSecret = response.data.data.clientSecret
-    //     this.initializeComponents(response.data.data.publishableKey)
-    //   })
-    //   .catch(error => {
-    //     console.log(error)
-    //   })
+    this.$refs.container.classList.add('submitting')
+    var create_payment_intent = functions.httpsCallable(
+      'stripe-create_payment_intent'
+    )
+    create_payment_intent({
+      amount: this.amount,
+      currency: this.currency
+    })
+      .then(response => {
+        this.payment_intent_id = response.data.data.paymentIntentId
+        this.$emit('paymentIntentCreated', response.data.data.paymentIntentId)
+        this.clientSecret = response.data.data.clientSecret
+        this.initializeComponents(response.data.data.publishableKey)
+      })
+      .catch(error => {
+        console.log(error)
+      })
   },
   methods: {
     onCollapseChange(key) {
@@ -369,11 +369,8 @@ export default {
     async submitPayment() {
       if (!this.clearToSubmit()) return this.$scrollTo('#container')
 
-      // Show a loading screen...
       this.$refs.container.classList.add('submitting')
       this.$emit('submitting')
-
-      //TODO: check if customer exists, else create
 
       var list_customers = functions.httpsCallable('stripe-list_customers')
 
@@ -381,11 +378,28 @@ export default {
       let customer
 
       if (customers.data.data.data.length) {
-        customer = customers.data.data.data[0]
+        if (this.include_address) {
+          var update_customer = functions.httpsCallable(
+            'stripe-update_customer'
+          )
+          customer = (
+            await update_customer({
+              id: customers.data.data.data[0].id,
+              data: {
+                address: this.address
+              }
+            })
+          ).data.data
+        } else customer = customers.data.data.data[0]
       } else {
         var create_customer = functions.httpsCallable('stripe-create_customer')
-        customer = (await create_customer({ email: this.email_address })).data
-          .data
+        customer = (
+          await create_customer(
+            this.include_address
+              ? { email: this.email_address, address: this.address }
+              : { email: this.email_address }
+          )
+        ).data.data
       }
 
       var update_payment_intent = functions.httpsCallable(
