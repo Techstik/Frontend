@@ -1,7 +1,6 @@
 <template>
   <client-only>
     <FilePond
-      ref="filepond"
       :label-idle="
         `${label} or <span class='filepond--label-action browse-btn'>Browse</span>`
       "
@@ -28,7 +27,7 @@ import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size'
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
 
-const FilePond = vueFilePond(
+const FilePond = new vueFilePond(
   FilePondPluginFileValidateType,
   FilePondPluginImagePreview,
   FilePondPluginFileValidateSize
@@ -50,6 +49,10 @@ export default {
     label: {
       type: String,
       default: ''
+    },
+    displayPreview: {
+      type: Boolean,
+      default: true
     }
   },
   data() {

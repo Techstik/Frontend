@@ -73,6 +73,21 @@
               </div>
             </div>
             <div class="section">
+              <div
+                :class="{ validation_error: $v.post.company_website.$error }"
+              >
+                <label class="d-block">Gallery</label>
+                <small
+                  >Upload some pictures to allow your applicants to get an idea
+                  of your company or work space</small
+                >
+                <FilePond
+                  label="Drop images here"
+                  :allow-multiple-files="true"
+                />
+              </div>
+            </div>
+            <div class="section">
               <a-row type="flex" align="middle">
                 <a-col :span="12">
                   <div
@@ -552,6 +567,8 @@
             v-show="activeStep == 4 && !displayCheckout"
             id="proceed_to_payment"
             class="f-r"
+            :loading="proceedingToPayment"
+            @click="proceedingToPayment = true"
           >
             Proceed to payment
           </a-button>
@@ -590,7 +607,7 @@ export default {
       editor: ClassicEditor,
       place: null,
       map: null,
-      activeStep: 2,
+      activeStep: 0,
       post_doc_id: null,
       postinfo_doc_id: null,
       post: {
@@ -661,7 +678,8 @@ export default {
       },
       post_gallery: [],
       displayCheckout: false,
-      hideButtons: false
+      hideButtons: false,
+      proceedingToPayment: false
     }
   },
   validations: {
@@ -759,6 +777,7 @@ export default {
     previousStep() {
       if (this.displayCheckout) {
         this.displayCheckout = false
+        this.proceedingToPayment = false
         window.recaptchaVerifier.reset()
       } else --this.activeStep
     },
