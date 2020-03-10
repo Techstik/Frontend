@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div ref="container" class="container">
+    <div id="container" ref="container" class="container">
       <div class="card_block">
         <div :class="[{ visible: confirm.failed }, 'error_repsonse']">
           <p>{{ confirm.failure_message }}</p>
@@ -14,6 +14,74 @@
             placeholder="Email Address"
             type="email"
           />
+        </div>
+        <div class="address-container">
+          <a-collapse :bordered="false" @change="onCollapseChange">
+            <a-collapse-panel
+              key="0"
+              header="Want to see your address on the receipt?"
+              :show-arrow="false"
+            >
+              <div :class="{ validation_error: $v.address.line1.$error }">
+                <a-input
+                  ref="address_line_1"
+                  v-model="$v.address.line1.$model"
+                  class="field"
+                  placeholder="Address Line 1"
+                />
+              </div>
+              <a-input
+                v-model="address.line2"
+                class="field mt-6"
+                placeholder="Address Line 2"
+              />
+              <a-input
+                v-model="address.city"
+                class="field"
+                placeholder="City"
+              />
+              <a-input
+                v-model="address.state"
+                class="field"
+                placeholder="State/Province"
+              />
+              <v-select
+                v-model="address.country"
+                class="vs-multiple"
+                label="name"
+                placeholder="Country"
+                :reduce="country => country.code"
+                :options="countries"
+              >
+                <template
+                  v-slot:selected-option="option"
+                  v-bind="
+                    typeof option === 'object' ? option : { [label]: option }
+                  "
+                >
+                  <span
+                    :class="
+                      `flag-icon flag-icon-${option.code.toLowerCase()} mr-15`
+                    "
+                  ></span>
+                  {{ option.name }}
+                </template>
+                <template v-slot:option="option">
+                  <span
+                    :class="
+                      `flag-icon flag-icon-${option.code.toLowerCase()} mr-15`
+                    "
+                  ></span>
+                  {{ option.name }}
+                </template>
+              </v-select>
+              <a-input
+                v-model="address.postal_code"
+                class="field"
+                placeholder="Postal Code"
+              />
+            </a-collapse-panel>
+          </a-collapse>
         </div>
         <div ref="card_number" class="ant-input field"></div>
         <a-row>
@@ -100,8 +168,9 @@
 </template>
 <script>
 import { functions } from '@/plugins/firebase'
-import { required, email } from 'vuelidate/lib/validators'
+import { required, requiredIf, email } from 'vuelidate/lib/validators'
 import stripelogo from '@/assets/images/logos/stripe/solid_dark.svg'
+import { mapState } from 'vuex'
 
 export default {
   props: {
@@ -122,6 +191,15 @@ export default {
       form_elements: [],
       form_errors: {},
       email_address: '',
+      include_address: false,
+      address: {
+        line1: '',
+        line2: '',
+        city: '',
+        country: '',
+        postal_code: '',
+        state: ''
+      },
       confirm: {
         failed: false,
         failure_message: ''
@@ -133,28 +211,43 @@ export default {
     email_address: {
       required,
       email
+    },
+    address: {
+      line1: {
+        required: requiredIf(function() {
+          return this.include_address
+        })
+      }
     }
   },
-  mounted() {
-    this.$refs.container.classList.add('submitting')
-    var create_payment_intent = functions.httpsCallable(
-      'stripe-create_payment_intent'
-    )
-    create_payment_intent({
-      amount: this.amount,
-      currency: this.currency
+  computed: {
+    ...mapState({
+      countries: state => state.countries.all
     })
-      .then(response => {
-        this.payment_intent_id = response.data.data.paymentIntentId
-        this.$emit('paymentIntentCreated', response.data.data.paymentIntentId)
-        this.clientSecret = response.data.data.clientSecret
-        this.initializeComponents(response.data.data.publishableKey)
-      })
-      .catch(error => {
-        console.log(error)
-      })
+  },
+  mounted() {
+    // this.$refs.container.classList.add('submitting')
+    // var create_payment_intent = functions.httpsCallable(
+    //   'stripe-create_payment_intent'
+    // )
+    // create_payment_intent({
+    //   amount: this.amount,
+    //   currency: this.currency
+    // })
+    //   .then(response => {
+    //     this.payment_intent_id = response.data.data.paymentIntentId
+    //     this.$emit('paymentIntentCreated', response.data.data.paymentIntentId)
+    //     this.clientSecret = response.data.data.clientSecret
+    //     this.initializeComponents(response.data.data.publishableKey)
+    //   })
+    //   .catch(error => {
+    //     console.log(error)
+    //   })
   },
   methods: {
+    onCollapseChange(key) {
+      this.include_address = key.length > 0
+    },
     initializeComponents(publishableKey) {
       // eslint-disable-next-line no-undef
       this.stripe = Stripe(publishableKey)
@@ -248,7 +341,8 @@ export default {
     clearToSubmit() {
       this.$v.$touch()
 
-      if (this.$v.email_address.$invalid) return false
+      if (this.$v.email_address.$invalid || this.$v.address.line1.$invalid)
+        return false
 
       let form_error = Object.keys(this.form_errors)
         .sort()
@@ -273,7 +367,7 @@ export default {
       return true
     },
     async submitPayment() {
-      if (!this.clearToSubmit()) return
+      if (!this.clearToSubmit()) return this.$scrollTo('#container')
 
       // Show a loading screen...
       this.$refs.container.classList.add('submitting')
@@ -611,5 +705,29 @@ button:active {
 }
 .error_repsonse p:last-child {
   color: black;
+}
+.address-container {
+  margin-bottom: 15px;
+}
+.address-container .ant-collapse-borderless {
+  background: transparent !important;
+}
+.vs-multiple {
+  margin-top: 6px;
+  margin-bottom: 15px;
+}
+.mt-6 {
+  margin-top: 6px;
+}
+</style>
+<style>
+.address-container .ant-collapse-header {
+  margin-bottom: 10px;
+}
+.address-container .vs__dropdown-toggle {
+  padding: 0 10px !important;
+}
+.address-container .ant-collapse-content-box > .field:last-child {
+  margin-bottom: 0px;
 }
 </style>

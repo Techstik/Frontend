@@ -257,12 +257,15 @@ h4 {
   font-family: 'Graphik-Bold';
   height: 47.5px;
 }
+.vs__search::placeholder {
+  color: #c0c0c0 !important;
+}
 
-.vs__dropdown-toggle{
+.vs__dropdown-toggle {
   padding: 0 35px 0 35px !important;
 }
 
-.vs--open .vs__dropdown-toggle{
+.vs--open .vs__dropdown-toggle {
   border-bottom-left-radius: 0px !important;
   border-bottom-right-radius: 0px !important;
 }
@@ -297,7 +300,7 @@ h4 {
   padding: 0px 0.5em;
 }
 
-.vs-multiple .vs__dropdown-menu{
+.vs-multiple .vs__dropdown-menu {
   position: unset !important;
 }
 
