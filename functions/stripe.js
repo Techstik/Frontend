@@ -108,10 +108,7 @@ exports.create_customer = firebase_functions.https.onCall((data, context) => {
   }
 
   return stripe.customers
-    .create({
-      email: data.email,
-      description: data.description
-    })
+    .create(data)
     .then(customer => {
       console.info(`Successfull`)
       return {
