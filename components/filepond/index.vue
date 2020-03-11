@@ -1,19 +1,20 @@
 <template>
   <client-only>
     <FilePond
+      ref="filepond"
       :label-idle="
         `${label} or <span class='filepond--label-action browse-btn'>Browse</span>`
       "
       :allow-multiple="allowMultipleFiles"
       accepted-file-types="image/jpeg, image/png"
       server="/api"
+      :class="{ 'multi-upload': allowMultipleFiles }"
       :max-file-size="`${maxFileSize}MB`"
       :files="myFiles"
-      @init="handleFilePondInit"
-      @processfile="onFileAdded"
-      @processfilerevert="onFileRemoved"
-      @processfileabort="onFileRemoved"
-      @removefile="onFileRemoved"
+      @processfile="onFilesUpdated"
+      @processfilerevert="onFilesUpdated"
+      @processfileabort="onFilesUpdated"
+      @removefile="onFilesUpdated"
     />
   </client-only>
 </template>
@@ -61,12 +62,13 @@ export default {
     }
   },
   methods: {
-    handleFilePondInit() {},
-    onFileAdded(error, upload) {
-      this.$emit('file-added', upload.file)
-    },
-    onFileRemoved() {
-      this.$emit('file-removed')
+    onFilesUpdated() {
+      this.$emit(
+        'files-updated',
+        this.$refs.filepond.getFiles().map(upload => {
+          return upload.file
+        })
+      )
     }
   }
 }
@@ -82,5 +84,16 @@ export default {
 }
 .browse-btn:focus {
   outline: none;
+}
+@media (min-width: 30em) {
+  .multi-upload .filepond--item {
+    width: calc(50% - 0.5em);
+  }
+}
+
+@media (min-width: 50em) {
+  .multi-upload .filepond--item {
+    width: calc(33.33% - 0.5em);
+  }
 }
 </style>

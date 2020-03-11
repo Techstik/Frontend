@@ -24,8 +24,9 @@
             <div class="section logo-upload">
               <FilePond
                 label="Drop logo here"
-                @file-added="onFileUpdated"
-                @file-removed="onFileUpdated"
+                @files-updated="
+                  (...args) => onFilesUpdated(...args, 'post_logo')
+                "
               />
             </div>
             <div class="section">
@@ -61,7 +62,7 @@
                 </div>
               </div>
             </div>
-            <div class="section">
+            <div>
               <div
                 :class="{ validation_error: $v.post.company_website.$error }"
               >
@@ -77,13 +78,16 @@
                 :class="{ validation_error: $v.post.company_website.$error }"
               >
                 <label class="d-block">Gallery</label>
-                <small
-                  >Upload some pictures to allow your applicants to get an idea
-                  of your company or work space</small
-                >
+                <small>
+                  Upload some pictures to allow your applicants to get an idea
+                  of your company or work space
+                </small>
                 <FilePond
                   label="Drop images here"
                   :allow-multiple-files="true"
+                  @files-updated="
+                    (...args) => onFilesUpdated(...args, 'post_gallery')
+                  "
                 />
               </div>
             </div>
@@ -352,13 +356,11 @@
               </div>
             </div>
             <div class="section">
-              <label class="d-block">
-                Residing Restrictions
-              </label>
-              <small
-                >If applicants should reside in close proximity, certain
-                countries or timezones</small
-              >
+              <label class="d-block">Residing Restrictions</label>
+              <small>
+                If applicants should reside in close proximity, certain
+                countries or timezones
+              </small>
               <a-row type="flex" align="middle">
                 <a-col :span="8">
                   <div
@@ -476,8 +478,7 @@
                     'UTC +10',
                     'UTC +11'
                   ]"
-                >
-                </v-select>
+                ></v-select>
               </div>
             </div>
           </a-tab-pane>
@@ -552,7 +553,8 @@
             v-scroll-to="'#container'"
             @click="previousStep"
           >
-            <a-icon type="left" />{{ displayCheckout ? 'Back' : 'Previous' }}
+            <a-icon type="left" />
+            {{ displayCheckout ? 'Back' : 'Previous' }}
           </a-button>
           <a-button
             v-if="activeStep < 4"
@@ -569,9 +571,8 @@
             class="f-r"
             :loading="proceedingToPayment"
             @click="proceedingToPayment = true"
+            >Proceed to payment</a-button
           >
-            Proceed to payment
-          </a-button>
         </div>
       </div>
     </div>
@@ -673,10 +674,13 @@ export default {
         ]
       },
       post_logo: {
-        file: null,
+        files: [],
         updated: false
       },
-      post_gallery: [],
+      post_gallery: {
+        files: [],
+        updated: false
+      },
       displayCheckout: false,
       hideButtons: false,
       proceedingToPayment: false
@@ -816,9 +820,9 @@ export default {
           break
       }
     },
-    onFileUpdated(file) {
-      this.post_logo.file = file ? file : null
-      this.post_logo.updated = true
+    onFilesUpdated(files, target) {
+      this[target]['files'] = files
+      this[target]['updated'] = true
     },
     async addPost() {
       this.$toast.info('Saving post...')

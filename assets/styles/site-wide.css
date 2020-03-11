@@ -145,8 +145,8 @@ canvas.mapboxgl-canvas:focus {
 .filepond--panel-root {
   background-color: #ffffff !important;
 }
-.filepond--item {
-  width: calc(50% - .5em);
+.filepond--root {
+  font-family: Graphik !important;
 }
 .toasted {
   font-family: 'Graphik-Bold';
