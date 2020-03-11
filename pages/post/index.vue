@@ -537,6 +537,14 @@
                 </div>
               </div>
             </div>
+            <div v-if="displayUploader">
+              <MultipleFileUpload
+                heading="Quickly preparing your gallery..."
+                :files="post_gallery.files"
+                base-path="Companies/Gallery"
+                @uploadComplete="onGalleryUploadComplete"
+              />
+            </div>
             <div v-if="displayCheckout">
               <Checkout
                 :amount="200"
@@ -587,6 +595,7 @@ import TechStack from '@/components/techstack'
 import ExperienceSelect from '@/components/experienceselect'
 import ListingPreview from '@/components/listings/preview'
 import Checkout from '@/components/cardcheckout'
+import MultipleFileUpload from '@/components/multifileupload'
 import { required, requiredIf, minLength, url } from 'vuelidate/lib/validators'
 // eslint-disable-next-line no-unused-vars
 import { auth, db } from '@/plugins/firebase'
@@ -601,14 +610,15 @@ export default {
     TechStack,
     ExperienceSelect,
     ListingPreview,
-    Checkout
+    Checkout,
+    MultipleFileUpload
   },
   data() {
     return {
       editor: ClassicEditor,
       place: null,
       map: null,
-      activeStep: 0,
+      activeStep: 4,
       post_doc_id: null,
       postinfo_doc_id: null,
       post: {
@@ -682,6 +692,7 @@ export default {
         updated: false
       },
       displayCheckout: false,
+      displayUploader: false,
       hideButtons: false,
       proceedingToPayment: false
     }
@@ -744,6 +755,8 @@ export default {
         size: 'invisible',
         // eslint-disable-next-line no-unused-vars
         callback: response => {
+          //TODO: check if pro post was selected and gallery exists and switch to uploader if true
+          //TODO: check if gallery was updated otherwise no need to upload
           this.displayCheckout = true
         }
       }
@@ -870,6 +883,11 @@ export default {
         .catch(error => {
           this.$toast.error(`Error: ${JSON.stringify(error)}`)
         })
+    },
+    onGalleryUploadComplete() {
+      //TODO: save the gallery URLS against post
+      this.displayUploader = false
+      this.displayCheckout = true
     },
     onPaymentInitiated(payment_intent_id) {
       this.post.payment_details.stripe_payment_intent_id = payment_intent_id
