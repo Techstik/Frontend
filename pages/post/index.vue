@@ -85,6 +85,7 @@
                 <FilePond
                   label="Drop images here"
                   :allow-multiple-files="true"
+                  :max-file-size="500"
                   @files-updated="
                     (...args) => onFilesUpdated(...args, 'post_gallery')
                   "
@@ -492,7 +493,7 @@
             </div>
           </a-tab-pane>
           <a-tab-pane key="4" tab="finalize">
-            <div v-show="!displayCheckout">
+            <div v-show="!displayCheckout && !displayUploader">
               <div class="section">
                 <label class="mb-10 d-block">Select an option</label>
                 <a-row class="price-blocks">
@@ -541,7 +542,7 @@
               <MultipleFileUpload
                 heading="Quickly preparing your gallery..."
                 :files="post_gallery.files"
-                base-path="Companies/Gallery"
+                :base-path="`Companies/Galleries/${post.company_name}`"
                 @uploadComplete="onGalleryUploadComplete"
               />
             </div>
@@ -574,7 +575,7 @@
             <a-icon type="right" />
           </a-button>
           <a-button
-            v-show="activeStep == 4 && !displayCheckout"
+            v-show="activeStep == 4 && !displayCheckout && !displayUploader"
             id="proceed_to_payment"
             class="f-r"
             :loading="proceedingToPayment"
@@ -618,7 +619,7 @@ export default {
       editor: ClassicEditor,
       place: null,
       map: null,
-      activeStep: 4,
+      activeStep: 0,
       post_doc_id: null,
       postinfo_doc_id: null,
       post: {
@@ -755,8 +756,16 @@ export default {
         size: 'invisible',
         // eslint-disable-next-line no-unused-vars
         callback: response => {
-          //TODO: check if pro post was selected and gallery exists and switch to uploader if true
-          //TODO: check if gallery was updated otherwise no need to upload
+          if (
+            this.post.type == 'professional' &&
+            this.post_gallery.files.length
+          ) {
+            if (!this.post_gallery.updated) return (this.displayCheckout = true)
+            return (this.displayUploader = true)
+          }
+
+          if (this.post_info.gallery) this.post_info.gallery = []
+
           this.displayCheckout = true
         }
       }
@@ -842,7 +851,7 @@ export default {
 
       if (this.post_logo.files.length) {
         this.post.company_logo = await this.$uploadFile(
-          'Companies/Logos',
+          `Companies/Logos/${this.post.company_name}`,
           this.post_logo.files[0]
         )
         this.post_logo.updated = false
@@ -884,8 +893,8 @@ export default {
           this.$toast.error(`Error: ${JSON.stringify(error)}`)
         })
     },
-    onGalleryUploadComplete() {
-      //TODO: save the gallery URLS against post
+    onGalleryUploadComplete(downloadURLs) {
+      this.post_info.gallery = downloadURLs
       this.displayUploader = false
       this.displayCheckout = true
     },

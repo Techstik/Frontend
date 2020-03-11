@@ -1,8 +1,13 @@
 <template>
-  <div>
-    <h3 v-if="heading" class="subheading">{{ heading }}</h3>
+  <div class="multifileupload">
+    <h4 v-if="heading">{{ heading }}</h4>
     <div class="progress-container">
-      <a-progress type="circle" :percent="progress" />
+      <a-progress
+        type="circle"
+        :percent="progress"
+        :width="80"
+        stroke-color="#161d2e"
+      />
     </div>
   </div>
 </template>
@@ -96,7 +101,15 @@ span {
   font-size: 12px;
 }
 .progress-container,
-h3 {
+h4 {
   text-align: center;
+}
+.progress-container {
+  margin: 30px 0px;
+}
+</style>
+<style>
+.multifileupload .ant-progress-status-success .ant-progress-circle-path {
+  stroke: #fcd668 !important;
 }
 </style>

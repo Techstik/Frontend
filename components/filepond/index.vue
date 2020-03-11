@@ -9,7 +9,7 @@
       accepted-file-types="image/jpeg, image/png"
       server="/api"
       :class="{ 'multi-upload': allowMultipleFiles }"
-      :max-file-size="`${maxFileSize}MB`"
+      :max-file-size="`${maxFileSize}KB`"
       :max-files="maxFiles"
       :files="myFiles"
       @processfile="onFilesUpdated"
@@ -42,7 +42,7 @@ export default {
   props: {
     maxFileSize: {
       type: Number,
-      default: 1
+      default: 1000
     },
     maxFiles: {
       type: Number,
