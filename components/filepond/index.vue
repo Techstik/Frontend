@@ -10,6 +10,7 @@
       server="/api"
       :class="{ 'multi-upload': allowMultipleFiles }"
       :max-file-size="`${maxFileSize}MB`"
+      :max-files="maxFiles"
       :files="myFiles"
       @processfile="onFilesUpdated"
       @processfilerevert="onFilesUpdated"
@@ -42,6 +43,10 @@ export default {
     maxFileSize: {
       type: Number,
       default: 1
+    },
+    maxFiles: {
+      type: Number,
+      default: 6
     },
     allowMultipleFiles: {
       type: Boolean,

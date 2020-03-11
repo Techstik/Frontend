@@ -827,10 +827,10 @@ export default {
     async addPost() {
       this.$toast.info('Saving post...')
 
-      if (this.post_logo.file) {
+      if (this.post_logo.files.length) {
         this.post.company_logo = await this.$uploadFile(
           'Companies/Logos',
-          this.post_logo.file
+          this.post_logo.files[0]
         )
         this.post_logo.updated = false
       }
@@ -852,9 +852,10 @@ export default {
       this.$toast.info('Updating post...')
 
       if (this.post_logo.updated) {
-        this.post.company_logo = this.post_logo.file
-          ? await this.$uploadFile('Companies/Logos', this.post_logo.file)
+        this.post.company_logo = this.post_logo.files.length
+          ? await this.$uploadFile('Companies/Logos', this.post_logo.files[0])
           : null
+        this.post_logo.updated = false
       }
 
       this.$updateDocument('posts', this.post_doc_id, this.post, true)
