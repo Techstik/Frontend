@@ -29,79 +29,104 @@ export default {
       }
     }
   },
-  async mounted() {
-    Mapbox.accessToken = process.env.MAPBOX_ACCESS_TOKEN
-
-    var location = await this.geolocate()
-
-    this.geojson.features[0].geometry.coordinates = [location.lng, location.lat]
-
-    this.map = new Mapbox.Map({
-      container: 'map',
-      style: 'mapbox://styles/matt-greppl/ck5s4wwut3c1p1ir8df8xwlcj',
-      center: [location.lng, location.lat],
-      zoom: 9,
-      minZoom: 1,
-      maxZoom: 15
-    })
-
-    this.displaySelectedLocation(location)
-
-    var canvas = this.map.getCanvasContainer()
-
-    this.map.on('load', () => {
-      // Add a single point to the map
-      this.map.addSource('point', {
-        type: 'geojson',
-        data: this.geojson
-      })
-
-      this.map.addLayer({
-        id: 'point',
-        type: 'circle',
-        source: 'point',
-        paint: {
-          'circle-radius': 10,
-          'circle-color': '#3887be'
+  created() {
+    this.$toast.info('May we use your current location?', {
+      duration: null,
+      action: [
+        {
+          text: 'Sure',
+          onClick: (e, toastObject) => {
+            toastObject.goAway(0)
+          }
+        },
+        {
+          text: 'Nope',
+          onClick: (e, toastObject) => {
+            toastObject.goAway(0)
+          }
         }
-      })
-
-      // When the cursor enters a feature in the point layer, prepare for dragging.
-      this.map.on('mouseenter', 'point', () => {
-        this.map.setPaintProperty('point', 'circle-color', '#3bb2d0')
-        canvas.style.cursor = 'move'
-      })
-
-      this.map.on('mouseleave', 'point', () => {
-        this.map.setPaintProperty('point', 'circle-color', '#3887be')
-        canvas.style.cursor = ''
-      })
-
-      this.map.on('mousedown', 'point', e => {
-        // Prevent the default map drag behavior.
-        e.preventDefault()
-
-        canvas.style.cursor = 'grab'
-
-        this.map.on('mousemove', this.onMapMove)
-        this.map.once('mouseup', this.onMapUp)
-      })
-
-      this.map.on('touchstart', 'point', e => {
-        if (e.points.length !== 1) return
-
-        // Prevent the default map drag behavior.
-        e.preventDefault()
-
-        this.map.on('touchmove', this.onMapMove)
-        this.map.once('touchend', this.onMapUp)
-      })
-
-      this.$refs.map_container.classList.remove('loading')
-      this.loading = false
+      ]
     })
   },
+  mounted() {
+    this.initialize()
+  },
   methods: {
+    async initialize() {
+      Mapbox.accessToken = process.env.MAPBOX_ACCESS_TOKEN
+
+      var location = await this.geolocate()
+
+      this.geojson.features[0].geometry.coordinates = [
+        location.lng,
+        location.lat
+      ]
+
+      this.map = new Mapbox.Map({
+        container: 'map',
+        style: 'mapbox://styles/matt-greppl/ck5s4wwut3c1p1ir8df8xwlcj',
+        center: [location.lng, location.lat],
+        zoom: 9,
+        minZoom: 1,
+        maxZoom: 15
+      })
+
+      this.displaySelectedLocation(location)
+
+      var canvas = this.map.getCanvasContainer()
+
+      this.map.on('load', () => {
+        // Add a single point to the map
+        this.map.addSource('point', {
+          type: 'geojson',
+          data: this.geojson
+        })
+
+        this.map.addLayer({
+          id: 'point',
+          type: 'circle',
+          source: 'point',
+          paint: {
+            'circle-radius': 10,
+            'circle-color': '#3887be'
+          }
+        })
+
+        // When the cursor enters a feature in the point layer, prepare for dragging.
+        this.map.on('mouseenter', 'point', () => {
+          this.map.setPaintProperty('point', 'circle-color', '#3bb2d0')
+          canvas.style.cursor = 'move'
+        })
+
+        this.map.on('mouseleave', 'point', () => {
+          this.map.setPaintProperty('point', 'circle-color', '#3887be')
+          canvas.style.cursor = ''
+        })
+
+        this.map.on('mousedown', 'point', e => {
+          // Prevent the default map drag behavior.
+          e.preventDefault()
+
+          canvas.style.cursor = 'grab'
+
+          this.map.on('mousemove', this.onMapMove)
+          this.map.once('mouseup', this.onMapUp)
+        })
+
+        this.map.on('touchstart', 'point', e => {
+          if (e.points.length !== 1) return
+
+          // Prevent the default map drag behavior.
+          e.preventDefault()
+
+          this.map.on('touchmove', this.onMapMove)
+          this.map.once('touchend', this.onMapUp)
+        })
+
+        this.$refs.map_container.classList.remove('loading')
+        this.loading = false
+      })
+    },
     onMapMove(e) {
       var coords = e.lngLat
 

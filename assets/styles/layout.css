@@ -197,7 +197,7 @@ h4 {
 .validation_error input, .validation_error .ck.ck-editor__editable_inline, .validation_error input:hover, .validation_error input:focus {
   border-color: #fa755a !important;
   background-color: #fa755a;
-  color:white;
+  color: white;
 }
 
 @keyframes shakeError {
@@ -259,6 +259,7 @@ h4 {
   font-family: 'Graphik-Bold';
   height: 47.5px;
 }
+
 .vs__search::placeholder {
   color: #c0c0c0 !important;
 }
@@ -312,4 +313,21 @@ h4 {
 
 b {
   font-family: Graphik-Bold;
+}
+
+.toasted {
+  border-radius: 10px !important;
+}
+
+.toasted .primary.info, .toasted.toasted-primary.info {
+  background: #303c6c !important;
+}
+
+.toasted-container .toasted .action {
+  font-size: 10px !important;
+}
+
+.toasted-container .toasted .action:hover {
+  text-decoration: none !important;
+  color: #fcd668 !important;
 }
