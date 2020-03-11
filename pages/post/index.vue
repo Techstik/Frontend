@@ -74,9 +74,7 @@
               </div>
             </div>
             <div class="section">
-              <div
-                :class="{ validation_error: $v.post.company_website.$error }"
-              >
+              <div>
                 <label class="d-block">Gallery</label>
                 <small>
                   Upload some pictures to allow your applicants to get an idea
@@ -778,12 +776,12 @@ export default {
 
       switch (this.activeStep) {
         case 0:
-          // if (
-          //   this.$v.post.company_name.$invalid ||
-          //   this.$v.post.company_website.$invalid ||
-          //   this.$v.post_info.company_intro.$invalid
-          // )
-          //   return
+          if (
+            this.$v.post.company_name.$invalid ||
+            this.$v.post_info.company_intro.$invalid ||
+            this.$v.post.company_website.$invalid
+          )
+            return
           break
         case 1:
           // if (
@@ -940,7 +938,7 @@ small {
   width: 20vw;
   padding: 25px;
   border: 2px solid white;
-  border-radius: 4px;
+  border-radius: 15px;
   display: inline-block;
   margin: 0 25px;
   text-align: center;

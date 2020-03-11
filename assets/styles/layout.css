@@ -196,6 +196,8 @@ h4 {
 
 .validation_error input, .validation_error .ck.ck-editor__editable_inline, .validation_error input:hover, .validation_error input:focus {
   border-color: #fa755a !important;
+  background-color: #fa755a;
+  color:white;
 }
 
 @keyframes shakeError {
