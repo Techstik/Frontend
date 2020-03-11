@@ -51,7 +51,8 @@ module.exports = {
     '@/plugins/devicon',
     //==== INJECTIONS =======
     '@plugins/injections/storage',
-    '@plugins/injections/firestore'
+    '@plugins/injections/firestore',
+    '@plugins/injections/locationservices'
   ],
   /*
    ** Nuxt.js dev-modules

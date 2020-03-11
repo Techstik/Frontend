@@ -10,6 +10,7 @@
 <script>
 import 'mapbox-gl/dist/mapbox-gl.css'
 import Mapbox from 'mapbox-gl'
+import { mapState } from 'vuex'
 
 export default {
   data() {
@@ -29,24 +30,13 @@ export default {
       }
     }
   },
-  created() {
-    this.$toast.info('May we use your current location?', {
-      duration: null,
-      action: [
-        {
-          text: 'Sure',
-          onClick: (e, toastObject) => {
-            toastObject.goAway(0)
-          }
-        },
-        {
-          text: 'Nope',
-          onClick: (e, toastObject) => {
-            toastObject.goAway(0)
-          }
-        }
-      ]
+  computed: {
+    ...mapState({
+      requestedLocationPermission: state => state.location.requestedPermission
     })
+  },
+  created() {
+    if (!this.requestedLocationPermission) this.$requestLocationPermission()
   },
   mounted() {
     this.initialize()

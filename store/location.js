@@ -1,13 +1,13 @@
 export const state = () => ({
-  askedPermission: false,
+  requestedPermission: false,
   permissionGranted: false
 })
 
 export const mutations = {
-  setAsked(state, { value }) {
-    state.askedPermission = value
+  setRequested(state, value) {
+    state.requestedPermission = value
   },
-  setGranted(state, { value }) {
+  setGranted(state, value) {
     state.permissionGranted = value
   }
 }
