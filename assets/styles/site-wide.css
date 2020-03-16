@@ -78,7 +78,8 @@
   border: 2px solid #ffffff !important;
   min-height: 100px;
   background-color: white;
-  font-family: Graphik-Bold;
+  font-family: Graphik;
+  color: black;
 }
 
 .ck.ck-editor__editable_inline:hover {
@@ -121,7 +122,7 @@ canvas.mapboxgl-canvas:focus {
 .ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-rounded-corners {
   border-radius: 10px !important;
   transition: all 0.3s;
-  font-size: 14px;
+  font-size: 16px;
   padding: 0 10px 0 35px;
 }
 

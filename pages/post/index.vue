@@ -373,8 +373,10 @@
                 <span class="cursor-pointer">
                   <a-tooltip>
                     <template slot="title">
-                      <p>These titles differ from company to company - however, we
-                      use the following traits to identify each:</p>
+                      <p>
+                        These titles differ from company to company - however,
+                        we use the following traits to identify each:
+                      </p>
 
                       <b>Entry-level</b>
                       <ul>
@@ -384,7 +386,7 @@
                       </ul>
                       <b>Intermediate</b>
                       <ul>
-                        <li>Works idependently on tasks</li>
+                        <li>Works independently on tasks</li>
                         <li>Proficient in one or more areas</li>
                         <li>Can be assigned more complex tasks</li>
                       </ul>
@@ -742,7 +744,7 @@ import firebase from 'firebase'
 import { mapState } from 'vuex'
 
 const currencyValidator = value =>
-  parseInt(value ? '1' : value.replace(',', '')) > 0
+  parseInt(!value ? '1' : value.replace(',', '')) > 0
 
 export default {
   components: {
@@ -760,11 +762,10 @@ export default {
       editor: ClassicEditor,
       place: null,
       map: null,
-      activeStep: 1,
+      activeStep: 0,
       post_doc_id: null,
       postinfo_doc_id: null,
       post: {
-        active: false,
         type: 'standard',
         position: '',
         company_logo: '',
@@ -1202,7 +1203,7 @@ small {
 .price-block {
   padding: 15px;
   background-color: white;
-  border-radius: 6px;
+  border-radius: 15px;
   cursor: pointer;
 }
 .price-block.active,

@@ -80,7 +80,7 @@
       <p>{{ technology.name }}</p>
     </div>
     <div v-if="!searchedTech.length">
-      <p>
+      <p class="not-found">
         Whoops - we dont seem to have what you're looking for, but you may still
         select it!
       </p>
@@ -188,6 +188,9 @@ export default {
   position: relative;
   display: inline-block;
 }
+.not-found {
+  font-size: 15px;
+}
 .ant-badge-count {
   cursor: pointer;
 }
@@ -228,8 +231,13 @@ export default {
 .validation_error .tech-blocks input {
   border-color: white !important;
   background-color: white !important;
+  color: black !important;
 }
 .validation_error .tech-blocks input:hover {
   border-color: #e4e4e4 !important;
+}
+
+.validation_error .tech-blocks input:focus {
+  border-color: #f4976c !important;
 }
 </style>
