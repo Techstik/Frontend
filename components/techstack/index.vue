@@ -121,7 +121,9 @@ export default {
       return !this.searchWord
         ? this.tech
         : this.tech.filter(_tech => {
-            return _tech.name.toLowerCase().includes(this.searchWord)
+            return _tech.name
+              .toLowerCase()
+              .includes(this.searchWord.toLowerCase())
           })
     }
   },

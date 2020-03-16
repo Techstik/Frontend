@@ -57,7 +57,10 @@
                       :number-style="{ backgroundColor: '#f4976c' }"
                     />
                   </label>
-                  <small>Some text here (keep it short)</small>
+                  <small
+                    >Tell us about what you do, but keep it short and
+                    precise!</small
+                  >
                   <ckeditor
                     v-model="$v.post_info.company_intro.$model"
                     :editor="editor"
@@ -82,8 +85,8 @@
               <div>
                 <label class="d-block">Gallery</label>
                 <small>
-                  Upload some pictures and allow your applicants to get an idea
-                  of your company or work space
+                  Upload some pictures of your team, work space or anything
+                  awesome
                 </small>
                 <FilePond
                   label="Drop images here"
@@ -124,8 +127,8 @@
             <div v-if="post.location_based" class="section">
               <label class="d-block">Where are you based?</label>
               <small>
-                Your company HQ - it's nice to see, even if this is a remote
-                position
+                Your comapny HQ - If you'd prefer not to show it, drop the pin
+                somewhere in the city it's located
               </small>
               <Map @location-updated="onLocationUpdated" />
             </div>
@@ -136,13 +139,17 @@
                 id="id_position"
                 :class="{ validation_error: $v.post.position.$error }"
               >
-                <label class="mb-10 d-block">
+                <label class="d-block">
                   Position
                   <a-badge
                     count="required"
                     :number-style="{ backgroundColor: '#f4976c' }"
                   />
                 </label>
+                <small>
+                  e.g. 'Frontend React Developer' or 'Digital Marketer' or 'UX
+                  Designer'
+                </small>
                 <a-input v-model="$v.post.position.$model"></a-input>
               </div>
               <div
@@ -158,7 +165,10 @@
                     :number-style="{ backgroundColor: '#f4976c' }"
                   />
                 </label>
-                <small>Some text here (keep it short)</small>
+                <small
+                  >A bit of information such as what they'll be working on, who
+                  they'll be working with, hours etc.</small
+                >
                 <ckeditor
                   v-model="$v.post_info.about_position.$model"
                   :editor="editor"
@@ -331,8 +341,8 @@
                   />
                 </label>
                 <small>
-                  Select a few technologies you use (max 8) and rank them from
-                  most important
+                  Select a few technologies that will be used (max 8) and
+                  <b>rank them</b> from most important
                 </small>
                 <div
                   id="id_tech"
@@ -380,7 +390,9 @@
                   :number-style="{ backgroundColor: '#f4976c' }"
                 />
               </label>
-              <small>Some text here (keep it short)</small>
+              <small
+                >e.g. 'Great self-discipline' or '2+ years Go experience'</small
+              >
               <div class="requirements">
                 <div
                   v-for="(v, index) in $v.post_info.requirements.$each.$iter"
@@ -410,7 +422,7 @@
               <label class="d-block">Residing Restrictions</label>
               <small>
                 If applicants should reside in close proximity, certain
-                countries or timezones
+                countries or timezones, select them here
               </small>
               <a-row type="flex" align="middle">
                 <a-col :span="8">
@@ -566,7 +578,7 @@
                 <a-input v-model="$v.post_info.application_url.$model" />
               </div>
               <div class="align-center mtb-10">
-                <label>OR</label>
+                <label>AND / OR</label>
               </div>
               <div
                 id="id_application_instr"
@@ -578,7 +590,10 @@
                 ]"
               >
                 <label class="d-block">Instructions</label>
-                <small>Some text here (keep it short)</small>
+                <small
+                  >Maybe you'd like applicants to send their resume to an email
+                  address or you want to outline your interview process</small
+                >
                 <ckeditor
                   v-model="$v.post_info.application_instr.$model"
                   :editor="editor"
@@ -627,7 +642,11 @@
                 </a-row>
               </div>
               <div class="section">
-                <label class="mb-10 d-block">Preview</label>
+                <label class="d-block">Preview</label>
+                <small
+                  >Check out how your post will be displayed to the
+                  community!</small
+                >
                 <div class="preview-container">
                   <ListingPreview v-model="post" />
                 </div>
@@ -916,51 +935,51 @@ export default {
     nextStep() {
       this.$v.$touch()
 
-      let error_detected = false
-      switch (this.activeStep) {
-        case 0:
-          if (
-            this.$v.post.company_name.$invalid ||
-            this.$v.post_info.company_intro.$invalid ||
-            this.$v.post.company_website.$invalid
-          )
-            error_detected = true
-          break
-        case 1:
-          if (
-            this.$v.post.position.$invalid ||
-            this.$v.post_info.about_position.$invalid ||
-            this.$v.post_info.responsibilities.$invalid ||
-            this.$v.post.salary.maximum.$invalid ||
-            this.$v.post.salary.minimum.$invalid ||
-            this.$v.post.tech.$invalid
-          )
-            error_detected = true
-          break
-        case 2:
-          if (
-            this.$v.post.experience.$invalid ||
-            this.$v.post_info.requirements.$invalid ||
-            this.$v.post.residing_restrictions.by_country.countries.$invalid ||
-            this.$v.post.residing_restrictions.by_timezone.timezones.$invalid
-          )
-            error_detected = true
-          break
-        case 3:
-          if (
-            this.$v.post_info.application_url.$invalid ||
-            this.$v.post_info.application_instr.$invalid
-          )
-            error_detected = true
-          break
-      }
+      // let error_detected = false
+      // switch (this.activeStep) {
+      //   case 0:
+      //     if (
+      //       this.$v.post.company_name.$invalid ||
+      //       this.$v.post_info.company_intro.$invalid ||
+      //       this.$v.post.company_website.$invalid
+      //     )
+      //       error_detected = true
+      //     break
+      //   case 1:
+      //     if (
+      //       this.$v.post.position.$invalid ||
+      //       this.$v.post_info.about_position.$invalid ||
+      //       this.$v.post_info.responsibilities.$invalid ||
+      //       this.$v.post.salary.maximum.$invalid ||
+      //       this.$v.post.salary.minimum.$invalid ||
+      //       this.$v.post.tech.$invalid
+      //     )
+      //       error_detected = true
+      //     break
+      //   case 2:
+      //     if (
+      //       this.$v.post.experience.$invalid ||
+      //       this.$v.post_info.requirements.$invalid ||
+      //       this.$v.post.residing_restrictions.by_country.countries.$invalid ||
+      //       this.$v.post.residing_restrictions.by_timezone.timezones.$invalid
+      //     )
+      //       error_detected = true
+      //     break
+      //   case 3:
+      //     if (
+      //       this.$v.post_info.application_url.$invalid ||
+      //       this.$v.post_info.application_instr.$invalid
+      //     )
+      //       error_detected = true
+      //     break
+      // }
 
-      if (error_detected) {
-        return this.$nextTick(() => {
-          var element = document.getElementsByClassName('validation_error')[0]
-          this.$scrollTo(`#${element.id}`)
-        })
-      }
+      // if (error_detected) {
+      //   return this.$nextTick(() => {
+      //     var element = document.getElementsByClassName('validation_error')[0]
+      //     this.$scrollTo(`#${element.id}`)
+      //   })
+      // }
 
       this.$v.$reset()
       ++this.activeStep
