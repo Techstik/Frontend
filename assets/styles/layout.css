@@ -190,14 +190,18 @@ h4 {
   animation-timing-function: ease-in-out;
 }
 
-.validation_error input, .validation_error .ck.ck-editor__editable_inline, .validation_error input:hover, .validation_error .ant-input-affix-wrapper:hover .ant-input:not(.ant-input-disabled), .validation_error input:focus {
+.validation_error input, .validation_error .ck.ck-editor__editable_inline, .validation_error .vs__dropdown-toggle, .validation_error .vs__search::placeholder, .validation_error input:hover, .validation_error .ant-input-affix-wrapper:hover .ant-input:not(.ant-input-disabled), .validation_error .ck.ck-editor__editable_inline:hover, .validation_error input:focus, .validation_error .ck.ck-editor__editable_inline:focus {
   border-color: #fa755a !important;
-  background-color: #fa755a;
+  background-color: #fa755a !important;
+  color: white !important;
+}
+
+.validation_error .ant-input-affix-wrapper .ant-input-prefix, .validation_error .ant-input-affix-wrapper .ant-input-suffix {
   color: white;
 }
 
-.validation_error .ant-input-affix-wrapper .ant-input-prefix, .validation_error .ant-input-affix-wrapper .ant-input-suffix{
-  color: white;
+.validation_error .vs__open-indicator{
+  fill: white;
 }
 
 @keyframes shakeError {
@@ -334,4 +338,7 @@ b {
 
 .ant-input-group .ant-input {
   margin-bottom: 10px !important;
+}
+.mtb-10{
+  margin: 10px 0px;
 }

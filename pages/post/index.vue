@@ -30,7 +30,10 @@
               />
             </div>
             <div class="section">
-              <div :class="{ validation_error: $v.post.company_name.$error }">
+              <div
+                id="id_company_name"
+                :class="{ validation_error: $v.post.company_name.$error }"
+              >
                 <label class="mb-10 d-block">
                   Company Name
                   <a-badge
@@ -42,6 +45,7 @@
               </div>
               <div class="section">
                 <div
+                  id="id_company_intro"
                   :class="{
                     validation_error: $v.post_info.company_intro.$error
                   }"
@@ -64,6 +68,7 @@
             </div>
             <div>
               <div
+                id="id_company_website"
                 :class="{ validation_error: $v.post.company_website.$error }"
               >
                 <label class="mb-10 d-block">Website URL</label>
@@ -77,7 +82,7 @@
               <div>
                 <label class="d-block">Gallery</label>
                 <small>
-                  Upload some pictures to allow your applicants to get an idea
+                  Upload some pictures and allow your applicants to get an idea
                   of your company or work space
                 </small>
                 <FilePond
@@ -127,7 +132,10 @@
           </a-tab-pane>
           <a-tab-pane key="1" tab="role">
             <div class="section">
-              <div :class="{ validation_error: $v.post.position.$error }">
+              <div
+                id="id_position"
+                :class="{ validation_error: $v.post.position.$error }"
+              >
                 <label class="mb-10 d-block">
                   Position
                   <a-badge
@@ -138,6 +146,7 @@
                 <a-input v-model="$v.post.position.$model"></a-input>
               </div>
               <div
+                id="id_position_about"
                 :class="{
                   validation_error: $v.post_info.about_position.$error
                 }"
@@ -169,6 +178,7 @@
                 <div
                   v-for="(v, index) in $v.post_info.responsibilities.$each
                     .$iter"
+                  id="id_responsibilities"
                   :key="`req_${index}`"
                   :class="{ validation_error: v.$error }"
                 >
@@ -256,6 +266,7 @@
               <a-col :span="12">
                 <div v-show="post.salary.set">
                   <div
+                    id="id_salary_max_1"
                     :class="{
                       validation_error: $v.post.salary.maximum.$error
                     }"
@@ -274,6 +285,7 @@
                     <a-row>
                       <a-col :span="11">
                         <div
+                          id="id_salary_min"
                           :class="{
                             validation_error: $v.post.salary.minimum.$error
                           }"
@@ -290,6 +302,7 @@
                       <a-col span="2" class="align-center">-</a-col>
                       <a-col :span="11">
                         <div
+                          id="id_salary_max_2"
                           :class="{
                             validation_error: $v.post.salary.maximum.$error
                           }"
@@ -322,6 +335,7 @@
                   most important
                 </small>
                 <div
+                  id="id_tech"
                   :class="{
                     validation_error: $v.post.tech.$error
                   }"
@@ -350,6 +364,7 @@
                 />
               </label>
               <div
+                id="id_experience"
                 :class="{
                   validation_error: $v.post.experience.$error
                 }"
@@ -369,6 +384,7 @@
               <div class="requirements">
                 <div
                   v-for="(v, index) in $v.post_info.requirements.$each.$iter"
+                  id="id_requirements"
                   :key="`req_${index}`"
                   :class="{ validation_error: v.$error }"
                 >
@@ -443,10 +459,19 @@
               </a-row>
               <div
                 v-show="post.residing_restrictions.by_country.restricted"
-                class="mt-15"
+                id="id_restrict_country"
+                :class="[
+                  {
+                    validation_error:
+                      $v.post.residing_restrictions.by_country.countries.$error
+                  },
+                  'mt-15'
+                ]"
               >
                 <v-select
-                  v-model="post.residing_restrictions.by_country.countries"
+                  v-model="
+                    $v.post.residing_restrictions.by_country.countries.$model
+                  "
                   class="vs-multiple"
                   label="name"
                   placeholder="Select the countries here"
@@ -479,10 +504,19 @@
               </div>
               <div
                 v-show="post.residing_restrictions.by_timezone.restricted"
-                class="mt-15"
+                id="id_restrict_timezone"
+                :class="[
+                  {
+                    validation_error:
+                      $v.post.residing_restrictions.by_timezone.timezones.$error
+                  },
+                  'mt-15'
+                ]"
               >
                 <v-select
-                  v-model="post.residing_restrictions.by_timezone.timezones"
+                  v-model="
+                    $v.post.residing_restrictions.by_timezone.timezones.$model
+                  "
                   class="vs-multiple"
                   label="name"
                   placeholder="Select the timezone(s) here"
@@ -519,11 +553,38 @@
           </a-tab-pane>
           <a-tab-pane key="3" tab="application">
             <div class="section">
-              <label class="d-block mb-10">Application URL</label>
-              <a-input />
-              <label class="d-block">Instructions</label>
-              <small>Some text here (keep it short)</small>
-              <ckeditor :editor="editor" class="h-200"></ckeditor>
+              <div
+                id="id_application_url"
+                :class="[
+                  {
+                    validation_error: $v.post_info.application_url.$error
+                  },
+                  'mt-15'
+                ]"
+              >
+                <label class="d-block mb-10">Application URL</label>
+                <a-input v-model="$v.post_info.application_url.$model" />
+              </div>
+              <div class="align-center mtb-10">
+                <label>OR</label>
+              </div>
+              <div
+                id="id_application_instr"
+                :class="[
+                  {
+                    validation_error: $v.post_info.application_instr.$error
+                  },
+                  'mt-15'
+                ]"
+              >
+                <label class="d-block">Instructions</label>
+                <small>Some text here (keep it short)</small>
+                <ckeditor
+                  v-model="$v.post_info.application_instr.$model"
+                  :editor="editor"
+                  class="h-200"
+                ></ckeditor>
+              </div>
             </div>
           </a-tab-pane>
           <a-tab-pane key="4" tab="finalize">
@@ -591,20 +652,11 @@
           </a-tab-pane>
         </a-tabs>
         <div class="navigation">
-          <a-button
-            v-if="activeStep > 0 && !hideButtons"
-            v-scroll-to="'#container'"
-            @click="previousStep"
-          >
+          <a-button v-if="activeStep > 0 && !hideButtons" @click="previousStep">
             <a-icon type="left" />
             {{ displayCheckout ? 'Back' : 'Previous' }}
           </a-button>
-          <a-button
-            v-if="activeStep < 4"
-            v-scroll-to="'#container'"
-            class="f-r"
-            @click="nextStep"
-          >
+          <a-button v-if="activeStep < 4" class="f-r" @click="nextStep">
             Next
             <a-icon type="right" />
           </a-button>
@@ -656,7 +708,7 @@ export default {
       editor: ClassicEditor,
       place: null,
       map: null,
-      activeStep: 2,
+      activeStep: 0,
       post_doc_id: null,
       postinfo_doc_id: null,
       post: {
@@ -719,7 +771,9 @@ export default {
           {
             responsibility: ''
           }
-        ]
+        ],
+        application_url: '',
+        application_instr: ''
       },
       post_logo: {
         files: [],
@@ -768,6 +822,24 @@ export default {
       experience: {
         required,
         minLength: minLength(1)
+      },
+      residing_restrictions: {
+        by_country: {
+          countries: {
+            required: requiredIf(function() {
+              return this.post.residing_restrictions.by_country.restricted
+            }),
+            minLength: minLength(1)
+          }
+        },
+        by_timezone: {
+          timezones: {
+            required: requiredIf(function() {
+              return this.post.residing_restrictions.by_timezone.restricted
+            }),
+            minLength: minLength(1)
+          }
+        }
       }
     },
     post_info: {
@@ -794,6 +866,17 @@ export default {
             required
           }
         }
+      },
+      application_url: {
+        required: requiredIf(function() {
+          return !this.post_info.application_instr.length
+        }),
+        url
+      },
+      application_instr: {
+        required: requiredIf(function() {
+          return !this.post_info.application_url.length
+        })
       }
     }
   },
@@ -833,40 +916,65 @@ export default {
     nextStep() {
       this.$v.$touch()
 
+      let error_detected = false
       switch (this.activeStep) {
         case 0:
-          // if (
-          //   this.$v.post.company_name.$invalid ||
-          //   this.$v.post_info.company_intro.$invalid ||
-          //   this.$v.post.company_website.$invalid
-          // )
-          //   return
+          if (
+            this.$v.post.company_name.$invalid ||
+            this.$v.post_info.company_intro.$invalid ||
+            this.$v.post.company_website.$invalid
+          )
+            error_detected = true
           break
         case 1:
-          // if (
-          //   this.$v.post.position.$invalid ||
-          //   this.$v.post_info.about_position.$invalid ||
-          //   this.$v.post_info.responsibilities.$invalid ||
-          //   this.$v.post.salary.maximum.$invalid ||
-          //   this.$v.post.salary.minimum.$invalid ||
-          //   this.$v.post.tech.$invalid
-          // )
-          //  return
+          if (
+            this.$v.post.position.$invalid ||
+            this.$v.post_info.about_position.$invalid ||
+            this.$v.post_info.responsibilities.$invalid ||
+            this.$v.post.salary.maximum.$invalid ||
+            this.$v.post.salary.minimum.$invalid ||
+            this.$v.post.tech.$invalid
+          )
+            error_detected = true
           break
         case 2:
-          if (this.$v.post_info.requirements.$invalid) return
+          if (
+            this.$v.post.experience.$invalid ||
+            this.$v.post_info.requirements.$invalid ||
+            this.$v.post.residing_restrictions.by_country.countries.$invalid ||
+            this.$v.post.residing_restrictions.by_timezone.timezones.$invalid
+          )
+            error_detected = true
           break
+        case 3:
+          if (
+            this.$v.post_info.application_url.$invalid ||
+            this.$v.post_info.application_instr.$invalid
+          )
+            error_detected = true
+          break
+      }
+
+      if (error_detected) {
+        return this.$nextTick(() => {
+          var element = document.getElementsByClassName('validation_error')[0]
+          this.$scrollTo(`#${element.id}`)
+        })
       }
 
       this.$v.$reset()
       ++this.activeStep
+      this.$scrollTo('#container')
     },
     previousStep() {
       if (this.displayCheckout) {
         this.displayCheckout = false
         this.proceedingToPayment = false
         window.recaptchaVerifier.reset()
-      } else --this.activeStep
+      } else {
+        --this.activeStep
+        this.$scrollTo('#container')
+      }
     },
     addResponsibility() {
       this.post_info.responsibilities.push({ responsibility: '' })

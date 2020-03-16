@@ -225,7 +225,7 @@ export default {
 }
 .validation_error .tech-blocks input {
   border-color: white !important;
-  background-color: white;
+  background-color: white !important;
 }
 .validation_error .tech-blocks input:hover {
   border-color: #e4e4e4 !important;
