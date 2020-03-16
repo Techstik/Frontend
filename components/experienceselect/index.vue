@@ -48,6 +48,9 @@ export default {
       selectedExperience: ['entry-level']
     }
   },
+  created() {
+    this.$emit('input', this.selectedExperience)
+  },
   methods: {
     updateSelection(experience) {
       if (this.selectedExperience.includes(experience)) {
@@ -83,5 +86,11 @@ export default {
   width: 130px;
   font-family: Graphik-Bold;
   text-align: center;
+}
+</style>
+<style>
+.validation_error .ant-checkbox-inner {
+  border-color: #fa755a;
+  background-color: #fa755a;
 }
 </style>

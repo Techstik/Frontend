@@ -193,6 +193,9 @@ export default {
   top: 5px;
   right: 5px;
 }
+.placeholder {
+  pointer-events: none;
+}
 .placeholder .tech-icon {
   color: transparent;
   background: transparent;
@@ -213,5 +216,18 @@ export default {
   margin: auto;
   margin-top: 15px;
   margin-bottom: 15px;
+}
+</style>
+<style>
+.validation_error .placeholder .tech-icon {
+  border-color: #fa755a;
+  background-color: #fa755a;
+}
+.validation_error .tech-blocks input {
+  border-color: white !important;
+  background-color: white;
+}
+.validation_error .tech-blocks input:hover {
+  border-color: #e4e4e4 !important;
 }
 </style>

@@ -190,13 +190,13 @@ h4 {
   animation-timing-function: ease-in-out;
 }
 
-.validation_error label, .validation_error small {
-  color: #fa755a;
-}
-
-.validation_error input, .validation_error .ck.ck-editor__editable_inline, .validation_error input:hover, .validation_error input:focus {
+.validation_error input, .validation_error .ck.ck-editor__editable_inline, .validation_error input:hover, .validation_error .ant-input-affix-wrapper:hover .ant-input:not(.ant-input-disabled), .validation_error input:focus {
   border-color: #fa755a !important;
   background-color: #fa755a;
+  color: white;
+}
+
+.validation_error .ant-input-affix-wrapper .ant-input-prefix, .validation_error .ant-input-affix-wrapper .ant-input-suffix{
   color: white;
 }
 
@@ -330,4 +330,8 @@ b {
 .toasted-container .toasted .action:hover {
   text-decoration: none !important;
   color: #fcd668 !important;
+}
+
+.ant-input-group .ant-input {
+  margin-bottom: 10px !important;
 }

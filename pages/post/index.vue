@@ -137,7 +137,11 @@
                 </label>
                 <a-input v-model="$v.post.position.$model"></a-input>
               </div>
-              <div :class="{ validation_error: $v.post_info.position.$error }">
+              <div
+                :class="{
+                  validation_error: $v.post_info.about_position.$error
+                }"
+              >
                 <label class="d-block">
                   About the position
                   <a-badge
@@ -147,7 +151,7 @@
                 </label>
                 <small>Some text here (keep it short)</small>
                 <ckeditor
-                  v-model="$v.post_info.position.$model"
+                  v-model="$v.post_info.about_position.$model"
                   :editor="editor"
                   class="h-200"
                 ></ckeditor>
@@ -166,7 +170,7 @@
                   v-for="(v, index) in $v.post_info.responsibilities.$each
                     .$iter"
                   :key="`req_${index}`"
-                  :class="{ validation_error: v.$error && index < 3 }"
+                  :class="{ validation_error: v.$error }"
                 >
                   <a-input v-model="v.responsibility.$model">
                     <a-icon
@@ -197,6 +201,7 @@
                     @click="setSalary(true)"
                   >
                     <h5>Set Salary</h5>
+                    <small>per year</small>
                   </div>
                 </a-col>
                 <a-col :span="12">
@@ -207,7 +212,8 @@
                     ]"
                     @click="setSalary(false)"
                   >
-                    <h5>Experience Dependent</h5>
+                    <h5>Estimate</h5>
+                    <small>per year</small>
                   </div>
                 </a-col>
               </a-row>
@@ -249,35 +255,53 @@
               </a-col>
               <a-col :span="12">
                 <div v-show="post.salary.set">
-                  <input
-                    v-model="post.salary.maximum"
-                    v-currency="{
-                      precision: 0
+                  <div
+                    :class="{
+                      validation_error: $v.post.salary.maximum.$error
                     }"
-                    class="ant-input"
-                  />
+                  >
+                    <input
+                      v-model="$v.post.salary.maximum.$model"
+                      v-currency="{
+                        precision: 0
+                      }"
+                      class="ant-input"
+                    />
+                  </div>
                 </div>
                 <div v-show="!post.salary.set">
                   <a-input-group>
                     <a-row>
                       <a-col :span="11">
-                        <input
-                          v-model="post.salary.minimum"
-                          v-currency="{
-                            precision: 0
+                        <div
+                          :class="{
+                            validation_error: $v.post.salary.minimum.$error
                           }"
-                          class="ant-input"
-                        />
+                        >
+                          <input
+                            v-model="$v.post.salary.minimum.$model"
+                            v-currency="{
+                              precision: 0
+                            }"
+                            class="ant-input"
+                          />
+                        </div>
                       </a-col>
                       <a-col span="2" class="align-center">-</a-col>
                       <a-col :span="11">
-                        <input
-                          v-model="post.salary.maximum"
-                          v-currency="{
-                            precision: 0
+                        <div
+                          :class="{
+                            validation_error: $v.post.salary.maximum.$error
                           }"
-                          class="ant-input"
-                        />
+                        >
+                          <input
+                            v-model="$v.post.salary.maximum.$model"
+                            v-currency="{
+                              precision: 0
+                            }"
+                            class="ant-input"
+                          />
+                        </div>
                       </a-col>
                     </a-row>
                   </a-input-group>
@@ -297,7 +321,13 @@
                   Select a few technologies you use (max 8) and rank them from
                   most important
                 </small>
-                <TechStack v-model="post.tech" />
+                <div
+                  :class="{
+                    validation_error: $v.post.tech.$error
+                  }"
+                >
+                  <TechStack v-model="$v.post.tech.$model" />
+                </div>
               </div>
             </div>
           </a-tab-pane>
@@ -319,7 +349,13 @@
                   :number-style="{ backgroundColor: '#f4976c' }"
                 />
               </label>
-              <ExperienceSelect v-model="post.experience" />
+              <div
+                :class="{
+                  validation_error: $v.post.experience.$error
+                }"
+              >
+                <ExperienceSelect v-model="$v.post.experience.$model" />
+              </div>
             </div>
             <div class="section">
               <label class="d-block">
@@ -334,7 +370,7 @@
                 <div
                   v-for="(v, index) in $v.post_info.requirements.$each.$iter"
                   :key="`req_${index}`"
-                  :class="{ validation_error: v.$error && index < 2 }"
+                  :class="{ validation_error: v.$error }"
                 >
                   <a-input v-model="v.requirement.$model">
                     <a-icon
@@ -601,6 +637,9 @@ import { auth, db } from '@/plugins/firebase'
 import firebase from 'firebase'
 import { mapState } from 'vuex'
 
+const currencyValidator = value =>
+  parseInt(value ? '1' : value.replace(',', '')) > 0
+
 export default {
   components: {
     ckeditor: CKEditor.component,
@@ -617,7 +656,7 @@ export default {
       editor: ClassicEditor,
       place: null,
       map: null,
-      activeStep: 0,
+      activeStep: 2,
       post_doc_id: null,
       postinfo_doc_id: null,
       post: {
@@ -661,7 +700,7 @@ export default {
       },
       post_info: {
         company_intro: '',
-        position: '',
+        about_position: '',
         requirements: [
           {
             requirement: ''
@@ -709,13 +748,33 @@ export default {
           return website.length
         }),
         url
+      },
+      salary: {
+        maximum: {
+          required,
+          currencyValidator
+        },
+        minimum: {
+          required: requiredIf(function() {
+            return !this.post.salary.set
+          }),
+          currencyValidator
+        }
+      },
+      tech: {
+        required,
+        minLength: minLength(2)
+      },
+      experience: {
+        required,
+        minLength: minLength(1)
       }
     },
     post_info: {
       company_intro: {
         required
       },
-      position: {
+      about_position: {
         required
       },
       requirements: {
@@ -776,22 +835,26 @@ export default {
 
       switch (this.activeStep) {
         case 0:
-          if (
-            this.$v.post.company_name.$invalid ||
-            this.$v.post_info.company_intro.$invalid ||
-            this.$v.post.company_website.$invalid
-          )
-            return
-          break
-        case 1:
           // if (
-          //   this.$v.post_info.responsibilities.$invalid ||
-          //   this.$v.post_info.role.$invalid
+          //   this.$v.post.company_name.$invalid ||
+          //   this.$v.post_info.company_intro.$invalid ||
+          //   this.$v.post.company_website.$invalid
           // )
           //   return
           break
+        case 1:
+          // if (
+          //   this.$v.post.position.$invalid ||
+          //   this.$v.post_info.about_position.$invalid ||
+          //   this.$v.post_info.responsibilities.$invalid ||
+          //   this.$v.post.salary.maximum.$invalid ||
+          //   this.$v.post.salary.minimum.$invalid ||
+          //   this.$v.post.tech.$invalid
+          // )
+          //  return
+          break
         case 2:
-          // if (this.$v.post_info.requirements.$invalid) return
+          if (this.$v.post_info.requirements.$invalid) return
           break
       }
 
@@ -945,6 +1008,10 @@ small {
   background-color: white;
   transition: all 0.2s;
 }
+.selection-block h5,
+.selection-block small {
+  margin: 0;
+}
 .selection-block:hover {
   cursor: pointer;
 }
@@ -962,6 +1029,9 @@ small {
 .salary-block {
   max-width: 800px;
   margin: auto;
+}
+.salary-block input {
+  text-align: right;
 }
 .preview-container {
   padding: 30px;
