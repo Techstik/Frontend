@@ -242,7 +242,7 @@
                       ]"
                       @click="setSalary(false)"
                     >
-                      <h5>Dependent</h5>
+                      <h5>Salary Range</h5>
                       <small>per year</small>
                     </div>
                   </a-col>
@@ -352,8 +352,8 @@
                   />
                 </label>
                 <small>
-                  Select a few technologies that will be used (max 8) and
-                  <b>rank them</b> from most important
+                  Select a few technologies that will be used and
+                  <b>rank them (drag-and-drop)</b> from most important
                 </small>
                 <div
                   id="id_tech"
@@ -372,10 +372,32 @@
                 Experience Level(s) Required
                 <span class="cursor-pointer">
                   <a-tooltip>
-                    <!-- <template slot="title">
-                      Add some text here explaing how we got to these
-                      values</template
-                    >-->
+                    <template slot="title">
+                      <p>These titles differ from company to company - however, we
+                      use the following traits to identify each:</p>
+
+                      <b>Entry-level</b>
+                      <ul>
+                        <li>Learning on the job</li>
+                        <li>Basic knowledge - expect risks</li>
+                        <li>Requires teaching and mentorship</li>
+                      </ul>
+                      <b>Intermediate</b>
+                      <ul>
+                        <li>Works idependently on tasks</li>
+                        <li>Proficient in one or more areas</li>
+                        <li>Can be assigned more complex tasks</li>
+                      </ul>
+                      <b>Senior</b>
+                      <ul>
+                        <li>Works autonomously</li>
+                        <li>Experts in their area</li>
+                        <li>Mentors others</li>
+                        <li>
+                          Easily identifies issues / has solved them before
+                        </li>
+                      </ul>
+                    </template>
                     <a-icon type="info-circle" />
                   </a-tooltip>
                 </span>

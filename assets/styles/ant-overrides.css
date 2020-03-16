@@ -182,12 +182,12 @@
 }
 
 .ant-tooltip-inner {
-    background-color: #fcd669;
-    color: black;
+    background-color: #303c6c;
+    color: white;
 }
 
 .ant-tooltip-placement-top .ant-tooltip-arrow, .ant-tooltip-placement-topLeft .ant-tooltip-arrow, .ant-tooltip-placement-topRight .ant-tooltip-arrow {
-    border-top-color: #fcd669;
+    border-top-color: #303c6c;
 }
 
 .ant-input-group-addon .ant-select-open .ant-select-selection, .ant-input-group-addon .ant-select-focused .ant-select-selection {
