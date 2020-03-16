@@ -210,127 +210,129 @@
                 </a-button>
               </div>
             </div>
-            <div class="section">
-              <a-row type="flex" align="middle">
+            <div class="mtb-25">
+              <div class="section">
+                <a-row type="flex" align="middle">
+                  <a-col :span="12">
+                    <div
+                      :class="[
+                        { 'selection-block-active': post.salary.set },
+                        'selection-block f-r'
+                      ]"
+                      @click="setSalary(true)"
+                    >
+                      <h5>Set Salary</h5>
+                      <small>per year</small>
+                    </div>
+                  </a-col>
+                  <a-col :span="12">
+                    <div
+                      :class="[
+                        { 'selection-block-active': !post.salary.set },
+                        'selection-block'
+                      ]"
+                      @click="setSalary(false)"
+                    >
+                      <h5>Estimate</h5>
+                      <small>per year</small>
+                    </div>
+                  </a-col>
+                </a-row>
+              </div>
+              <a-row class="salary-block">
                 <a-col :span="12">
-                  <div
-                    :class="[
-                      { 'selection-block-active': post.salary.set },
-                      'selection-block f-r'
-                    ]"
-                    @click="setSalary(true)"
-                  >
-                    <h5>Set Salary</h5>
-                    <small>per year</small>
+                  <div class="currency-select">
+                    <v-select
+                      v-model="post.salary.currency"
+                      label="name"
+                      :options="currencies"
+                      :clearable="false"
+                    >
+                      <template
+                        v-slot:selected-option="option"
+                        v-bind="
+                          typeof option === 'object'
+                            ? option
+                            : { [label]: option }
+                        "
+                      >
+                        <span
+                          :class="
+                            `currency-flag currency-flag-${option.code.toLowerCase()} mr-15`
+                          "
+                        ></span>
+                        {{ option.name }}
+                      </template>
+                      <template v-slot:option="option">
+                        <span
+                          :class="
+                            `currency-flag currency-flag-${option.code.toLowerCase()} mr-15`
+                          "
+                        ></span>
+                        {{ option.name }}
+                      </template>
+                    </v-select>
                   </div>
                 </a-col>
                 <a-col :span="12">
-                  <div
-                    :class="[
-                      { 'selection-block-active': !post.salary.set },
-                      'selection-block'
-                    ]"
-                    @click="setSalary(false)"
-                  >
-                    <h5>Estimate</h5>
-                    <small>per year</small>
+                  <div v-show="post.salary.set">
+                    <div
+                      id="id_salary_max_1"
+                      :class="{
+                        validation_error: $v.post.salary.maximum.$error
+                      }"
+                    >
+                      <input
+                        v-model="$v.post.salary.maximum.$model"
+                        v-currency="{
+                          precision: 0
+                        }"
+                        class="ant-input"
+                      />
+                    </div>
+                  </div>
+                  <div v-show="!post.salary.set">
+                    <a-input-group>
+                      <a-row>
+                        <a-col :span="11">
+                          <div
+                            id="id_salary_min"
+                            :class="{
+                              validation_error: $v.post.salary.minimum.$error
+                            }"
+                          >
+                            <input
+                              v-model="$v.post.salary.minimum.$model"
+                              v-currency="{
+                                precision: 0
+                              }"
+                              class="ant-input"
+                            />
+                          </div>
+                        </a-col>
+                        <a-col span="2" class="align-center">-</a-col>
+                        <a-col :span="11">
+                          <div
+                            id="id_salary_max_2"
+                            :class="{
+                              validation_error: $v.post.salary.maximum.$error
+                            }"
+                          >
+                            <input
+                              v-model="$v.post.salary.maximum.$model"
+                              v-currency="{
+                                precision: 0
+                              }"
+                              class="ant-input"
+                            />
+                          </div>
+                        </a-col>
+                      </a-row>
+                    </a-input-group>
                   </div>
                 </a-col>
               </a-row>
             </div>
-            <a-row class="salary-block">
-              <a-col :span="12">
-                <div class="currency-select">
-                  <v-select
-                    v-model="post.salary.currency"
-                    label="name"
-                    :options="currencies"
-                    :clearable="false"
-                  >
-                    <template
-                      v-slot:selected-option="option"
-                      v-bind="
-                        typeof option === 'object'
-                          ? option
-                          : { [label]: option }
-                      "
-                    >
-                      <span
-                        :class="
-                          `currency-flag currency-flag-${option.code.toLowerCase()} mr-15`
-                        "
-                      ></span>
-                      {{ option.name }}
-                    </template>
-                    <template v-slot:option="option">
-                      <span
-                        :class="
-                          `currency-flag currency-flag-${option.code.toLowerCase()} mr-15`
-                        "
-                      ></span>
-                      {{ option.name }}
-                    </template>
-                  </v-select>
-                </div>
-              </a-col>
-              <a-col :span="12">
-                <div v-show="post.salary.set">
-                  <div
-                    id="id_salary_max_1"
-                    :class="{
-                      validation_error: $v.post.salary.maximum.$error
-                    }"
-                  >
-                    <input
-                      v-model="$v.post.salary.maximum.$model"
-                      v-currency="{
-                        precision: 0
-                      }"
-                      class="ant-input"
-                    />
-                  </div>
-                </div>
-                <div v-show="!post.salary.set">
-                  <a-input-group>
-                    <a-row>
-                      <a-col :span="11">
-                        <div
-                          id="id_salary_min"
-                          :class="{
-                            validation_error: $v.post.salary.minimum.$error
-                          }"
-                        >
-                          <input
-                            v-model="$v.post.salary.minimum.$model"
-                            v-currency="{
-                              precision: 0
-                            }"
-                            class="ant-input"
-                          />
-                        </div>
-                      </a-col>
-                      <a-col span="2" class="align-center">-</a-col>
-                      <a-col :span="11">
-                        <div
-                          id="id_salary_max_2"
-                          :class="{
-                            validation_error: $v.post.salary.maximum.$error
-                          }"
-                        >
-                          <input
-                            v-model="$v.post.salary.maximum.$model"
-                            v-currency="{
-                              precision: 0
-                            }"
-                            class="ant-input"
-                          />
-                        </div>
-                      </a-col>
-                    </a-row>
-                  </a-input-group>
-                </div>
-              </a-col>
-            </a-row>
             <div class="section">
               <div>
                 <label class="d-block">

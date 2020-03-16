@@ -1,5 +1,7 @@
 <template>
-  <div class="big-block"></div>
+  <div>
+    <div class="big-block"></div>
+  </div>
 </template>
 <style scoped>
 :root {

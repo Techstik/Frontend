@@ -34,20 +34,33 @@ export default {
   },
   computed: {
     ...mapState({
-      requestedLocationPermission: state => state.location.requestedPermission
+      requestedLocationPermission: state => state.location.requestedPermission,
+      locationRequestAnswered: state => state.location.requestAnswered,
+      locationPermissionGranted: state => state.location.permissionGranted
     })
   },
-  created() {
-    if (!this.requestedLocationPermission) this.$requestLocationPermission()
+  watch: {
+    locationRequestAnswered(answered) {
+      if (answered) this.initialize()
+    }
   },
   mounted() {
-    this.initialize()
+    if (!this.requestedLocationPermission) this.$requestLocationPermission()
+    else this.initialize()
   },
   methods: {
     async initialize() {
       Mapbox.accessToken = process.env.MAPBOX_ACCESS_TOKEN
 
-      var location = await this.geolocate()
+      let location
+
+      if (this.locationPermissionGranted) location = await this.geolocate()
+      else {
+        location = {
+          lat: 37,
+          lng: -122
+        }
+      }
 
       this.geojson.features[0].geometry.coordinates = [
         location.lng,
