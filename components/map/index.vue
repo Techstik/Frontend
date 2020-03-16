@@ -1,18 +1,20 @@
 <template>
   <div>
-    <p v-if="loading" class="loading-text">
-      Loading a map, give us a second...
-    </p>
-    <div id="map" ref="map_container" class="loading"></div>
+    <Skeleton v-if="loading" />
+    <div id="map" ref="map_container" class="map_container loading"></div>
     <pre id="coordinates" class="coordinates"></pre>
   </div>
 </template>
 <script>
 import 'mapbox-gl/dist/mapbox-gl.css'
 import Mapbox from 'mapbox-gl'
+import Skeleton from './skeleton'
 import { mapState } from 'vuex'
 
 export default {
+  components: {
+    Skeleton
+  },
   data() {
     return {
       loading: true,
