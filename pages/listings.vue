@@ -28,7 +28,6 @@
 <script>
 import { mapState } from 'vuex'
 import listingSet from '@/components/listings/set'
-import backgroundShape from '@/assets/images/MoonBackground-01.svg'
 import globe from '@/assets/images/planet-earth.svg'
 import pin from '@/assets/images/pin.svg'
 
@@ -38,7 +37,6 @@ export default {
   },
   data() {
     return {
-      backgroundShape,
       globe,
       pin
     }

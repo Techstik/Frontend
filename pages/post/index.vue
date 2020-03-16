@@ -83,7 +83,16 @@
             </div>
             <div class="section">
               <div>
-                <label class="d-block">Gallery</label>
+                <label class="d-block"
+                  >Gallery
+                  <a-badge
+                    count="PREMIUM FEATURE"
+                    :number-style="{
+                      backgroundColor: '#161d2e',
+                      color: '#fcd669'
+                    }"
+                  />
+                </label>
                 <small>
                   Upload some pictures of your team, work space or anything
                   awesome
@@ -233,7 +242,7 @@
                       ]"
                       @click="setSalary(false)"
                     >
-                      <h5>Estimate</h5>
+                      <h5>Dependent</h5>
                       <small>per year</small>
                     </div>
                   </a-col>
@@ -293,8 +302,8 @@
                   </div>
                   <div v-show="!post.salary.set">
                     <a-input-group>
-                      <a-row>
-                        <a-col :span="11">
+                      <a-row type="flex" align="middle">
+                        <a-col :span="10">
                           <div
                             id="id_salary_min"
                             :class="{
@@ -310,8 +319,8 @@
                             />
                           </div>
                         </a-col>
-                        <a-col span="2" class="align-center">-</a-col>
-                        <a-col :span="11">
+                        <a-col span="4" class="align-center"><b>to</b></a-col>
+                        <a-col :span="10">
                           <div
                             id="id_salary_max_2"
                             :class="{
@@ -729,7 +738,7 @@ export default {
       editor: ClassicEditor,
       place: null,
       map: null,
-      activeStep: 0,
+      activeStep: 1,
       post_doc_id: null,
       postinfo_doc_id: null,
       post: {
@@ -1198,5 +1207,11 @@ small {
 .price-blocks {
   max-width: 750px;
   margin: auto;
+}
+</style>
+
+<style>
+.navigation div:first-of-type {
+  display: inline-block;
 }
 </style>

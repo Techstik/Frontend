@@ -459,16 +459,21 @@ export default {
   margin-top: 6px;
 }
 
-.field.focus,
+/* .field.focus,
 .field:focus,
 .field:hover {
   border-color: #f3976b !important;
-}
+} */
 
 .field.invalid,
 .field.invalid:focus {
   background-color: #fa755a;
   border-color: #fa755a !important;
+}
+
+.validation_error .field::placeholder,
+.validation_error .field:focus::placeholder {
+  color: white;
 }
 
 .field.focus::-webkit-input-placeholder,

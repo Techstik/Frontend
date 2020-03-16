@@ -147,8 +147,8 @@
 }
 
 .ant-steps-item-wait .ant-steps-item-icon {
-    background-color: #fcd669;
-    border-color: #fcd669;
+    background-color: #f3976b;
+    border-color: #f3976b;
 }
 
 .ant-steps-item-wait .ant-steps-item-icon>.ant-steps-icon, .ant-steps-item-process .ant-steps-item-icon>.ant-steps-icon {
@@ -164,12 +164,12 @@
 }
 
 .ant-steps-item-finish .ant-steps-item-icon {
-    background-color: #f3976b;
-    border-color: #f3976b;
+    background-color: #fcd669;
+    border-color: #fcd669;
 }
 
 .ant-steps-item-finish>.ant-steps-item-content>.ant-steps-item-title::after {
-    background-color: #f3976b;
+    background-color: #fcd669;
 }
 
 .ant-steps-item-finish .ant-steps-item-icon>.ant-steps-icon {
