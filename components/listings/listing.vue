@@ -14,14 +14,17 @@
         <a-progress
           v-for="(experience, index) in post.experience"
           :key="experience.id"
-          :percent="experienceRequired(post.experience[index]).percentage"
+          :percent="100"
           :stroke-color="experienceRequired(post.experience[index]).colour"
           :show-info="false"
         />
       </div>
       <div v-else>
         <div>
-          <img class="company-image" :src="google" />
+          <div class="company-image">
+            <img v-if="post.company_logo" :src="post.company_logo" />
+            <span v-else>{{ companyInitials }}</span>
+          </div>
           <div class="content">
             <label class="position">
               {{ post.position }}
@@ -33,39 +36,65 @@
               /></span>
             </label>
             <p class="company">
-              {{ post.company_name }}
+              <a
+                v-if="post.company_website"
+                :href="post.company_website"
+                target="_blank"
+              >
+                {{ post.company_name }}
+              </a>
+              <span v-else>
+                {{ post.company_name }}
+              </span>
             </p>
           </div>
         </div>
-        <a-progress
-          v-for="(experience, index) in post.experience"
-          :key="experience.id"
-          :percent="experienceRequired(post.experience[index]).percentage"
-          :stroke-color="experienceRequired(post.experience[index]).colour"
-          :show-info="false"
-        />
-        <div class="tech-icons">
-          <div v-for="(tech, index) in post.tech" :key="tech.id" class="inline">
-            <techicon
-              v-if="index < 3"
-              :tech="tech"
-              :width="revealing ? 50 : 30"
+        <a-row>
+          <a-col :span="4">
+            <a-progress
+              v-for="(experience, index) in post.experience"
+              :key="experience.id"
+              :class="[
+                { 'progress-half': post.experience.length == 2 },
+                { 'progress-third': post.experience.length == 3 }
+              ]"
+              :percent="100"
+              :stroke-color="experienceRequired(post.experience[index]).colour"
+              :show-info="false"
             />
-            <techicon
-              v-else
-              v-show="hovering || revealing"
-              :tech="tech"
-              :width="revealing ? 50 : 30"
-            />
-          </div>
-          <p
-            v-if="post.tech.length > 3"
-            v-show="!hovering && !revealing"
-            class="elipsis"
-          >
-            ...
-          </p>
-        </div>
+          </a-col>
+          <a-col :span="16">
+            <div class="inline">
+              <div
+                v-for="(tech, index) in post.tech"
+                :key="tech.id"
+                class="inline ms-2h"
+              >
+                <techicon
+                  v-if="index < 3"
+                  :tech="tech"
+                  :width="revealing ? 50 : 20"
+                />
+                <techicon
+                  v-else
+                  v-show="hovering || revealing"
+                  :tech="tech"
+                  :width="revealing ? 50 : 20"
+                />
+              </div>
+              <p
+                v-if="post.tech.length > 3"
+                v-show="!hovering && !revealing"
+                class="elipsis"
+              >
+                ...
+              </p>
+            </div>
+          </a-col>
+          <a-col :span="4" class="date">
+            {{ post.date_created.toDate() | moment('from', 'now') }}
+          </a-col>
+        </a-row>
         <a-collapse
           :active-key="revealing ? 1 : 0"
           :bordered="false"
@@ -216,36 +245,6 @@
             </div>
           </a-collapse-panel>
         </a-collapse>
-        <a-row type="flex" justify="space-around" align="middle">
-          <a-col
-            :span="post.location_based && post.remote ? 4 : 2"
-            class="align-center mt-13"
-          >
-            <a-tooltip v-if="post.location_based" placement="top">
-              <template slot="title">
-                <span
-                  >{{ post.location.city }}, {{ post.location.country }}</span
-                >
-              </template>
-              <img class="location" :src="pin" />
-            </a-tooltip>
-            <a-tooltip v-if="post.remote" placement="top">
-              <template slot="title">
-                <span>Remote</span>
-              </template>
-              <img class="location" :src="globe" />
-            </a-tooltip>
-          </a-col>
-          <a-col :span="post.location_based && post.remote ? 20 : 22">
-            <a-divider class="date-posted" orientation="right">
-              {{
-                post.date_listed
-                  ? post.date_listed.toDate()
-                  : new Date() | moment('from', 'now')
-              }}
-            </a-divider>
-          </a-col>
-        </a-row>
       </div>
     </div>
   </div>
@@ -280,6 +279,16 @@ export default {
       ok,
       asterisk,
       germany
+    }
+  },
+  computed: {
+    companyInitials() {
+      let pieces = this.post.company_name.split(' ')
+      let initials = ''
+      pieces.forEach(word => {
+        initials += word.substring(0, 1)
+      })
+      return initials
     }
   },
   methods: {
@@ -336,6 +345,10 @@ export default {
 .company-image {
   width: 45px;
   position: absolute;
+  text-align: center;
+}
+.company-image img {
+  width: 45px;
 }
 .company {
   font-size: 13px;
@@ -361,10 +374,6 @@ export default {
 }
 .divider {
   width: 20px;
-}
-.tech-icons {
-  text-align: center;
-  margin-top: 15px;
 }
 .date-posted {
   margin-bottom: 0px;
@@ -396,5 +405,32 @@ export default {
 }
 .card-body {
   padding: 2.25rem;
+}
+.date {
+  text-align: right;
+  font-size: 12px;
+}
+.ms-2h {
+  margin: 0px 2.5px;
+}
+.progress-half {
+  width: 50%;
+  padding: 0px 2px;
+}
+.progress-half:last-child {
+  padding: 0px 0px 0px 2px;
+}
+.progress-third {
+  width: 33%;
+  padding: 0px 2px;
+}
+
+.progress-half:first-child,
+.progress-third:first-child {
+  padding: 0px 2px 0px 0px;
+}
+.progress-half:last-child,
+.progress-third:last-child {
+  padding: 0px 0px 0px 2px;
 }
 </style>

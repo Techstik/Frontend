@@ -59,9 +59,14 @@ Vue.prototype.$updateDocument = (collection, docId, data) => {
   })
 }
 
-Vue.prototype.$readData = collection => {
+Vue.prototype.$readData = (collection, options) => {
   return new Promise((resolve, reject) => {
-    db.collection(collection)
+    var query = db.collection(collection)
+
+    if (options.orderByKey) query = query.orderByKey()
+    if (options.limit) query = query.limit(options.limit)
+
+    query
       .get()
       .then(querySnapshot => {
         var list = []

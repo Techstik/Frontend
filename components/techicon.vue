@@ -1,9 +1,18 @@
 <template>
   <a-tooltip placement="top">
     <template slot="title">
-      <span>{{ tech }}</span>
+      <span>{{ tech.name }}</span>
     </template>
-    <img :src="techicons[tech]" :style="style" />
+    <i
+      :class="[
+        `devicon-${
+          tech.iconname
+            ? tech.iconname
+            : `${tech.name.toLowerCase().replace(/ /g, '')}-plain`
+        }`,
+        'colored'
+      ]"
+    ></i>
   </a-tooltip>
 </template>
 <script>

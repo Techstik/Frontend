@@ -17,7 +17,7 @@ export default {
     }
   },
   mounted() {
-    this.$readData('posts').then(data => {
+    this.$readData('posts', { limit: 5 }).then(data => {
       this.posts = data
     })
   }
