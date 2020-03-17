@@ -68,6 +68,8 @@ code_quality:
       --volume /tmp/cc:/tmp/cc 
       codeclimate/codeclimate:0.85.2 analyze -f html > gl-code-quality-report.json
   artifacts:
+    reports:
+      codequality: gl-code-quality-report.json
     paths: [gl-code-quality-report.json]
     expire_in: 10 weeks
   dependencies:
