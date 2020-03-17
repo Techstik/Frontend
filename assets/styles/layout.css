@@ -190,12 +190,18 @@ h4 {
   animation-timing-function: ease-in-out;
 }
 
-.validation_error label, .validation_error small {
-  color: #fa755a;
+.validation_error input, .validation_error .ck.ck-editor__editable_inline, .validation_error .vs__dropdown-toggle, .validation_error .vs__search::placeholder, .validation_error input:hover, .validation_error .ant-input-affix-wrapper:hover .ant-input:not(.ant-input-disabled), .validation_error .ck.ck-editor__editable_inline:hover, .validation_error input:focus, .validation_error .ck.ck-editor__editable_inline:focus {
+  border-color: #fa755a !important;
+  background-color: #fa755a !important;
+  color: white !important;
 }
 
-.validation_error input, .validation_error .ck.ck-editor__editable_inline, .validation_error input:hover, .validation_error input:focus {
-  border-color: #fa755a !important;
+.validation_error .ant-input-affix-wrapper .ant-input-prefix, .validation_error .ant-input-affix-wrapper .ant-input-suffix {
+  color: white;
+}
+
+.validation_error .vs__open-indicator{
+  fill: white;
 }
 
 @keyframes shakeError {
@@ -256,7 +262,19 @@ h4 {
   font-size: 16px;
   font-family: 'Graphik-Bold';
   height: 47.5px;
+}
+
+.vs__search::placeholder {
+  color: #c0c0c0 !important;
+}
+
+.vs__dropdown-toggle {
   padding: 0 35px 0 35px !important;
+}
+
+.vs--open .vs__dropdown-toggle {
+  border-bottom-left-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
 }
 
 .vs__dropdown-menu {
@@ -266,15 +284,64 @@ h4 {
   border-bottom-right-radius: 10px !important;
   font-size: 16px;
   font-family: 'Graphik-Bold';
+  box-shadow: unset !important
 }
 
 .vs__actions {
   cursor: pointer;
 }
 
+.vs__selected {
+  margin: none !important;
+}
+
+.vs__deselect {
+  fill: white!important;
+}
+
+.vs-multiple .vs__selected {
+  background-color: #fcd668;
+  border: 1px solid #fcd668;
+  color: black;
+  margin: 8px 5px;
+  padding: 0px 0.5em;
+}
+
+.vs-multiple .vs__dropdown-menu {
+  position: unset !important;
+}
+
 .small {
   font-size: 85%;
 }
-b {
+
+b, strong {
   font-family: Graphik-Bold;
+}
+
+.toasted {
+  border-radius: 10px !important;
+}
+
+.toasted .primary.info, .toasted.toasted-primary.info {
+  background: #303c6c !important;
+}
+
+.toasted-container .toasted .action {
+  font-size: 10px !important;
+}
+
+.toasted-container .toasted .action:hover {
+  text-decoration: none !important;
+  color: #fcd668 !important;
+}
+
+.ant-input-group .ant-input {
+  margin-bottom: 10px !important;
+}
+.mtb-10{
+  margin: 10px 0px;
+}
+.mtb-25{
+  margin: 25px 0px;
 }

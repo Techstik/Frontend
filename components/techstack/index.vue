@@ -55,11 +55,7 @@
       class="search"
     />
     <div
-      v-for="technology in !searchWord
-        ? tech
-        : tech.filter(_tech => {
-            return _tech.name.toLowerCase().includes(searchWord)
-          })"
+      v-for="technology in searchedTech"
       :key="technology.name"
       :class="[
         {
@@ -82,6 +78,15 @@
         ]"
       ></i>
       <p>{{ technology.name }}</p>
+    </div>
+    <div v-if="!searchedTech.length">
+      <p class="not-found">
+        Whoops - we dont seem to have what you're looking for, but you may still
+        select it!
+      </p>
+      <a-button class="btn-sm btn-outline-dark" @click="addUnknown">
+        <a-icon type="plus" /> Select '{{ searchWord }}'</a-button
+      >
     </div>
   </div>
 </template>
@@ -111,6 +116,15 @@ export default {
     }),
     placeholdersRequired() {
       return this.selectedTech.length > 2 ? 0 : 2 - this.selectedTech.length
+    },
+    searchedTech() {
+      return !this.searchWord
+        ? this.tech
+        : this.tech.filter(_tech => {
+            return _tech.name
+              .toLowerCase()
+              .includes(this.searchWord.toLowerCase())
+          })
     }
   },
   methods: {
@@ -119,10 +133,14 @@ export default {
         this.selectedTech = this.lodash.remove(this.selectedTech, existing => {
           return existing !== tech
         })
-      } else {
+      } else if (this.selectedTech.length < 8) {
         this.selectedTech.push(tech)
       }
       this.emitChange()
+    },
+    addUnknown() {
+      this.updateTech({ iconname: '', name: this.searchWord })
+      this.searchWord = ''
     },
     emitChange() {
       this.$emit(
@@ -170,12 +188,18 @@ export default {
   position: relative;
   display: inline-block;
 }
+.not-found {
+  font-size: 15px;
+}
 .ant-badge-count {
   cursor: pointer;
 }
 .ant-badge-count {
   top: 5px;
   right: 5px;
+}
+.placeholder {
+  pointer-events: none;
 }
 .placeholder .tech-icon {
   color: transparent;
@@ -197,5 +221,23 @@ export default {
   margin: auto;
   margin-top: 15px;
   margin-bottom: 15px;
+}
+</style>
+<style>
+.validation_error .placeholder .tech-icon {
+  border-color: #fa755a;
+  background-color: #fa755a;
+}
+.validation_error .tech-blocks input {
+  border-color: white !important;
+  background-color: white !important;
+  color: black !important;
+}
+.validation_error .tech-blocks input:hover {
+  border-color: #e4e4e4 !important;
+}
+
+.validation_error .tech-blocks input:focus {
+  border-color: #f4976c !important;
 }
 </style>

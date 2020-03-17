@@ -88,16 +88,19 @@
 .ant-checkbox-inner, .ant-radio-inner {
     height: 25px;
     width: 25px;
+    border: 1px solid #ffffff !important;
+    border-radius: 7px !important;
 }
 
 .ant-checkbox-inner::after {
-    height: 12.142857px;
-    left: 28%;
+    height: 10.142857px;
+    left: 29%;
+    top: 46%;
 }
 
 .ant-checkbox-checked .ant-checkbox-inner {
-    background-color: #19262d;
-    border-color: #19262d;
+    background-color: #161d2e;
+    border-color: #161d2e;
 }
 
 .ant-checkbox-wrapper:hover .ant-checkbox-inner, .ant-checkbox:hover .ant-checkbox-inner, .ant-checkbox-input:focus+.ant-checkbox-inner, .ant-radio-wrapper:hover .ant-radio, .ant-radio:hover .ant-radio-inner, .ant-radio-input:focus+.ant-radio-inner, .ant-radio-checked .ant-radio-inner {
@@ -118,9 +121,9 @@
     margin-bottom: 10px;
     height: 47.5px;
     border-radius: 10px;
-    color: rgba(0, 0, 0, 0.65);
+    color: black;
     padding: 0 35px 0 35px;
-    font-family: Graphik-Bold;
+    font-family: Graphik;
     font-size: 16px;
 }
 
@@ -133,9 +136,9 @@
     font-size: 120%;
 }
 
-.ant-input:hover, .ant-input:focus, .ant-input-affix-wrapper:hover .ant-input:not(.ant-input-disabled), .ant-input-number:hover{ 
+.ant-input:hover, .ant-input:focus, .ant-input-affix-wrapper:hover .ant-input:not(.ant-input-disabled), .ant-input-number:hover {
     border-right-width: 2px !important;
-    border-color: #e4e4e4  !important;
+    border-color: #e4e4e4 !important;
     box-shadow: none !important
 }
 
@@ -144,8 +147,8 @@
 }
 
 .ant-steps-item-wait .ant-steps-item-icon {
-    background-color: #fcd669;
-    border-color: #fcd669;
+    background-color: #f3976b;
+    border-color: #f3976b;
 }
 
 .ant-steps-item-wait .ant-steps-item-icon>.ant-steps-icon, .ant-steps-item-process .ant-steps-item-icon>.ant-steps-icon {
@@ -161,12 +164,12 @@
 }
 
 .ant-steps-item-finish .ant-steps-item-icon {
-    background-color: #f3976b;
-    border-color: #f3976b;
+    background-color: #fcd669;
+    border-color: #fcd669;
 }
 
 .ant-steps-item-finish>.ant-steps-item-content>.ant-steps-item-title::after {
-    background-color: #f3976b;
+    background-color: #fcd669;
 }
 
 .ant-steps-item-finish .ant-steps-item-icon>.ant-steps-icon {
@@ -179,28 +182,38 @@
 }
 
 .ant-tooltip-inner {
-    background-color: #fcd669;
-    color: black;
+    background-color: #303c6c;
+    color: white;
 }
 
 .ant-tooltip-placement-top .ant-tooltip-arrow, .ant-tooltip-placement-topLeft .ant-tooltip-arrow, .ant-tooltip-placement-topRight .ant-tooltip-arrow {
-    border-top-color: #fcd669;
+    border-top-color: #303c6c;
 }
-.ant-input-group-addon .ant-select-open .ant-select-selection, .ant-input-group-addon .ant-select-focused .ant-select-selection{
+
+.ant-input-group-addon .ant-select-open .ant-select-selection, .ant-input-group-addon .ant-select-focused .ant-select-selection {
     color: #f3976b;
 }
+
 .ant-radio-group.ant-radio-group-outline.ant-radio-group-default input, .ant-radio-group.ant-radio-group-outline.ant-radio-group-default label {
     font-size: initial;
 }
+
 .ant-input-affix-wrapper .ant-input-suffix {
     padding-bottom: 8px;
 }
-.ant-badge-count, .ant-divider-inner-text{
+
+.ant-badge-count, .ant-divider-inner-text {
     font-family: 'Graphik-Bold';
 }
+
 a {
     color: #f3976b !important;
 }
+
 a:hover {
     color: #19262d !important;
+}
+
+.ant-badge-count {
+    box-shadow: none !important;
 }

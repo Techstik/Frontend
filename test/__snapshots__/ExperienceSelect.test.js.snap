@@ -5,7 +5,9 @@ exports[`Experience Select matches snapshot 1`] = `
   <div
     class="experience-level"
   >
-    <a-checkbox />
+    <a-checkbox
+      default-checked="true"
+    />
      
     <p>
       Entry-level

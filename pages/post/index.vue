@@ -23,12 +23,17 @@
           <a-tab-pane key="0" tab="company-info">
             <div class="section logo-upload">
               <FilePond
-                @file-added="onFileUpdated"
-                @file-removed="onFileUpdated"
+                label="Drop logo here"
+                @files-updated="
+                  (...args) => onFilesUpdated(...args, 'post_logo')
+                "
               />
             </div>
             <div class="section">
-              <div :class="{ validation_error: $v.post.company_name.$error }">
+              <div
+                id="id_company_name"
+                :class="{ validation_error: $v.post.company_name.$error }"
+              >
                 <label class="mb-10 d-block">
                   Company Name
                   <a-badge
@@ -40,6 +45,7 @@
               </div>
               <div class="section">
                 <div
+                  id="id_company_intro"
                   :class="{
                     validation_error: $v.post_info.company_intro.$error
                   }"
@@ -51,7 +57,10 @@
                       :number-style="{ backgroundColor: '#f4976c' }"
                     />
                   </label>
-                  <small>Some text here (keep it short)</small>
+                  <small
+                    >Tell us about what you do, but keep it short and
+                    precise!</small
+                  >
                   <ckeditor
                     v-model="$v.post_info.company_intro.$model"
                     :editor="editor"
@@ -60,14 +69,42 @@
                 </div>
               </div>
             </div>
-            <div class="section">
+            <div>
               <div
+                id="id_company_website"
                 :class="{ validation_error: $v.post.company_website.$error }"
               >
                 <label class="mb-10 d-block">Website URL</label>
                 <a-input
-                  v-model="$v.post.company_website.$model"
                   placeholder="https://yourwebsite.com"
+                  @blur="post.company_website = $event.target.value"
+                  @blur.native="$v.post.company_website.$touch()"
+                />
+              </div>
+            </div>
+            <div class="section">
+              <div>
+                <label class="d-block"
+                  >Gallery
+                  <a-badge
+                    count="PREMIUM FEATURE"
+                    :number-style="{
+                      backgroundColor: '#161d2e',
+                      color: '#fcd669'
+                    }"
+                  />
+                </label>
+                <small>
+                  Upload some pictures of your team, work space or anything
+                  awesome
+                </small>
+                <FilePond
+                  label="Drop images here"
+                  :allow-multiple-files="true"
+                  :max-file-size="500"
+                  @files-updated="
+                    (...args) => onFilesUpdated(...args, 'post_gallery')
+                  "
                 />
               </div>
             </div>
@@ -100,25 +137,37 @@
             <div v-if="post.location_based" class="section">
               <label class="d-block">Where are you based?</label>
               <small>
-                Your company HQ - it's nice to see, even if this is a remote
-                position
+                Your comapny HQ - If you'd prefer not to show it, drop the pin
+                somewhere in the city it's located
               </small>
               <Map @location-updated="onLocationUpdated" />
             </div>
           </a-tab-pane>
           <a-tab-pane key="1" tab="role">
             <div class="section">
-              <div :class="{ validation_error: $v.post.position.$error }">
-                <label class="mb-10 d-block">
+              <div
+                id="id_position"
+                :class="{ validation_error: $v.post.position.$error }"
+              >
+                <label class="d-block">
                   Position
                   <a-badge
                     count="required"
                     :number-style="{ backgroundColor: '#f4976c' }"
                   />
                 </label>
+                <small>
+                  e.g. 'Frontend React Developer' or 'Digital Marketer' or 'UX
+                  Designer'
+                </small>
                 <a-input v-model="$v.post.position.$model"></a-input>
               </div>
-              <div :class="{ validation_error: $v.post_info.position.$error }">
+              <div
+                id="id_position_about"
+                :class="{
+                  validation_error: $v.post_info.about_position.$error
+                }"
+              >
                 <label class="d-block">
                   About the position
                   <a-badge
@@ -126,9 +175,12 @@
                     :number-style="{ backgroundColor: '#f4976c' }"
                   />
                 </label>
-                <small>Some text here (keep it short)</small>
+                <small
+                  >A bit of information such as what they'll be working on, who
+                  they'll be working with, hours etc.</small
+                >
                 <ckeditor
-                  v-model="$v.post_info.position.$model"
+                  v-model="$v.post_info.about_position.$model"
                   :editor="editor"
                   class="h-200"
                 ></ckeditor>
@@ -146,8 +198,9 @@
                 <div
                   v-for="(v, index) in $v.post_info.responsibilities.$each
                     .$iter"
+                  id="id_responsibilities"
                   :key="`req_${index}`"
-                  :class="{ validation_error: v.$error && index < 3 }"
+                  :class="{ validation_error: v.$error }"
                 >
                   <a-input v-model="v.responsibility.$model">
                     <a-icon
@@ -159,6 +212,7 @@
                   </a-input>
                 </div>
                 <a-button
+                  v-if="post_info.responsibilities.length < 8"
                   class="btn-sm btn-outline-dark"
                   @click="addResponsibility"
                 >
@@ -166,79 +220,129 @@
                 </a-button>
               </div>
             </div>
-            <div class="section">
-              <a-row type="flex" align="middle">
+            <div class="mtb-25">
+              <div class="section">
+                <a-row type="flex" align="middle">
+                  <a-col :span="12">
+                    <div
+                      :class="[
+                        { 'selection-block-active': post.salary.set },
+                        'selection-block f-r'
+                      ]"
+                      @click="setSalary(true)"
+                    >
+                      <h5>Set Salary</h5>
+                      <small>per year</small>
+                    </div>
+                  </a-col>
+                  <a-col :span="12">
+                    <div
+                      :class="[
+                        { 'selection-block-active': !post.salary.set },
+                        'selection-block'
+                      ]"
+                      @click="setSalary(false)"
+                    >
+                      <h5>Salary Range</h5>
+                      <small>per year</small>
+                    </div>
+                  </a-col>
+                </a-row>
+              </div>
+              <a-row class="salary-block">
                 <a-col :span="12">
-                  <div
-                    :class="[
-                      { 'selection-block-active': post.salary.set },
-                      'selection-block f-r'
-                    ]"
-                    @click="setSalary(true)"
-                  >
-                    <h5>Set Salary</h5>
+                  <div class="currency-select">
+                    <v-select
+                      v-model="post.salary.currency"
+                      label="name"
+                      :options="currencies"
+                      :clearable="false"
+                    >
+                      <template
+                        v-slot:selected-option="option"
+                        v-bind="
+                          typeof option === 'object'
+                            ? option
+                            : { [label]: option }
+                        "
+                      >
+                        <span
+                          :class="
+                            `currency-flag currency-flag-${option.code.toLowerCase()} mr-15`
+                          "
+                        ></span>
+                        {{ option.name }}
+                      </template>
+                      <template v-slot:option="option">
+                        <span
+                          :class="
+                            `currency-flag currency-flag-${option.code.toLowerCase()} mr-15`
+                          "
+                        ></span>
+                        {{ option.name }}
+                      </template>
+                    </v-select>
                   </div>
                 </a-col>
                 <a-col :span="12">
-                  <div
-                    :class="[
-                      { 'selection-block-active': !post.salary.set },
-                      'selection-block'
-                    ]"
-                    @click="setSalary(false)"
-                  >
-                    <h5>Experience Dependent</h5>
+                  <div v-show="post.salary.set">
+                    <div
+                      id="id_salary_max_1"
+                      :class="{
+                        validation_error: $v.post.salary.maximum.$error
+                      }"
+                    >
+                      <input
+                        v-model="$v.post.salary.maximum.$model"
+                        v-currency="{
+                          precision: 0
+                        }"
+                        class="ant-input"
+                      />
+                    </div>
+                  </div>
+                  <div v-show="!post.salary.set">
+                    <a-input-group>
+                      <a-row type="flex" align="middle">
+                        <a-col :span="10">
+                          <div
+                            id="id_salary_min"
+                            :class="{
+                              validation_error: $v.post.salary.minimum.$error
+                            }"
+                          >
+                            <input
+                              v-model="$v.post.salary.minimum.$model"
+                              v-currency="{
+                                precision: 0
+                              }"
+                              class="ant-input"
+                            />
+                          </div>
+                        </a-col>
+                        <a-col span="4" class="align-center"><b>to</b></a-col>
+                        <a-col :span="10">
+                          <div
+                            id="id_salary_max_2"
+                            :class="{
+                              validation_error: $v.post.salary.maximum.$error
+                            }"
+                          >
+                            <input
+                              v-model="$v.post.salary.maximum.$model"
+                              v-currency="{
+                                precision: 0
+                              }"
+                              class="ant-input"
+                            />
+                          </div>
+                        </a-col>
+                      </a-row>
+                    </a-input-group>
                   </div>
                 </a-col>
               </a-row>
             </div>
-            <a-row class="salary-block">
-              <a-col :span="12">
-                <div class="currency-select">
-                  <v-select
-                    v-model="post.salary.currency"
-                    label="name"
-                    :options="currencies"
-                  ></v-select>
-                </div>
-              </a-col>
-              <a-col :span="12">
-                <div v-show="post.salary.set">
-                  <input
-                    v-model="post.salary.maximum"
-                    v-currency="{
-                      precision: 0
-                    }"
-                    class="ant-input"
-                  />
-                </div>
-                <div v-show="!post.salary.set">
-                  <a-input-group>
-                    <a-row>
-                      <a-col :span="11">
-                        <input
-                          v-model="post.salary.minimum"
-                          v-currency="{
-                            precision: 0
-                          }"
-                          class="ant-input"
-                        />
-                      </a-col>
-                      <a-col span="2" class="align-center">-</a-col>
-                      <a-col :span="11">
-                        <input
-                          v-model="post.salary.maximum"
-                          v-currency="{
-                            precision: 0
-                          }"
-                          class="ant-input"
-                        />
-                      </a-col>
-                    </a-row>
-                  </a-input-group>
-                </div>
-              </a-col>
-            </a-row>
             <div class="section">
               <div>
                 <label class="d-block">
@@ -249,10 +353,17 @@
                   />
                 </label>
                 <small>
-                  Select a few technologies you use and rank them from most
-                  used.
+                  Select a few technologies that will be used and
+                  <b>rank them (drag-and-drop)</b> from most important
                 </small>
-                <TechStack v-model="post.tech" />
+                <div
+                  id="id_tech"
+                  :class="{
+                    validation_error: $v.post.tech.$error
+                  }"
+                >
+                  <TechStack v-model="$v.post.tech.$model" />
+                </div>
               </div>
             </div>
           </a-tab-pane>
@@ -262,10 +373,34 @@
                 Experience Level(s) Required
                 <span class="cursor-pointer">
                   <a-tooltip>
-                    <!-- <template slot="title">
-                      Add some text here explaing how we got to these
-                      values</template
-                    >-->
+                    <template slot="title">
+                      <p>
+                        These titles differ from company to company - however,
+                        we use the following traits to identify each:
+                      </p>
+
+                      <b>Entry-level</b>
+                      <ul>
+                        <li>Learning on the job</li>
+                        <li>Basic knowledge - expect risks</li>
+                        <li>Requires teaching and mentorship</li>
+                      </ul>
+                      <b>Intermediate</b>
+                      <ul>
+                        <li>Works independently on tasks</li>
+                        <li>Proficient in one or more areas</li>
+                        <li>Can be assigned more complex tasks</li>
+                      </ul>
+                      <b>Senior</b>
+                      <ul>
+                        <li>Works autonomously</li>
+                        <li>Experts in their area</li>
+                        <li>Mentors others</li>
+                        <li>
+                          Easily identifies issues / has solved them before
+                        </li>
+                      </ul>
+                    </template>
                     <a-icon type="info-circle" />
                   </a-tooltip>
                 </span>
@@ -274,7 +409,14 @@
                   :number-style="{ backgroundColor: '#f4976c' }"
                 />
               </label>
-              <ExperienceSelect v-model="post.experience" />
+              <div
+                id="id_experience"
+                :class="{
+                  validation_error: $v.post.experience.$error
+                }"
+              >
+                <ExperienceSelect v-model="$v.post.experience.$model" />
+              </div>
             </div>
             <div class="section">
               <label class="d-block">
@@ -284,12 +426,15 @@
                   :number-style="{ backgroundColor: '#f4976c' }"
                 />
               </label>
-              <small>Some text here (keep it short)</small>
+              <small
+                >e.g. 'Great self-discipline' or '2+ years Go experience'</small
+              >
               <div class="requirements">
                 <div
                   v-for="(v, index) in $v.post_info.requirements.$each.$iter"
+                  id="id_requirements"
                   :key="`req_${index}`"
-                  :class="{ validation_error: v.$error && index < 2 }"
+                  :class="{ validation_error: v.$error }"
                 >
                   <a-input v-model="v.requirement.$model">
                     <a-icon
@@ -301,6 +446,7 @@
                   </a-input>
                 </div>
                 <a-button
+                  v-if="post_info.requirements.length < 8"
                   class="btn-sm btn-outline-dark"
                   @click="addRequirement"
                 >
@@ -308,18 +454,195 @@
                 </a-button>
               </div>
             </div>
+            <div class="section">
+              <label class="d-block">Residing Restrictions</label>
+              <small>
+                If applicants should reside in close proximity, certain
+                countries or timezones, select them here
+              </small>
+              <a-row type="flex" align="middle">
+                <a-col :span="8">
+                  <div
+                    :class="[
+                      {
+                        'selection-block-active':
+                          !post.residing_restrictions.by_country.restricted &&
+                          !post.residing_restrictions.by_timezone.restricted
+                      },
+                      'selection-block'
+                    ]"
+                    @click="setResidingRestriction('none')"
+                  >
+                    <h5>No Restrictions</h5>
+                  </div>
+                </a-col>
+                <a-col :span="8">
+                  <div
+                    :class="[
+                      {
+                        'selection-block-active':
+                          post.residing_restrictions.by_country.restricted
+                      },
+                      'selection-block'
+                    ]"
+                    @click="setResidingRestriction('country')"
+                  >
+                    <h5>Certain Countries</h5>
+                  </div>
+                </a-col>
+                <a-col :span="8">
+                  <div
+                    :class="[
+                      {
+                        'selection-block-active':
+                          post.residing_restrictions.by_timezone.restricted
+                      },
+                      'selection-block'
+                    ]"
+                    @click="setResidingRestriction('timezone')"
+                  >
+                    <h5>Certain Timezones</h5>
+                  </div>
+                </a-col>
+              </a-row>
+              <div
+                v-show="post.residing_restrictions.by_country.restricted"
+                id="id_restrict_country"
+                :class="[
+                  {
+                    validation_error:
+                      $v.post.residing_restrictions.by_country.countries.$error
+                  },
+                  'mt-15'
+                ]"
+              >
+                <v-select
+                  v-model="
+                    $v.post.residing_restrictions.by_country.countries.$model
+                  "
+                  class="vs-multiple"
+                  label="name"
+                  placeholder="Select the countries here"
+                  multiple
+                  :close-on-select="false"
+                  :options="countries"
+                >
+                  <template
+                    v-slot:selected-option="option"
+                    v-bind="
+                      typeof option === 'object' ? option : { [label]: option }
+                    "
+                  >
+                    <span
+                      :class="
+                        `flag-icon flag-icon-${option.code.toLowerCase()} mr-15`
+                      "
+                    ></span>
+                    {{ option.name }}
+                  </template>
+                  <template v-slot:option="option">
+                    <span
+                      :class="
+                        `flag-icon flag-icon-${option.code.toLowerCase()} mr-15`
+                      "
+                    ></span>
+                    {{ option.name }}
+                  </template>
+                </v-select>
+              </div>
+              <div
+                v-show="post.residing_restrictions.by_timezone.restricted"
+                id="id_restrict_timezone"
+                :class="[
+                  {
+                    validation_error:
+                      $v.post.residing_restrictions.by_timezone.timezones.$error
+                  },
+                  'mt-15'
+                ]"
+              >
+                <v-select
+                  v-model="
+                    $v.post.residing_restrictions.by_timezone.timezones.$model
+                  "
+                  class="vs-multiple"
+                  label="name"
+                  placeholder="Select the timezone(s) here"
+                  multiple
+                  :close-on-select="false"
+                  :options="[
+                    'UTC -11',
+                    'UTC -10',
+                    'UTC -9',
+                    'UTC -8',
+                    'UTC -7',
+                    'UTC -6',
+                    'UTC -5',
+                    'UTC -4',
+                    'UTC -3',
+                    'UTC -2',
+                    'UTC -1',
+                    'UTC +0',
+                    'UTC +1',
+                    'UTC +2',
+                    'UTC +3',
+                    'UTC +4',
+                    'UTC +5',
+                    'UTC +6',
+                    'UTC +7',
+                    'UTC +8',
+                    'UTC +9',
+                    'UTC +10',
+                    'UTC +11'
+                  ]"
+                ></v-select>
+              </div>
+            </div>
           </a-tab-pane>
           <a-tab-pane key="3" tab="application">
             <div class="section">
-              <label class="d-block mb-10">Application URL</label>
-              <a-input />
-              <label class="d-block">Instructions</label>
-              <small>Some text here (keep it short)</small>
-              <ckeditor :editor="editor" class="h-200"></ckeditor>
+              <div
+                id="id_application_url"
+                :class="[
+                  {
+                    validation_error: $v.post_info.application_url.$error
+                  },
+                  'mt-15'
+                ]"
+              >
+                <label class="d-block mb-10">Application URL</label>
+                <a-input
+                  @blur="post_info.application_url = $event.target.value"
+                  @blur.native="$v.post_info.application_url.$touch()"
+                />
+              </div>
+              <div class="align-center mtb-10">
+                <label>AND / OR</label>
+              </div>
+              <div
+                id="id_application_instr"
+                :class="[
+                  {
+                    validation_error: $v.post_info.application_instr.$error
+                  },
+                  'mt-15'
+                ]"
+              >
+                <label class="d-block">Instructions</label>
+                <small
+                  >Maybe you'd like applicants to send their resume to an email
+                  address or you want to outline your interview process</small
+                >
+                <ckeditor
+                  v-model="$v.post_info.application_instr.$model"
+                  :editor="editor"
+                  class="h-200"
+                ></ckeditor>
+              </div>
             </div>
           </a-tab-pane>
           <a-tab-pane key="4" tab="finalize">
-            <div v-show="!displayCheckout">
+            <div v-show="!displayCheckout && !displayUploader">
               <div class="section">
                 <label class="mb-10 d-block">Select an option</label>
                 <a-row class="price-blocks">
@@ -358,11 +681,23 @@
                 </a-row>
               </div>
               <div class="section">
-                <label class="mb-10 d-block">Preview</label>
+                <label class="d-block">Preview</label>
+                <small
+                  >Check out how your post will be displayed to the
+                  community!</small
+                >
                 <div class="preview-container">
                   <ListingPreview v-model="post" />
                 </div>
               </div>
+            </div>
+            <div v-if="displayUploader">
+              <MultipleFileUpload
+                heading="Quickly preparing your gallery..."
+                :files="post_gallery.files"
+                :base-path="`Companies/Galleries/${post.company_name}`"
+                @uploadComplete="onGalleryUploadComplete"
+              />
             </div>
             <div v-if="displayCheckout">
               <Checkout
@@ -375,29 +710,22 @@
           </a-tab-pane>
         </a-tabs>
         <div class="navigation">
-          <a-button
-            v-if="activeStep > 0 && !hideButtons"
-            v-scroll-to="'#container'"
-            @click="previousStep"
-          >
-            <a-icon type="left" />{{ displayCheckout ? 'Back' : 'Previous' }}
+          <a-button v-if="activeStep > 0 && !hideButtons" @click="previousStep">
+            <a-icon type="left" />
+            {{ displayCheckout ? 'Back' : 'Previous' }}
           </a-button>
-          <a-button
-            v-if="activeStep < 4"
-            v-scroll-to="'#container'"
-            class="f-r"
-            @click="nextStep"
-          >
+          <a-button v-if="activeStep < 4" class="f-r" @click="nextStep">
             Next
             <a-icon type="right" />
           </a-button>
           <a-button
-            v-show="activeStep == 4 && !displayCheckout"
+            v-show="activeStep == 4 && !displayCheckout && !displayUploader"
             id="proceed_to_payment"
             class="f-r"
+            :loading="proceedingToPayment"
+            @click="proceedingToPayment = true"
+            >Proceed to payment</a-button
           >
-            Proceed to payment
-          </a-button>
         </div>
       </div>
     </div>
@@ -412,11 +740,16 @@ import TechStack from '@/components/techstack'
 import ExperienceSelect from '@/components/experienceselect'
 import ListingPreview from '@/components/listings/preview'
 import Checkout from '@/components/cardcheckout'
+import MultipleFileUpload from '@/components/multifileupload'
 import { required, requiredIf, minLength, url } from 'vuelidate/lib/validators'
 // eslint-disable-next-line no-unused-vars
 import { auth, db } from '@/plugins/firebase'
 import firebase from 'firebase'
 import { mapState } from 'vuex'
+
+const currencyValidator = value =>
+  parseInt(!value || !(typeof value == String) ? '1' : value.replace(',', '')) >
+  0
 
 export default {
   components: {
@@ -426,18 +759,18 @@ export default {
     TechStack,
     ExperienceSelect,
     ListingPreview,
-    Checkout
+    Checkout,
+    MultipleFileUpload
   },
   data() {
     return {
       editor: ClassicEditor,
       place: null,
       map: null,
-      activeStep: 3,
+      activeStep: 0,
       post_doc_id: null,
       postinfo_doc_id: null,
       post: {
-        active: false,
         type: 'standard',
         position: '',
         company_logo: '',
@@ -463,11 +796,21 @@ export default {
         payment_details: {
           stripe_payment_intent_id: '',
           paid: false
+        },
+        residing_restrictions: {
+          by_country: {
+            restricted: false,
+            countries: []
+          },
+          by_timezone: {
+            restricted: false,
+            timezones: []
+          }
         }
       },
       post_info: {
         company_intro: '',
-        position: '',
+        about_position: '',
         requirements: [
           {
             requirement: ''
@@ -486,15 +829,22 @@ export default {
           {
             responsibility: ''
           }
-        ]
+        ],
+        application_url: '',
+        application_instr: ''
       },
       post_logo: {
-        file: null,
+        files: [],
         updated: false
       },
-      post_gallery: [],
+      post_gallery: {
+        files: [],
+        updated: false
+      },
       displayCheckout: false,
-      hideButtons: false
+      displayUploader: false,
+      hideButtons: false,
+      proceedingToPayment: false
     }
   },
   validations: {
@@ -510,13 +860,51 @@ export default {
           return website.length
         }),
         url
+      },
+      salary: {
+        maximum: {
+          required,
+          currencyValidator
+        },
+        minimum: {
+          required: requiredIf(function() {
+            return !this.post.salary.set
+          }),
+          currencyValidator
+        }
+      },
+      tech: {
+        required,
+        minLength: minLength(2)
+      },
+      experience: {
+        required,
+        minLength: minLength(1)
+      },
+      residing_restrictions: {
+        by_country: {
+          countries: {
+            required: requiredIf(function() {
+              return this.post.residing_restrictions.by_country.restricted
+            }),
+            minLength: minLength(1)
+          }
+        },
+        by_timezone: {
+          timezones: {
+            required: requiredIf(function() {
+              return this.post.residing_restrictions.by_timezone.restricted
+            }),
+            minLength: minLength(1)
+          }
+        }
       }
     },
     post_info: {
       company_intro: {
         required
       },
-      position: {
+      about_position: {
         required
       },
       requirements: {
@@ -536,12 +924,24 @@ export default {
             required
           }
         }
+      },
+      application_url: {
+        required: requiredIf(function() {
+          return !this.post_info.application_instr.length
+        }),
+        url
+      },
+      application_instr: {
+        required: requiredIf(function() {
+          return !this.post_info.application_url.length
+        })
       }
     }
   },
   computed: {
     ...mapState({
-      currencies: state => state.currencies.all
+      currencies: state => state.currencies.all,
+      countries: state => state.countries.all
     }),
     activeStepToString() {
       return this.activeStep.toString()
@@ -554,6 +954,16 @@ export default {
         size: 'invisible',
         // eslint-disable-next-line no-unused-vars
         callback: response => {
+          if (
+            this.post.type == 'professional' &&
+            this.post_gallery.files.length
+          ) {
+            if (!this.post_gallery.updated) return (this.displayCheckout = true)
+            return (this.displayUploader = true)
+          }
+
+          if (this.post_info.gallery) this.post_info.gallery = []
+
           this.displayCheckout = true
         }
       }
@@ -564,35 +974,65 @@ export default {
     nextStep() {
       this.$v.$touch()
 
-      switch (this.activeStep) {
-        case 0:
-          // if (
-          //   this.$v.post.company_name.$invalid ||
-          //   this.$v.post.company_website.$invalid ||
-          //   this.$v.post_info.company_intro.$invalid
-          // )
-          //   return
-          break
-        case 1:
-          // if (
-          //   this.$v.post_info.responsibilities.$invalid ||
-          //   this.$v.post_info.role.$invalid
-          // )
-          //   return
-          break
-        case 2:
-          // if (this.$v.post_info.requirements.$invalid) return
-          break
-      }
+      // let error_detected = false
+      // switch (this.activeStep) {
+      //   case 0:
+      //     if (
+      //       this.$v.post.company_name.$invalid ||
+      //       this.$v.post_info.company_intro.$invalid ||
+      //       this.$v.post.company_website.$invalid
+      //     )
+      //       error_detected = true
+      //     break
+      //   case 1:
+      //     if (
+      //       this.$v.post.position.$invalid ||
+      //       this.$v.post_info.about_position.$invalid ||
+      //       this.$v.post_info.responsibilities.$invalid ||
+      //       this.$v.post.salary.maximum.$invalid ||
+      //       this.$v.post.salary.minimum.$invalid ||
+      //       this.$v.post.tech.$invalid
+      //     )
+      //       error_detected = true
+      //     break
+      //   case 2:
+      //     if (
+      //       this.$v.post.experience.$invalid ||
+      //       this.$v.post_info.requirements.$invalid ||
+      //       this.$v.post.residing_restrictions.by_country.countries.$invalid ||
+      //       this.$v.post.residing_restrictions.by_timezone.timezones.$invalid
+      //     )
+      //       error_detected = true
+      //     break
+      //   case 3:
+      //     if (
+      //       this.$v.post_info.application_url.$invalid ||
+      //       this.$v.post_info.application_instr.$invalid
+      //     )
+      //       error_detected = true
+      //     break
+      // }
+
+      // if (error_detected) {
+      //   return this.$nextTick(() => {
+      //     var element = document.getElementsByClassName('validation_error')[0]
+      //     this.$scrollTo(`#${element.id}`)
+      //   })
+      // }
 
       this.$v.$reset()
       ++this.activeStep
+      this.$scrollTo('#container')
     },
     previousStep() {
       if (this.displayCheckout) {
         this.displayCheckout = false
+        this.proceedingToPayment = false
         window.recaptchaVerifier.reset()
-      } else --this.activeStep
+      } else {
+        --this.activeStep
+        this.$scrollTo('#container')
+      }
     },
     addResponsibility() {
       this.post_info.responsibilities.push({ responsibility: '' })
@@ -617,12 +1057,32 @@ export default {
     setSalary(value) {
       this.post.salary.set = value
     },
-    onFileUpdated(file) {
-      this.post_logo.file = file ? file : null
-      this.post_logo.updated = true
+    setResidingRestriction(restr) {
+      this.post.residing_restrictions.by_country.restricted = false
+      this.post.residing_restrictions.by_timezone.restricted = false
+      switch (restr) {
+        case 'country':
+          this.post.residing_restrictions.by_country.restricted = true
+          break
+        case 'timezone':
+          this.post.residing_restrictions.by_timezone.restricted = true
+          break
+      }
     },
-    addPost() {
+    onFilesUpdated(files, target) {
+      this[target]['files'] = files
+      this[target]['updated'] = true
+    },
+    async addPost() {
       this.$toast.info('Saving post...')
+
+      if (this.post_logo.files.length) {
+        this.post.company_logo = await this.$uploadFile(
+          `Companies/Logos/${this.post.company_name}`,
+          this.post_logo.files[0]
+        )
+        this.post_logo.updated = false
+      }
 
       this.$addDocument('posts', this.post)
         .then(postRef => {
@@ -637,8 +1097,15 @@ export default {
           this.$toast.error(`Error: ${JSON.stringify(error)}`)
         })
     },
-    updatePost() {
+    async updatePost() {
       this.$toast.info('Updating post...')
+
+      if (this.post_logo.updated) {
+        this.post.company_logo = this.post_logo.files.length
+          ? await this.$uploadFile('Companies/Logos', this.post_logo.files[0])
+          : null
+        this.post_logo.updated = false
+      }
 
       this.$updateDocument('posts', this.post_doc_id, this.post, true)
         .then(() => {
@@ -652,6 +1119,11 @@ export default {
         .catch(error => {
           this.$toast.error(`Error: ${JSON.stringify(error)}`)
         })
+    },
+    onGalleryUploadComplete(downloadURLs) {
+      this.post_info.gallery = downloadURLs
+      this.displayUploader = false
+      this.displayCheckout = true
     },
     onPaymentInitiated(payment_intent_id) {
       this.post.payment_details.stripe_payment_intent_id = payment_intent_id
@@ -695,12 +1167,16 @@ small {
   width: 20vw;
   padding: 25px;
   border: 2px solid white;
-  border-radius: 4px;
+  border-radius: 15px;
   display: inline-block;
   margin: 0 25px;
   text-align: center;
   background-color: white;
   transition: all 0.2s;
+}
+.selection-block h5,
+.selection-block small {
+  margin: 0;
 }
 .selection-block:hover {
   cursor: pointer;
@@ -720,6 +1196,9 @@ small {
   max-width: 800px;
   margin: auto;
 }
+.salary-block input {
+  text-align: right;
+}
 .preview-container {
   padding: 30px;
   background: #161d2d;
@@ -729,7 +1208,7 @@ small {
 .price-block {
   padding: 15px;
   background-color: white;
-  border-radius: 6px;
+  border-radius: 15px;
   cursor: pointer;
 }
 .price-block.active,
@@ -756,5 +1235,11 @@ small {
 .price-blocks {
   max-width: 750px;
   margin: auto;
+}
+</style>
+
+<style>
+.navigation div:first-of-type {
+  display: inline-block;
 }
 </style>

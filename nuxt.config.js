@@ -4,8 +4,8 @@ module.exports = {
     DEVELOPMENT: process.env.NODE_ENV !== 'production',
     GOOGLE_API_KEY: 'AIzaSyDVa0vRTfMXY1qBXz1ctMDHZGpPhC6TRvU',
     LOCATION_IQ_API_KEY: '96fbe635b05579',
-    reCAPTCHA_SITE_KEY: '6LcuONkUAAAAACcZcOapQiTVOWz52mAUWU-G2Daj',
-    reCAPTCHA_SECRET_KEY: '6LcuONkUAAAAAK2Rej6Gr7AvR9B2ZjUYMPQC9N8r'
+    MAPBOX_ACCESS_TOKEN:
+      'pk.eyJ1IjoibWF0dC1ncmVwcGwiLCJhIjoiY2s1ZTYxbHhvMXZvMzNqcmY0amtoMWg2YSJ9.9hJ2XBQZxFIoxhwbB1Pb4w'
   },
   head: {
     title: process.env.npm_package_name || '',
@@ -33,7 +33,9 @@ module.exports = {
     '@/assets/styles/layout.css',
     '@/assets/styles/ant-overrides.css',
     '@/assets/styles/site-wide.css',
-    '@/assets/styles/grid.css'
+    '@/assets/styles/grid.css',
+    '@/assets/styles/currency-flags.min.css',
+    '@/node_modules/flag-icon-css/css/flag-icon.min.css'
   ],
   /*
    ** Plugins to load before mounting the App
@@ -41,7 +43,7 @@ module.exports = {
   plugins: [
     '@/plugins/antd-ui',
     '@/plugins/firebase',
-    '@/plugins/snapshot-subscriptions',
+    '@/plugins/vuex-seed',
     '@/plugins/lodash',
     '@/plugins/moment',
     '@/plugins/vuelidate',
@@ -49,7 +51,8 @@ module.exports = {
     '@/plugins/devicon',
     //==== INJECTIONS =======
     '@plugins/injections/storage',
-    '@plugins/injections/firestore'
+    '@plugins/injections/firestore',
+    '@plugins/injections/locationservices'
   ],
   /*
    ** Nuxt.js dev-modules

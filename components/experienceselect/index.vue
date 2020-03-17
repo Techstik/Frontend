@@ -1,7 +1,10 @@
 <template>
   <div>
     <div class="experience-level">
-      <a-checkbox @change="updateSelection('entry-level')"></a-checkbox>
+      <a-checkbox
+        :default-checked="true"
+        @change="updateSelection('entry-level')"
+      ></a-checkbox>
       <p>Entry-level</p>
       <a-progress
         :stroke-width="15"
@@ -42,8 +45,11 @@ export default {
   },
   data() {
     return {
-      selectedExperience: []
+      selectedExperience: ['entry-level']
     }
+  },
+  created() {
+    this.$emit('input', this.selectedExperience)
   },
   methods: {
     updateSelection(experience) {
@@ -80,5 +86,11 @@ export default {
   width: 130px;
   font-family: Graphik-Bold;
   text-align: center;
+}
+</style>
+<style>
+.validation_error .ant-checkbox-inner {
+  border-color: #fa755a;
+  background-color: #fa755a;
 }
 </style>

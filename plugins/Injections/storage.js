@@ -3,6 +3,7 @@ import { storage } from '@/plugins/firebase'
 
 Vue.prototype.$uploadFile = (basepath, file) => {
   return new Promise((resolve, reject) => {
+    if (!basepath || !file) return resolve(null)
     storage
       .ref(`/${basepath}/${file.name}`)
       .put(file)
