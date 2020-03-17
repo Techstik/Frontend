@@ -2,13 +2,11 @@ image: node:11.15.0
 
 stages:
   - install
-  # - format
-  # - code_quality
   - quality
   # - build (if deploying)
 
-# include:
-#   - template: Code-Quality.gitlab-ci.yml
+include:
+  - template: Code-Quality.gitlab-ci.yml
 
 install:
    stage: install
@@ -51,28 +49,29 @@ tests:
 #    dependencies:
 #       - install
 
-# code_quality:
-#   stage: format
-#   image: docker:stable
-#   allow_failure: true
-#   services:
-#     - docker:stable-dind
-#   variables:
-#     DOCKER_DRIVER: overlay2
-#     DOCKER_TLS_CERTDIR: ""
-#   script:
-#     - docker info
-#     - docker run 
-#       --env CODECLIMATE_DEBUG=1 
-#       --env CODECLIMATE_CODE="$PWD" 
-#       --volume "$PWD":/code 
-#       --volume /var/run/docker.sock:/var/run/docker.sock 
-#       --volume /tmp/cc:/tmp/cc 
-#       codeclimate/codeclimate:0.85.2 analyze -f html > gl-code-quality-report.json
-#   artifacts:
-#     paths: [gl-code-quality-report.json]
-#     expire_in: 10 weeks
-#   dependencies: []
-#   except:
-#     variables:
-#       - $CODE_QUALITY_DISABLED
+code_quality:
+  stage: quality
+  image: docker:stable
+  allow_failure: true
+  services:
+    - docker:stable-dind
+  variables:
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+  script:
+    - docker info
+    - docker run 
+      --env CODECLIMATE_DEBUG=1 
+      --env CODECLIMATE_CODE="$PWD" 
+      --volume "$PWD":/code 
+      --volume /var/run/docker.sock:/var/run/docker.sock 
+      --volume /tmp/cc:/tmp/cc 
+      codeclimate/codeclimate:0.85.2 analyze -f html > gl-code-quality-report.json
+  artifacts:
+    paths: [gl-code-quality-report.json]
+    expire_in: 10 weeks
+  dependencies:
+    - install
+  except:
+    variables:
+      - $CODE_QUALITY_DISABLED
