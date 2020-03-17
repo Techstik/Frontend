@@ -15,6 +15,8 @@
     "updatetestsnaphsots": "jest --updateSnapshot"
   },
   "dependencies": {
+    "@bugsnag/js": "^6.5.2",
+    "@bugsnag/plugin-vue": "^6.5.0",
     "@ckeditor/ckeditor5-build-classic": "^16.0.0",
     "@ckeditor/ckeditor5-build-inline": "^16.0.0",
     "@ckeditor/ckeditor5-vue": "^1.0.1",

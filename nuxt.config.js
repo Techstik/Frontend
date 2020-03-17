@@ -4,6 +4,7 @@ module.exports = {
     DEVELOPMENT: process.env.NODE_ENV !== 'production',
     GOOGLE_API_KEY: 'AIzaSyDVa0vRTfMXY1qBXz1ctMDHZGpPhC6TRvU',
     LOCATION_IQ_API_KEY: '96fbe635b05579',
+    BUGSNAG_KEY: '645bb4eb67f94b231df6229fa34acdd4',
     MAPBOX_ACCESS_TOKEN:
       'pk.eyJ1IjoibWF0dC1ncmVwcGwiLCJhIjoiY2s1ZTYxbHhvMXZvMzNqcmY0amtoMWg2YSJ9.9hJ2XBQZxFIoxhwbB1Pb4w'
   },
@@ -52,7 +53,8 @@ module.exports = {
     //==== INJECTIONS =======
     '@plugins/injections/storage',
     '@plugins/injections/firestore',
-    '@plugins/injections/locationservices'
+    '@plugins/injections/locationservices',
+    '@/plugins/injections/bugsnag'
   ],
   /*
    ** Nuxt.js dev-modules
