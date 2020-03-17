@@ -23,7 +23,7 @@ import mongo from '@/assets/images/tech-icons/mongo.svg'
 export default {
   props: {
     tech: {
-      type: String,
+      type: Object,
       default: null
     },
     width: {

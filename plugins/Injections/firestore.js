@@ -63,7 +63,13 @@ Vue.prototype.$readData = (collection, options) => {
   return new Promise((resolve, reject) => {
     var query = db.collection(collection)
 
-    if (options.orderByKey) query = query.orderByKey()
+    if (options.where)
+      query = query.where(
+        options.where.field,
+        options.where.operation,
+        options.where.value
+      )
+
     if (options.limit) query = query.limit(options.limit)
 
     query
@@ -71,7 +77,7 @@ Vue.prototype.$readData = (collection, options) => {
       .then(querySnapshot => {
         var list = []
 
-        querySnapshot.forEach(function(doc) {
+        querySnapshot.forEach(doc => {
           list.push({
             id: doc.id,
             ...doc.data()
@@ -79,6 +85,29 @@ Vue.prototype.$readData = (collection, options) => {
         })
 
         resolve(list)
+      })
+      .catch(error => {
+        reject(error)
+        //TODO: log with bugsnag
+      })
+  })
+}
+
+Vue.prototype.$readDocument = (collection, docId) => {
+  return new Promise((resolve, reject) => {
+    db.collection(collection)
+      .doc(docId)
+      .get()
+      .then(doc => {
+        if (doc.exists) {
+          resolve({
+            id: doc.id,
+            ...doc.data()
+          })
+        } else {
+          reject()
+          //TODO: log with bugsnag
+        }
       })
       .catch(error => {
         reject(error)
