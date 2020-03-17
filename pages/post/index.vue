@@ -76,8 +76,9 @@
               >
                 <label class="mb-10 d-block">Website URL</label>
                 <a-input
-                  v-model="$v.post.company_website.$model"
                   placeholder="https://yourwebsite.com"
+                  @blur="post.company_website = $event.target.value"
+                  @blur.native="$v.post.company_website.$touch()"
                 />
               </div>
             </div>
@@ -610,7 +611,10 @@
                 ]"
               >
                 <label class="d-block mb-10">Application URL</label>
-                <a-input v-model="$v.post_info.application_url.$model" />
+                <a-input
+                  @blur="post_info.application_url = $event.target.value"
+                  @blur.native="$v.post_info.application_url.$touch()"
+                />
               </div>
               <div class="align-center mtb-10">
                 <label>AND / OR</label>
@@ -744,7 +748,8 @@ import firebase from 'firebase'
 import { mapState } from 'vuex'
 
 const currencyValidator = value =>
-  parseInt(!value ? '1' : value.replace(',', '')) > 0
+  parseInt(!value || !(typeof value == String) ? '1' : value.replace(',', '')) >
+  0
 
 export default {
   components: {
