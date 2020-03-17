@@ -59,6 +59,7 @@ export default {
           } else
             this.progressBytes = this.completedBytes + snapshot.bytesTransferred
         },
+        // eslint-disable-next-line no-unused-vars
         error => {
           //TODO: log with bugsnag
         },

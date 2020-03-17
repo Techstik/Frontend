@@ -1,8 +1,9 @@
 image: node:11.15.0
 
 stages:
-  - format
   - code_quality
+  - format
+  - test
 
 include:
   - template: Code-Quality.gitlab-ci.yml
@@ -38,3 +39,8 @@ format:
   script:
     - npm install
     - npm run lintfix
+
+test:
+  stage: test
+  script:
+    - jest
