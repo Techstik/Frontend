@@ -58,3 +58,26 @@ Vue.prototype.$updateDocument = (collection, docId, data) => {
       })
   })
 }
+
+Vue.prototype.$readData = collection => {
+  return new Promise((resolve, reject) => {
+    db.collection(collection)
+      .get()
+      .then(querySnapshot => {
+        var list = []
+
+        querySnapshot.forEach(function(doc) {
+          list.push({
+            id: doc.id,
+            ...doc.data()
+          })
+        })
+
+        resolve(list)
+      })
+      .catch(error => {
+        reject(error)
+        //TODO: log with bugsnag
+      })
+  })
+}

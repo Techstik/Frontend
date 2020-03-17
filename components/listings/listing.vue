@@ -7,15 +7,15 @@
   >
     <div class="card-body">
       <div v-if="thumbnailView" class="thumbnail">
-        <label class="position position-thumb">{{ value.position }}</label>
+        <label class="position position-thumb">{{ post.position }}</label>
         <p class="company">
-          {{ value.company_name }}
+          {{ post.company_name }}
         </p>
         <a-progress
-          v-for="(experience, index) in value.experience"
+          v-for="(experience, index) in post.experience"
           :key="experience.id"
-          :percent="experienceRequired(value.experience[index]).percentage"
-          :stroke-color="experienceRequired(value.experience[index]).colour"
+          :percent="experienceRequired(post.experience[index]).percentage"
+          :stroke-color="experienceRequired(post.experience[index]).colour"
           :show-info="false"
         />
       </div>
@@ -24,7 +24,7 @@
           <img class="company-image" :src="google" />
           <div class="content">
             <label class="position">
-              {{ value.position }}
+              {{ post.position }}
               <span
                 v-show="revealing"
                 class="float-right"
@@ -33,23 +33,19 @@
               /></span>
             </label>
             <p class="company">
-              {{ value.company_name }}
+              {{ post.company_name }}
             </p>
           </div>
         </div>
         <a-progress
-          v-for="(experience, index) in value.experience"
+          v-for="(experience, index) in post.experience"
           :key="experience.id"
-          :percent="experienceRequired(value.experience[index]).percentage"
-          :stroke-color="experienceRequired(value.experience[index]).colour"
+          :percent="experienceRequired(post.experience[index]).percentage"
+          :stroke-color="experienceRequired(post.experience[index]).colour"
           :show-info="false"
         />
         <div class="tech-icons">
-          <div
-            v-for="(tech, index) in value.tech"
-            :key="tech.id"
-            class="inline"
-          >
+          <div v-for="(tech, index) in post.tech" :key="tech.id" class="inline">
             <techicon
               v-if="index < 3"
               :tech="tech"
@@ -63,7 +59,7 @@
             />
           </div>
           <p
-            v-if="value.tech.length > 3"
+            v-if="post.tech.length > 3"
             v-show="!hovering && !revealing"
             class="elipsis"
           >
@@ -222,29 +218,29 @@
         </a-collapse>
         <a-row type="flex" justify="space-around" align="middle">
           <a-col
-            :span="value.location_based && value.remote ? 4 : 2"
+            :span="post.location_based && post.remote ? 4 : 2"
             class="align-center mt-13"
           >
-            <a-tooltip v-if="value.location_based" placement="top">
+            <a-tooltip v-if="post.location_based" placement="top">
               <template slot="title">
                 <span
-                  >{{ value.location.city }}, {{ value.location.country }}</span
+                  >{{ post.location.city }}, {{ post.location.country }}</span
                 >
               </template>
               <img class="location" :src="pin" />
             </a-tooltip>
-            <a-tooltip v-if="value.remote" placement="top">
+            <a-tooltip v-if="post.remote" placement="top">
               <template slot="title">
                 <span>Remote</span>
               </template>
               <img class="location" :src="globe" />
             </a-tooltip>
           </a-col>
-          <a-col :span="value.location_based && value.remote ? 20 : 22">
+          <a-col :span="post.location_based && post.remote ? 20 : 22">
             <a-divider class="date-posted" orientation="right">
               {{
-                value.date_listed
-                  ? value.date_listed.toDate()
+                post.date_listed
+                  ? post.date_listed.toDate()
                   : new Date() | moment('from', 'now')
               }}
             </a-divider>
@@ -268,7 +264,7 @@ export default {
     techicon
   },
   props: {
-    value: {
+    post: {
       type: Object,
       default: null
     }

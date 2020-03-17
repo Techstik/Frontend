@@ -1,18 +1,25 @@
-<template> </template>
+<template>
+  <div>
+    <listing v-for="post in posts" :key="post.id" :post="post" />
+  </div>
+</template>
 
 <script>
 import listing from '@/components/listings/listing'
-import { mapState } from 'vuex'
 
 export default {
   components: {
     listing
   },
-  computed: {
-    ...mapState({})
+  data() {
+    return {
+      posts: []
+    }
   },
   mounted() {
-    // this.$bugsnag.notify(new Error('Test error'))
+    this.$readData('posts').then(data => {
+      this.posts = data
+    })
   }
 }
 </script>
