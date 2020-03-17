@@ -43,4 +43,5 @@ include:
 test:
   stage: test
   script:
+    - npm install
     - npm run test
