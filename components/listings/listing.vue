@@ -29,7 +29,34 @@
             <div class="content">
               <label class="position">
                 {{ post.position }}
-                <span class="float-right location-tag">REMOTE</span>
+                <span class="float-right">
+                  <div class="inline">
+                    <div
+                      v-for="(tech, index) in post.tech"
+                      :key="tech.id"
+                      class="inline ms-2h"
+                    >
+                      <techicon
+                        v-if="index < 3"
+                        :tech="tech"
+                        :width="revealing ? 50 : 20"
+                      />
+                      <techicon
+                        v-else
+                        v-show="hovering || revealing"
+                        :tech="tech"
+                        :width="revealing ? 50 : 20"
+                      />
+                    </div>
+                    <p
+                      v-if="post.tech.length > 3"
+                      v-show="!hovering && !revealing"
+                      class="elipsis"
+                    >
+                      ...
+                    </p>
+                  </div>
+                </span>
               </label>
               <p class="company">
                 {{ post.company_name }}
@@ -52,40 +79,16 @@
                 :show-info="false"
               />
             </a-col>
-            <a-col :span="12">
-              <div class="inline">
-                <div
-                  v-for="(tech, index) in post.tech"
-                  :key="tech.id"
-                  class="inline ms-2h"
-                >
-                  <techicon
-                    v-if="index < 3"
-                    :tech="tech"
-                    :width="revealing ? 50 : 20"
-                  />
-                  <techicon
-                    v-else
-                    v-show="hovering || revealing"
-                    :tech="tech"
-                    :width="revealing ? 50 : 20"
-                  />
-                </div>
-                <p
-                  v-if="post.tech.length > 3"
-                  v-show="!hovering && !revealing"
-                  class="elipsis"
-                >
-                  ...
-                </p>
-              </div>
-            </a-col>
-            <a-col :span="4" class="date">
+            <a-col :span="16" class="date">
               {{ post.date_created.toDate() | moment('from', 'now') }}
             </a-col>
           </a-row>
         </div>
-        <a-collapse :active-key="revealing ? 1 : 0" :bordered="false">
+        <a-collapse
+          :active-key="revealing ? 1 : 0"
+          :bordered="false"
+          :class="[{ 'mt-10': revealing }, 'trans-500']"
+        >
           <a-collapse-panel key="1" :show-arrow="false" header="">
             <div class="collapse-container">
               <div v-if="details.loading"></div>
@@ -293,20 +296,20 @@ export default {
   },
   watch: {
     revealing(isRevealing) {
-      if (isRevealing && !this.details.data) {
-        this.details.loading = true
-        this.$readData('postdetails', {
-          where: {
-            field: 'post_ref',
-            operation: '==',
-            value: `posts/${this.post.id}`
-          },
-          limit: 1
-        }).then(details => {
-          this.details.data = details[0]
-          this.details.loading = false
-        })
-      }
+      // if (isRevealing && !this.details.data) {
+      //   this.details.loading = true
+      //   this.$readData('postdetails', {
+      //     where: {
+      //       field: 'post_ref',
+      //       operation: '==',
+      //       value: `posts/${this.post.id}`
+      //     },
+      //     limit: 1
+      //   }).then(details => {
+      //     this.details.data = details[0]
+      //     this.details.loading = false
+      //   })
+      // }
     }
   },
   methods: {
@@ -432,6 +435,10 @@ export default {
 .ms-2h {
   margin: 0px 2.5px;
 }
+.mt-10 {
+  margin-top: 10px;
+  transition: 500ms;
+}
 .progress-half {
   width: 50%;
   padding: 0px 2px;
@@ -452,10 +459,7 @@ export default {
 .progress-third:last-child {
   padding: 0px 0px 0px 2px;
 }
-.location-tag {
-  font-size: 15px;
-  border: 2px solid black;
-  padding: 3px 10px;
-  border-radius: 5px;
+.trans-500 {
+  transition: 500ms;
 }
 </style>
