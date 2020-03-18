@@ -21,7 +21,7 @@
         />
       </div>
       <div v-else>
-        <div @click="revealing = !revealing">
+        <div @click="toggleReveal">
           <div>
             <div class="company-image">
               <img v-if="post.company_logo" :src="post.company_logo" />
@@ -270,6 +270,7 @@ import ok from '@/assets/images/icons/ok.svg'
 import asterisk from '@/assets/images/icons/asterisk.png'
 import germany from '@/assets/images/flags/germany.svg'
 import Skeleton from './skeleton'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
   components: {
@@ -300,6 +301,9 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      currentlyRevealedPost: state => state.posts.user_selected
+    }),
     companyInitials() {
       let pieces = this.post.company_name.split(' ')
       let initials = ''
@@ -310,6 +314,9 @@ export default {
     }
   },
   watch: {
+    currentlyRevealedPost(post_id) {
+      if (post_id != this.post.id) this.revealing = false
+    },
     revealing(isRevealing) {
       if (isRevealing && !this.details.data) {
         this.details.loading = true
@@ -321,17 +328,17 @@ export default {
     }
   },
   methods: {
-    setThumbnail(value) {
-      this.thumbnailView = value
-      if (value) this.revealing = false
-    },
-    setReveal(value) {
-      this.revealing = value
+    ...mapMutations({
+      setCurrentlyRevealed: 'posts/setUserSelected'
+    }),
+    // setThumbnail(value) {
+    //   this.thumbnailView = value
+    //   if (value) this.revealing = false
+    // },
+    toggleReveal() {
+      this.revealing = !this.revealing
 
-      if (!value)
-        setTimeout(() => {
-          this.$emit('collapsing')
-        }, 300)
+      if (this.revealing) this.setCurrentlyRevealed(this.post.id)
     },
     onHoverEnter() {
       this.hovering = true
