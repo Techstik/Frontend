@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <div
     ref="listing"
@@ -81,7 +82,8 @@
             </a-col>
             <a-col :span="8">
               <div class="restriction-tags">
-                <span v-if="post.remote">REMOTE</span>
+                <img v-if="post.remote" :src="globe" width="20" />
+                <!-- <span v-if="post.remote">REMOTE</span> -->
                 <span
                   v-if="
                     post.residing_restrictions.by_country.restricted ||
@@ -122,9 +124,21 @@
                     <h3 class="subheading">About Us</h3>
                     <p v-html="details.data.company_intro"></p>
                   </a-col>
-                  <a-col span="6" class="align-center">
-                    <img :src="germany" class="location-image" />
-                    <h4>Munich</h4>
+                  <a-col span="6" class="align-center location">
+                    <div v-if="post.location_based">
+                      <span
+                        :class="
+                          `flag-icon flag-icon-${post.location.country_code.toLowerCase()}`
+                        "
+                      ></span>
+                      <h4>
+                        {{ post.location.city }}, {{ post.location.country }}
+                      </h4>
+                    </div>
+                    <div v-else>
+                      <img :src="globe" width="60" />
+                      <h4>Worldwide</h4>
+                    </div>
                   </a-col>
                 </a-row>
                 <a-row>
@@ -300,7 +314,6 @@ export default {
       if (isRevealing && !this.details.data) {
         this.details.loading = true
         this.$readReference(this.post.postdetails_ref).then(details => {
-          console.log(details)
           this.details.data = details
           this.details.loading = false
         })
@@ -384,9 +397,10 @@ export default {
 .position-thumb {
   font-size: 85%;
 }
-.location {
-  width: 20px;
-  z-index: 1;
+.location .flag-icon,
+.location img {
+  font-size: 60px;
+  margin-bottom: 10px;
 }
 .divider {
   width: 20px;
