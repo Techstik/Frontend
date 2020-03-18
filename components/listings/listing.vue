@@ -122,7 +122,7 @@
                     <h3 class="subheading">About Us</h3>
                     <p v-html="details.data.company_intro"></p>
                   </a-col>
-                  <a-col span="4" class="align-center">
+                  <a-col span="6" class="align-center">
                     <img :src="germany" class="location-image" />
                     <h4>Munich</h4>
                   </a-col>
@@ -146,7 +146,40 @@
                     </p>
                   </a-col>
                 </a-row>
-
+                <h3 class="subheading">What You'll Be Doing</h3>
+                <a-row align="middle" type="flex" justify="space-around">
+                  <a-col span="18">
+                    <p
+                      v-for="value in details.data.responsibilities.filter(
+                        res => {
+                          return res.responsibility
+                        }
+                      )"
+                      :key="value.id"
+                    >
+                      {{ value.responsibility }}
+                    </p>
+                  </a-col>
+                  <a-col span="6">
+                    <div class="salary align-center">
+                      <a-tooltip placement="top" arrow-point-at-center>
+                        <template slot="title">
+                          <span>{{ post.salary.currency.name }}</span>
+                        </template>
+                        <p>{{ post.salary.currency.code }}</p>
+                      </a-tooltip>
+                      <div v-if="!post.salary.set">
+                        <h3 class="subheading">
+                          {{ post.salary.minimum }}
+                        </h3>
+                        <p>to</p>
+                      </div>
+                      <h3 class="subheading">
+                        {{ post.salary.maximum }}
+                      </h3>
+                    </div>
+                  </a-col>
+                </a-row>
                 <div
                   v-if="
                     post.residing_restrictions.by_country.restricted ||
@@ -181,44 +214,26 @@
                       ></span>
                     </a-tooltip>
                   </div>
-                </div>
-
-                <a-row>
-                  <a-col span="18">
-                    <h3 class="subheading">What You'll Be Doing</h3>
-                  </a-col>
-                  <a-col span="4"> <h3 class="subheading">Salary</h3> </a-col>
-                </a-row>
-                <a-row align="middle" type="flex" justify="space-around">
-                  <a-col span="18">
-                    <p
-                      v-for="value in details.data.responsibilities.filter(
-                        res => {
-                          return res.responsibility
-                        }
-                      )"
-                      :key="value.id"
+                  <div v-else class="timezones">
+                    <span
+                      v-for="timezone in post.residing_restrictions.by_timezone
+                        .timezones"
+                      :key="timezone.id"
+                      ><b>{{ timezone }}</b></span
                     >
-                      {{ value.responsibility }}
-                    </p>
-                  </a-col>
-                  <a-col span="4">
-                    <h3>$90,000</h3>
-                  </a-col>
-                </a-row>
+                  </div>
+                </div>
                 <div
-                  v-if="!details.data.application_url"
+                  v-if="details.data.application_instr"
                   class="apply-container"
                 >
                   <h3 class="subheading">How to apply</h3>
                   <p v-html="details.data.application_instr"></p>
                 </div>
-                <div class="align-center">
+                <div class="align-center mt-10">
                   <a-button
                     v-if="details.data.application_url"
-                    type="success"
                     shape="round"
-                    class="btn-sucess"
                     :href="details.data.application_url"
                     target="_blank"
                     >Apply For This Position</a-button
@@ -400,7 +415,6 @@ export default {
 }
 .collapse-container {
   padding: 15px;
-  margin-top: 15px;
 }
 .mt-13 {
   margin-top: 13px;
@@ -473,9 +487,7 @@ export default {
   padding: 10px;
   border-radius: 6px;
   background-color: #fa755a;
-  max-width: 400px;
   text-align: center;
-  margin: auto;
   color: white;
   margin-bottom: 10px;
 }
@@ -485,5 +497,18 @@ export default {
 .flag-icon {
   font-size: 30px;
   border-radius: 5px;
+}
+.timezones span {
+  margin: 0px 5px;
+}
+.timezones span:first-child {
+  margin-left: 0px;
+}
+.timezones span:last-child {
+  margin-right: 0px;
+}
+.salary p,
+.salary .subheading {
+  margin-bottom: 0;
 }
 </style>
