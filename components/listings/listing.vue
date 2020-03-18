@@ -120,9 +120,7 @@
                 <a-row align="middle" type="flex" justify="space-around">
                   <a-col span="18">
                     <h3 class="subheading">About Us</h3>
-                    <p>
-                      {{ details.data.company_intro }}
-                    </p>
+                    <p v-html="details.data.company_intro"></p>
                   </a-col>
                   <a-col span="4" class="align-center">
                     <img :src="germany" class="location-image" />
@@ -132,82 +130,59 @@
                 <a-row>
                   <a-col span="12">
                     <h3 class="subheading">The Role</h3>
-                    <p>
-                      We are looking for an assertive, friendly, highly
-                      organized Customer Support Rep. Our professional support
-                      team serves almost 3,000 companies on our platform (and
-                      growing) and is on the front lines of our organization. In
-                      this role, you will help, encourage and support our
-                      customers via email, chat and phone. Results Understand
-                      our industry and product Resolve all customer issues,
-                      questions, or concerns in a timely manner Work with your
-                      Sr. Agent to improve your numbers Help support other team
-                      members as needed Work together with the team to improve
-                      our processes Maintain positive survey results for all
-                      customer interactions Benefits Full-time position in a
-                      stable yet fast-growing, self-funded company (we make
-                      investments for the long term, as we don’t plan on selling
-                      our company. Ever.) Freedom to work from anywhere. Though
-                      we do ask that you’ll be around for PST meetings, you will
-                      have flexibility with your schedule and of course your
-                      location. 20 calendar days of paid time off a year, plus
-                      US holidays. A highly supportive environment, an
-                      outstanding, smart and caring team and a real chance to
-                      learn and grow. Work at a SaaS company whose mission is to
-                      change the lives of our customers, their clients, and our
-                      team. Join a company early and have a voice in a future
-                      hundred million dollar company. We hire for talent and
-                      drive, and it doesn’t matter what your gender, religion,
-                      race, or language are, who you date or who you spend your
-                      life or time with. What we care about is people who
-                      believe in our company’s mission to change lives, who help
-                      each other and the company grow and move forward.
-                      Additional Info Start Date: 1-2 weeks from today Credit
-                      Repair Cloud Homepage: https://www.creditrepaircloud.com/
-                      Online Training / Webinar explaining what we do, why we do
-                      it & what we sell:
-                      https://w.creditrepaircloud.com/free-training Customer
-                      Reviews:
-                      https://www.trustpilot.com/review/creditrepaircloud.com &
-                      https://tinyurl.com/CRC-Google-Reviews *** We strive to
-                      create an inclusive environment, empower employees and
-                      embrace diversity. We encourage every talented and
-                      qualified person to respond. **
-                    </p>
+                    <p v-html="details.data.about_position"></p>
                   </a-col>
                   <a-col span="12">
                     <h3 class="subheading">
                       Our Requirements
                     </h3>
-                    <p>
-                      <span><img class="checkbox_icon" :src="ok"/></span>
-                      You are an accountable, punctual, responsible, mature
-                      professional that has the discipline and requires little
-                      supervision post-training period
-                    </p>
-                    <p>
-                      <span><img class="checkbox_icon" :src="ok"/></span>
-                      You have strong interpersonal, written and oral
-                      communication skills. You genuinely care about your work
-                      and about the team
-                    </p>
-                    <p>
-                      <span><img class="checkbox_icon" :src="ok"/></span>
-                      You genuinely care about your work and about the team You
-                      are self-motivated You are an inquisitive person, you
-                      always want to learn new things
-                    </p>
-                    <p>
-                      <span><img class="checkbox_icon" :src="ok"/></span>
-                      You are an inquisitive person, you always want to learn
-                      new things
-                    </p>
-                    <p>
-                      <span><img class="checkbox_icon" :src="ok"/></span>
-                      You have excellent verbal and written English skills
+                    <p
+                      v-for="value in details.data.requirements.filter(req => {
+                        return req.requirement
+                      })"
+                      :key="value.id"
+                    >
+                      {{ value.requirement }}
                     </p>
                   </a-col>
                 </a-row>
+
+                <div
+                  v-if="
+                    post.residing_restrictions.by_country.restricted ||
+                      post.residing_restrictions.by_timezone.restricted
+                  "
+                  class="restrictions"
+                >
+                  This position is restrcited to applicants residing in the
+                  following
+                  {{
+                    post.residing_restrictions.by_country.restricted
+                      ? 'countries'
+                      : 'timezones'
+                  }}:
+                  <div
+                    v-if="post.residing_restrictions.by_country.restricted"
+                    class="flags"
+                  >
+                    <a-tooltip
+                      v-for="country in post.residing_restrictions.by_country
+                        .countries"
+                      :key="country.id"
+                      placement="top"
+                    >
+                      <template slot="title">
+                        <span>{{ country.name }}</span>
+                      </template>
+                      <span
+                        :class="
+                          `flag-icon flag-icon-${country.code.toLowerCase()} mr-15`
+                        "
+                      ></span>
+                    </a-tooltip>
+                  </div>
+                </div>
+
                 <a-row>
                   <a-col span="18">
                     <h3 class="subheading">What You'll Be Doing</h3>
@@ -216,42 +191,27 @@
                 </a-row>
                 <a-row align="middle" type="flex" justify="space-around">
                   <a-col span="18">
-                    <p>
-                      <span><img class="checkbox_icon" :src="asterisk"/></span>
-                      Provide customer support over email and possibly phone,
-                      with unparalleled attention to detail.
-                    </p>
-                    <p>
-                      <span><img class="checkbox_icon" :src="asterisk"/></span>
-                      Be a positive and encouraging voice for our team,
-                      according to our Company Performance Culture Statement.
-                    </p>
-                    <p>
-                      <span><img class="checkbox_icon" :src="asterisk"/></span>
-                      Resolve problems for human beings, not bots.
-                    </p>
-                    <p>
-                      <span><img class="checkbox_icon" :src="asterisk"/></span>
-                      Though we’re a tech company, we really emphasize the
-                      importance of making our users’ professional lives easier
-                      and treating one another with kindness.
+                    <p
+                      v-for="value in details.data.responsibilities.filter(
+                        res => {
+                          return res.responsibility
+                        }
+                      )"
+                      :key="value.id"
+                    >
+                      {{ value.responsibility }}
                     </p>
                   </a-col>
-                  <a-col span="4"> <h2>$90,000</h2> </a-col>
+                  <a-col span="4">
+                    <h3>$90,000</h3>
+                  </a-col>
                 </a-row>
                 <div
                   v-if="!details.data.application_url"
                   class="apply-container"
                 >
                   <h3 class="subheading">How to apply</h3>
-                  <p>
-                    Typical Interview Process: If your application is selected,
-                    a Recruiter will reach out to schedule a phone screen with
-                    them. If selected to move forward, you will complete a
-                    HackerRank Coding Assessment. If you pass, you will either
-                    move forward to a technical phone call for an additional
-                    screening, OR directly to an onsite interview. Offer stage.
-                  </p>
+                  <p v-html="details.data.application_instr"></p>
                 </div>
                 <div class="align-center">
                   <a-button
@@ -507,5 +467,23 @@ export default {
 }
 .apply-container p {
   margin-bottom: 0px;
+}
+.restrictions {
+  border: 2px solid #fa755a;
+  padding: 10px;
+  border-radius: 6px;
+  background-color: #fa755a;
+  max-width: 400px;
+  text-align: center;
+  margin: auto;
+  color: white;
+  margin-bottom: 10px;
+}
+.restrictions .flags {
+  margin-top: 5px;
+}
+.flag-icon {
+  font-size: 30px;
+  border-radius: 5px;
 }
 </style>
