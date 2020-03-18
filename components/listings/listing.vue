@@ -108,7 +108,12 @@
               </div>
               <div v-else>
                 <div class="align-center">
-                  <a-button type="success" shape="round"
+                  <a-button
+                    v-if="details.application_url"
+                    type="success"
+                    shape="round"
+                    :href="details.application_url"
+                    target="_blank"
                     >Apply For This Position</a-button
                   >
                 </div>
@@ -116,22 +121,7 @@
                   <a-col span="18">
                     <h3 class="subheading">About Us</h3>
                     <p>
-                      With almost 3,000 credit repair companies powered by
-                      Credit Repair Cloud, our customers have helped hundreds of
-                      thousands of consumers clean their credit, improved over
-                      1,900,000 credit report items, and collected over
-                      $50,000,000 in revenue. Our mission to help entrepreneurs
-                      to start, run and grow profitable credit repair businesses
-                      began in early 2002 as a bootstrapped startup. Today we're
-                      a stable yet fast-growing (INC 5,000) company with over 50
-                      team members around the globe and products that the
-                      industry loves. Why What We Do Matters At Credit Repair
-                      Cloud, we create products that help Credit Heroes™
-                      (entrepreneurs) to help their clients with their credit,
-                      to truly change lives, and make a great living in the
-                      process. We help them by creating the software, the
-                      systems, and the strategies, to grow multi-million dollar
-                      credit repair businesses from nothing.
+                      {{ details.company_intro }}
                     </p>
                   </a-col>
                   <a-col span="4" class="align-center">
@@ -249,8 +239,25 @@
                   </a-col>
                   <a-col span="4"> <h2>$90,000</h2> </a-col>
                 </a-row>
+                <div v-if="!details.application_url" class="apply-container">
+                  <h3 class="subheading">How to apply</h3>
+                  <p>
+                    Typical Interview Process: If your application is selected,
+                    a Recruiter will reach out to schedule a phone screen with
+                    them. If selected to move forward, you will complete a
+                    HackerRank Coding Assessment. If you pass, you will either
+                    move forward to a technical phone call for an additional
+                    screening, OR directly to an onsite interview. Offer stage.
+                  </p>
+                </div>
                 <div class="align-center">
-                  <a-button type="success" shape="round" class="btn-sucess"
+                  <a-button
+                    v-if="details.application_url"
+                    type="success"
+                    shape="round"
+                    class="btn-sucess"
+                    :href="details.application_url"
+                    target="_blank"
                     >Apply For This Position</a-button
                   >
                 </div>
@@ -322,6 +329,7 @@ export default {
           },
           limit: 1
         }).then(details => {
+          console.log(details)
           this.details.data = details[0]
           this.details.loading = false
         })
@@ -495,5 +503,13 @@ export default {
 }
 .info-bar [class*='ant-col-']:last-child {
   padding-right: 0px;
+}
+.apply-container {
+  background-color: #fcd669;
+  padding: 15px;
+  border-radius: 6px;
+}
+.apply-container p {
+  margin-bottom: 0px;
 }
 </style>

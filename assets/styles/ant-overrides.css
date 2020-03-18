@@ -217,3 +217,13 @@ a:hover {
 .ant-badge-count {
     box-shadow: none !important;
 }
+
+a.ant-btn {
+    line-height: initial;
+    color: white !important;
+}
+
+a.ant-btn:hover {
+    color: #ffa500 !important;
+    cursor: pointer !important;
+}

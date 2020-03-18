@@ -1084,13 +1084,13 @@ export default {
         this.post_logo.updated = false
       }
 
-      this.$addDocument('posts', this.post)
-        .then(postRef => {
-          this.post_doc_id = postRef.id
-          this.post_info.post_ref = postRef
+      this.$addDocument('postdetails', this.post_info)
+        .then(postinfoRef => {
+          this.postinfo_doc_id = postinfoRef.id
+          this.post.postdetails_ref = postinfoRef
 
-          this.$addDocument('postdetails', this.post_info).then(postinfoRef => {
-            this.postinfo_doc_id = postinfoRef.id
+          this.$addDocument('posts', this.post).then(postRef => {
+            this.post_doc_id = postRef.id
           })
         })
         .catch(error => {
@@ -1107,14 +1107,14 @@ export default {
         this.post_logo.updated = false
       }
 
-      this.$updateDocument('posts', this.post_doc_id, this.post, true)
+      this.$updateDocument(
+        'postdetails',
+        this.postinfo_doc_id,
+        this.post_info,
+        true
+      )
         .then(() => {
-          this.$updateDocument(
-            'postdetails',
-            this.postinfo_doc_id,
-            this.post_info,
-            true
-          )
+          this.$updateDocument('posts', this.post_doc_id, this.post, true)
         })
         .catch(error => {
           this.$toast.error(`Error: ${JSON.stringify(error)}`)
