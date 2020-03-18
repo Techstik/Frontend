@@ -36,7 +36,8 @@ module.exports = {
     '@/assets/styles/site-wide.css',
     '@/assets/styles/grid.css',
     '@/assets/styles/currency-flags.min.css',
-    '@/node_modules/flag-icon-css/css/flag-icon.min.css'
+    '@/node_modules/flag-icon-css/css/flag-icon.min.css',
+    '@/assets/styles/skeleton.css'
   ],
   /*
    ** Plugins to load before mounting the App
