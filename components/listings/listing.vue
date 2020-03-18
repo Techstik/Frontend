@@ -63,7 +63,7 @@
               </p>
             </div>
           </div>
-          <a-row>
+          <a-row type="flex" align="bottom" class="info-bar">
             <a-col :span="8">
               <a-progress
                 v-for="(experience, index) in post.experience"
@@ -79,7 +79,19 @@
                 :show-info="false"
               />
             </a-col>
-            <a-col :span="16" class="date">
+            <a-col :span="8">
+              <div class="restriction-tags">
+                <span v-if="post.remote">REMOTE</span>
+                <span
+                  v-if="
+                    post.residing_restrictions.by_country.restricted ||
+                      post.residing_restrictions.by_timezone.restricted
+                  "
+                  >RESTRICTIONS</span
+                >
+              </div>
+            </a-col>
+            <a-col :span="8" class="date">
               {{ post.date_created.toDate() | moment('from', 'now') }}
             </a-col>
           </a-row>
@@ -91,7 +103,9 @@
         >
           <a-collapse-panel key="1" :show-arrow="false" header="">
             <div class="collapse-container">
-              <div v-if="details.loading"></div>
+              <div v-if="details.loading">
+                <Skeleton />
+              </div>
               <div v-else>
                 <div class="align-center">
                   <a-button type="success" shape="round"
@@ -256,10 +270,12 @@ import techicon from '@/components/techicon'
 import ok from '@/assets/images/icons/ok.svg'
 import asterisk from '@/assets/images/icons/asterisk.png'
 import germany from '@/assets/images/flags/germany.svg'
+import Skeleton from './skeleton'
 
 export default {
   components: {
-    techicon
+    techicon,
+    Skeleton
   },
   props: {
     post: {
@@ -296,20 +312,20 @@ export default {
   },
   watch: {
     revealing(isRevealing) {
-      // if (isRevealing && !this.details.data) {
-      //   this.details.loading = true
-      //   this.$readData('postdetails', {
-      //     where: {
-      //       field: 'post_ref',
-      //       operation: '==',
-      //       value: `posts/${this.post.id}`
-      //     },
-      //     limit: 1
-      //   }).then(details => {
-      //     this.details.data = details[0]
-      //     this.details.loading = false
-      //   })
-      // }
+      if (isRevealing && !this.details.data) {
+        this.details.loading = true
+        this.$readData('postdetails', {
+          where: {
+            field: 'post_ref',
+            operation: '==',
+            value: `posts/${this.post.id}`
+          },
+          limit: 1
+        }).then(details => {
+          this.details.data = details[0]
+          this.details.loading = false
+        })
+      }
     }
   },
   methods: {
@@ -461,5 +477,23 @@ export default {
 }
 .trans-500 {
   transition: 500ms;
+}
+.restriction-tags span {
+  font-size: 12px;
+  font-family: Graphik-Bold;
+}
+.info-bar.ant-row-flex {
+  margin-left: inherit;
+  margin-right: inherit;
+}
+.info-bar.ant-row-flex > [class*='ant-col-'] {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.info-bar [class*='ant-col-']:first-child {
+  padding-left: 0px;
+}
+.info-bar [class*='ant-col-']:last-child {
+  padding-right: 0px;
 }
 </style>
