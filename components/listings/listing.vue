@@ -109,10 +109,10 @@
               <div v-else>
                 <div class="align-center">
                   <a-button
-                    v-if="details.application_url"
+                    v-if="details.data.application_url"
                     type="success"
                     shape="round"
-                    :href="details.application_url"
+                    :href="details.data.application_url"
                     target="_blank"
                     >Apply For This Position</a-button
                   >
@@ -121,7 +121,7 @@
                   <a-col span="18">
                     <h3 class="subheading">About Us</h3>
                     <p>
-                      {{ details.company_intro }}
+                      {{ details.data.company_intro }}
                     </p>
                   </a-col>
                   <a-col span="4" class="align-center">
@@ -239,7 +239,10 @@
                   </a-col>
                   <a-col span="4"> <h2>$90,000</h2> </a-col>
                 </a-row>
-                <div v-if="!details.application_url" class="apply-container">
+                <div
+                  v-if="!details.data.application_url"
+                  class="apply-container"
+                >
                   <h3 class="subheading">How to apply</h3>
                   <p>
                     Typical Interview Process: If your application is selected,
@@ -252,11 +255,11 @@
                 </div>
                 <div class="align-center">
                   <a-button
-                    v-if="details.application_url"
+                    v-if="details.data.application_url"
                     type="success"
                     shape="round"
                     class="btn-sucess"
-                    :href="details.application_url"
+                    :href="details.data.application_url"
                     target="_blank"
                     >Apply For This Position</a-button
                   >
@@ -321,16 +324,9 @@ export default {
     revealing(isRevealing) {
       if (isRevealing && !this.details.data) {
         this.details.loading = true
-        this.$readData('postdetails', {
-          where: {
-            field: 'post_ref',
-            operation: '==',
-            value: `posts/${this.post.id}`
-          },
-          limit: 1
-        }).then(details => {
+        this.$readReference(this.post.postdetails_ref).then(details => {
           console.log(details)
-          this.details.data = details[0]
+          this.details.data = details
           this.details.loading = false
         })
       }

@@ -1087,7 +1087,7 @@ export default {
       this.$addDocument('postdetails', this.post_info)
         .then(postinfoRef => {
           this.postinfo_doc_id = postinfoRef.id
-          this.post.postdetails_ref = postinfoRef
+          this.post.postdetails_ref = `postdetails/${postinfoRef.id}`
 
           this.$addDocument('posts', this.post).then(postRef => {
             this.post_doc_id = postRef.id

@@ -115,3 +115,25 @@ Vue.prototype.$readDocument = (collection, docId) => {
       })
   })
 }
+
+Vue.prototype.$readReference = reference => {
+  return new Promise((resolve, reject) => {
+    db.doc(reference)
+      .get()
+      .then(doc => {
+        if (doc.exists) {
+          resolve({
+            id: doc.id,
+            ...doc.data()
+          })
+        } else {
+          reject()
+          //TODO: log with bugsnag
+        }
+      })
+      .catch(error => {
+        reject(error)
+        //TODO: log with bugsnag
+      })
+  })
+}
