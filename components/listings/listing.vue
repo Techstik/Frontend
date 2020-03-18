@@ -2,7 +2,13 @@
 <template>
   <div
     ref="listing"
-    class="card listing"
+    :class="[
+      {
+        'fade-opacity':
+          currentlyRevealedPost && currentlyRevealedPost != post.id
+      },
+      'card listing'
+    ]"
     @mouseover="onHoverEnter"
     @mouseout="onHoverExit"
   >
@@ -82,8 +88,8 @@
             </a-col>
             <a-col :span="8">
               <div class="restriction-tags">
-                <img v-if="post.remote" :src="globe" width="20" />
-                <!-- <span v-if="post.remote">REMOTE</span> -->
+                <!-- <img v-if="post.remote" :src="globe" width="20" /> -->
+                <span v-if="post.remote">REMOTE</span>
                 <span
                   v-if="
                     post.residing_restrictions.by_country.restricted ||
@@ -337,8 +343,7 @@ export default {
     // },
     toggleReveal() {
       this.revealing = !this.revealing
-
-      if (this.revealing) this.setCurrentlyRevealed(this.post.id)
+      this.setCurrentlyRevealed(this.revealing ? this.post.id : null)
     },
     onHoverEnter() {
       this.hovering = true
@@ -374,6 +379,11 @@ export default {
   text-align: left;
   margin: 15px;
   cursor: pointer;
+  transition: 300ms;
+}
+.fade-opacity {
+  opacity: 0.1;
+  transition: 300ms;
 }
 .title {
   margin-bottom: 10px;
