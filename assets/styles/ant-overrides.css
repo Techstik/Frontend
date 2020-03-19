@@ -227,3 +227,11 @@ a.ant-btn:hover {
     color: #ffa500 !important;
     cursor: pointer !important;
 }
+
+.ant-tabs-ink-bar {
+    background-color: #ffa500 !important;
+}
+
+.ant-tabs-nav .ant-tabs-tab-active, .ant-tabs-nav .ant-tabs-tab:hover {
+    color: #ffa500 !important;
+}

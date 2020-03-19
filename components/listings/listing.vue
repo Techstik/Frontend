@@ -195,8 +195,10 @@
                           <h4>Worldwide</h4>
                         </div>
                       </a-col>
-                    </a-row></a-tab-pane
-                  >
+                    </a-row>
+                    <h3 class="subheading">Size</h3>
+                    <h3 class="subheading align-center">1-30 people</h3>
+                  </a-tab-pane>
                   <a-tab-pane key="3" tab="Perks">Content of tab 3</a-tab-pane>
                 </a-tabs>
 
