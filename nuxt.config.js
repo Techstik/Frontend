@@ -51,7 +51,6 @@ module.exports = {
     '@/plugins/vuelidate',
     '@/plugins/vue-select',
     '@/plugins/devicon',
-    '@/plugins/vue-gallery',
     //==== INJECTIONS =======
     '@plugins/injections/storage',
     '@plugins/injections/firestore',
