@@ -196,8 +196,14 @@
                         </div>
                       </a-col>
                     </a-row>
+                    <Map
+                      v-if="post.location_based"
+                      :coords="{ lat: 37, lng: -122 }"
+                      class="mb-15"
+                    />
                     <h3 class="subheading">Size</h3>
                     <h3 class="subheading align-center">1-30 people</h3>
+                    <h3 class="subheading">Picture Proof</h3>
                   </a-tab-pane>
                   <a-tab-pane key="3" tab="Perks">Content of tab 3</a-tab-pane>
                 </a-tabs>
@@ -274,16 +280,15 @@ import google from '@/assets/images/google.png'
 import globe from '@/assets/images/planet-earth.svg'
 import pin from '@/assets/images/pin.svg'
 import techicon from '@/components/techicon'
-import ok from '@/assets/images/icons/ok.svg'
-import asterisk from '@/assets/images/icons/asterisk.png'
-import germany from '@/assets/images/flags/germany.svg'
+import Map from '@/components/map'
 import Skeleton from './skeleton'
 import { mapState, mapMutations } from 'vuex'
 
 export default {
   components: {
     techicon,
-    Skeleton
+    Skeleton,
+    Map
   },
   props: {
     post: {
@@ -302,10 +307,7 @@ export default {
       },
       google,
       globe,
-      pin,
-      ok,
-      asterisk,
-      germany
+      pin
     }
   },
   computed: {
@@ -548,5 +550,8 @@ export default {
 }
 .fs-40 {
   font-size: 40px;
+}
+.mb-15 {
+  margin-bottom: 15px;
 }
 </style>

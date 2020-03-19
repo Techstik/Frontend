@@ -15,6 +15,12 @@ export default {
   components: {
     Skeleton
   },
+  props: {
+    coords: {
+      type: Object,
+      default: null
+    }
+  },
   data() {
     return {
       loading: true,
@@ -45,7 +51,8 @@ export default {
     }
   },
   mounted() {
-    if (!this.requestedLocationPermission) this.$requestLocationPermission()
+    if (!this.coords && !this.requestedLocationPermission)
+      this.$requestLocationPermission()
     else this.initialize()
   },
   methods: {
@@ -55,12 +62,16 @@ export default {
       let location
 
       if (this.locationPermissionGranted) location = await this.geolocate()
-      else {
+      else if (this.coords)
+        location = {
+          lat: this.coords.lat,
+          lng: this.coords.lng
+        }
+      else
         location = {
           lat: 37,
           lng: -122
         }
-      }
 
       this.geojson.features[0].geometry.coordinates = [
         location.lng,
@@ -97,36 +108,38 @@ export default {
           }
         })
 
-        // When the cursor enters a feature in the point layer, prepare for dragging.
-        this.map.on('mouseenter', 'point', () => {
-          this.map.setPaintProperty('point', 'circle-color', '#3bb2d0')
-          canvas.style.cursor = 'move'
-        })
+        if (!this.coords) {
+          // When the cursor enters a feature in the point layer, prepare for dragging.
+          this.map.on('mouseenter', 'point', () => {
+            this.map.setPaintProperty('point', 'circle-color', '#3bb2d0')
+            canvas.style.cursor = 'move'
+          })
 
-        this.map.on('mouseleave', 'point', () => {
-          this.map.setPaintProperty('point', 'circle-color', '#3887be')
-          canvas.style.cursor = ''
-        })
+          this.map.on('mouseleave', 'point', () => {
+            this.map.setPaintProperty('point', 'circle-color', '#3887be')
+            canvas.style.cursor = ''
+          })
 
-        this.map.on('mousedown', 'point', e => {
-          // Prevent the default map drag behavior.
-          e.preventDefault()
+          this.map.on('mousedown', 'point', e => {
+            // Prevent the default map drag behavior.
+            e.preventDefault()
 
-          canvas.style.cursor = 'grab'
+            canvas.style.cursor = 'grab'
 
-          this.map.on('mousemove', this.onMapMove)
-          this.map.once('mouseup', this.onMapUp)
-        })
+            this.map.on('mousemove', this.onMapMove)
+            this.map.once('mouseup', this.onMapUp)
+          })
 
-        this.map.on('touchstart', 'point', e => {
-          if (e.points.length !== 1) return
+          this.map.on('touchstart', 'point', e => {
+            if (e.points.length !== 1) return
 
-          // Prevent the default map drag behavior.
-          e.preventDefault()
+            // Prevent the default map drag behavior.
+            e.preventDefault()
 
-          this.map.on('touchmove', this.onMapMove)
-          this.map.once('touchend', this.onMapUp)
-        })
+            this.map.on('touchmove', this.onMapMove)
+            this.map.once('touchend', this.onMapUp)
+          })
+        }
 
         this.$refs.map_container.classList.remove('loading')
         this.loading = false
@@ -154,6 +167,7 @@ export default {
       this.map.off('touchmove', this.onMapMove)
     },
     async displaySelectedLocation(coords) {
+      if (this.coords) return
       var location = await this.reverseGeocode(coords)
       document.getElementById(
         'coordinates'
