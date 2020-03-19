@@ -204,6 +204,11 @@
                     <h3 class="subheading">Size</h3>
                     <h3 class="subheading align-center">1-30 people</h3>
                     <h3 class="subheading">Picture Proof</h3>
+                    <v-gallery
+                      :images="images"
+                      :index="index"
+                      @close="index = null"
+                    />
                   </a-tab-pane>
                   <a-tab-pane key="3" tab="Perks">Content of tab 3</a-tab-pane>
                 </a-tabs>
