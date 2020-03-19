@@ -13,20 +13,7 @@
     @mouseout="onHoverExit"
   >
     <div class="card-body">
-      <div v-if="thumbnailView" class="thumbnail">
-        <label class="position position-thumb">{{ post.position }}</label>
-        <p class="company">
-          {{ post.company_name }}
-        </p>
-        <a-progress
-          v-for="(experience, index) in post.experience"
-          :key="experience.id"
-          :percent="100"
-          :stroke-color="experienceRequired(post.experience[index]).colour"
-          :show-info="false"
-        />
-      </div>
-      <div v-else>
+      <div>
         <div @click="toggleReveal">
           <div>
             <div class="company-image">
@@ -67,29 +54,35 @@
               </label>
               <p class="company">
                 {{ post.company_name }}
+                <span class="float-right exp-container">
+                  <a-progress
+                    v-for="(experience, index) in post.experience"
+                    :key="experience.id"
+                    :class="[
+                      { 'progress-half': post.experience.length == 2 },
+                      { 'progress-third': post.experience.length == 3 }
+                    ]"
+                    :percent="100"
+                    :stroke-color="
+                      experienceRequired(post.experience[index]).colour
+                    "
+                    :show-info="false"
+                  />
+                </span>
               </p>
             </div>
           </div>
           <a-row type="flex" align="bottom" class="info-bar">
-            <a-col :span="8">
-              <a-progress
-                v-for="(experience, index) in post.experience"
-                :key="experience.id"
-                :class="[
-                  { 'progress-half': post.experience.length == 2 },
-                  { 'progress-third': post.experience.length == 3 }
-                ]"
-                :percent="100"
-                :stroke-color="
-                  experienceRequired(post.experience[index]).colour
-                "
-                :show-info="false"
-              />
+            <a-col :span="8" class="date">
+              {{ post.date_created.toDate() | moment('from', 'now') }} |
+              <span v-if="post.location_based"
+                >{{ post.location.city }}, {{ post.location.country }}
+              </span>
+              <span v-else><b>Remote</b></span>
             </a-col>
-            <a-col :span="8">
-              <div class="restriction-tags">
+            <a-col :span="16">
+              <div class="restriction-tags float-right">
                 <!-- <img v-if="post.remote" :src="globe" width="20" /> -->
-                <span v-if="post.remote">REMOTE</span>
                 <span
                   v-if="
                     post.residing_restrictions.by_country.restricted ||
@@ -98,9 +91,6 @@
                   >RESTRICTIONS</span
                 >
               </div>
-            </a-col>
-            <a-col :span="8" class="date">
-              {{ post.date_created.toDate() | moment('from', 'now') }}
             </a-col>
           </a-row>
         </div>
@@ -125,34 +115,27 @@
                     >Apply For This Position</a-button
                   >
                 </div>
-                <a-row align="middle" type="flex" justify="space-around">
-                  <a-col span="18">
-                    <h3 class="subheading">About Us</h3>
-                    <p v-html="details.data.company_intro"></p>
-                  </a-col>
-                  <a-col span="6" class="align-center location">
-                    <div v-if="post.location_based">
-                      <span
-                        :class="
-                          `flag-icon flag-icon-${post.location.country_code.toLowerCase()}`
-                        "
-                      ></span>
-                      <h4>
-                        {{ post.location.city }}, {{ post.location.country }}
-                      </h4>
-                    </div>
-                    <div v-else>
-                      <img :src="globe" width="60" />
-                      <h4>Worldwide</h4>
-                    </div>
-                  </a-col>
-                </a-row>
-                <a-row>
-                  <a-col span="12">
+
+                <a-tabs
+                  default-active-key="1"
+                  tab-position="left"
+                  class="mtb-15"
+                >
+                  <a-tab-pane key="1" tab="Job">
                     <h3 class="subheading">The Role</h3>
                     <p v-html="details.data.about_position"></p>
-                  </a-col>
-                  <a-col span="12">
+                    <h3 class="subheading">
+                      Technologies
+                    </h3>
+                    <div class="align-center fs-40">
+                      <div
+                        v-for="tech in post.tech"
+                        :key="tech.id"
+                        class="inline ms-2h"
+                      >
+                        <techicon :tech="tech" :width="50" />
+                      </div>
+                    </div>
                     <h3 class="subheading">
                       Our Requirements
                     </h3>
@@ -164,11 +147,7 @@
                     >
                       {{ value.requirement }}
                     </p>
-                  </a-col>
-                </a-row>
-                <h3 class="subheading">What You'll Be Doing</h3>
-                <a-row align="middle" type="flex" justify="space-around">
-                  <a-col span="18">
+                    <h3 class="subheading">What You'll Be Doing</h3>
                     <p
                       v-for="value in details.data.responsibilities.filter(
                         res => {
@@ -179,27 +158,48 @@
                     >
                       {{ value.responsibility }}
                     </p>
-                  </a-col>
-                  <a-col span="6">
-                    <div class="salary align-center">
-                      <a-tooltip placement="top" arrow-point-at-center>
-                        <template slot="title">
-                          <span>{{ post.salary.currency.name }}</span>
-                        </template>
-                        <p>{{ post.salary.currency.code }}</p>
-                      </a-tooltip>
-                      <div v-if="!post.salary.set">
-                        <h3 class="subheading">
-                          {{ post.salary.minimum }}
-                        </h3>
-                        <p>to</p>
-                      </div>
-                      <h3 class="subheading">
-                        {{ post.salary.maximum }}
-                      </h3>
-                    </div>
-                  </a-col>
-                </a-row>
+                    <h3 class="subheading">Salary</h3>
+                    <a-tooltip placement="top" arrow-point-at-center>
+                      <template slot="title">
+                        <span>{{ post.salary.currency.name }}</span>
+                      </template>
+                      <span>{{ post.salary.currency.code }}</span>
+                    </a-tooltip>
+                    <h3 class="subheading">
+                      <span v-if="!post.salary.set"
+                        >{{ post.salary.minimum }} -
+                      </span>
+                      {{ post.salary.maximum }}
+                    </h3>
+                  </a-tab-pane>
+                  <a-tab-pane key="2" tab="Company">
+                    <a-row align="middle" type="flex" justify="space-around">
+                      <a-col span="18">
+                        <h3 class="subheading">About Us</h3>
+                        <p v-html="details.data.company_intro"></p>
+                      </a-col>
+                      <a-col span="6" class="align-center location">
+                        <div v-if="post.location_based">
+                          <span
+                            :class="
+                              `flag-icon flag-icon-${post.location.country_code.toLowerCase()}`
+                            "
+                          ></span>
+                          <h4>
+                            {{ post.location.city }},
+                            {{ post.location.country }}
+                          </h4>
+                        </div>
+                        <div v-else>
+                          <img :src="globe" width="60" />
+                          <h4>Worldwide</h4>
+                        </div>
+                      </a-col>
+                    </a-row></a-tab-pane
+                  >
+                  <a-tab-pane key="3" tab="Perks">Content of tab 3</a-tab-pane>
+                </a-tabs>
+
                 <div
                   v-if="
                     post.residing_restrictions.by_country.restricted ||
@@ -422,10 +422,6 @@ export default {
 .divider {
   width: 20px;
 }
-.date-posted {
-  margin-bottom: 0px;
-  font-size: 12px;
-}
 .elipsis {
   margin: 0;
   display: inline-block;
@@ -454,7 +450,6 @@ export default {
   padding: 2.25rem;
 }
 .date {
-  text-align: right;
   font-size: 12px;
 }
 .ms-2h {
@@ -541,5 +536,15 @@ export default {
 .salary p,
 .salary .subheading {
   margin-bottom: 0;
+}
+.exp-container {
+  width: 200px;
+  max-width: 150px;
+}
+.mtb-15 {
+  margin: 15px 0px;
+}
+.fs-40 {
+  font-size: 40px;
 }
 </style>

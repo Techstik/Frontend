@@ -1,9 +1,11 @@
 <template>
   <div>
-    <div class="search-bar">
-      <a-input v-model="searchWord" />
-      <p class="filter-text">Apply some filters</p>
-    </div>
+    <a-affix :offset-top="85">
+      <div class="search-bar">
+        <a-input v-model="searchWord" />
+        <p class="filter-text">Apply some filters</p>
+      </div>
+    </a-affix>
     <h3 class="subheading">Posted Today</h3>
     <listing v-for="post in searchFilter" :key="post.id" :post="post" />
   </div>
