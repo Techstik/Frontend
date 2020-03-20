@@ -90,25 +90,6 @@
   min-height: 200px;
 }
 
-.mapboxgl-map {
-  height: 100vh;
-  max-height: 300px;
-  border-radius: 10px;
-}
-
-canvas.mapboxgl-canvas:focus {
-  outline: none;
-}
-
-.mapboxgl-ctrl.mapboxgl-ctrl-attrib {
-  background-color: transparent !important;
-  font-family: Graphik;
-}
-
-.mapboxgl-ctrl-attrib .mapbox-improve-map {
-  font-family: Graphik-Bold;
-}
-
 .add-listing-tabs .ant-tabs-bar {
   display: none;
 }

@@ -1,7 +1,12 @@
 <template>
   <div>
-    <Skeleton v-if="loading" />
-    <div id="map" ref="map_container" class="map_container loading"></div>
+    <Skeleton v-if="loading" :height="height" />
+    <div
+      id="map"
+      ref="map_container"
+      :style="{ height: `${height}px` }"
+      class="map_container loading"
+    ></div>
     <pre id="coordinates" class="coordinates"></pre>
   </div>
 </template>
@@ -19,6 +24,10 @@ export default {
     coords: {
       type: Object,
       default: null
+    },
+    height: {
+      type: Number,
+      default: 300
     }
   },
   data() {
@@ -224,5 +233,25 @@ export default {
 .loading-text {
   text-align: center;
   padding: 45px 0px;
+}
+</style>
+<style>
+.mapboxgl-map {
+  height: 100vh;
+  max-height: 300px;
+  border-radius: 10px;
+}
+
+canvas.mapboxgl-canvas:focus {
+  outline: none;
+}
+
+.mapboxgl-ctrl.mapboxgl-ctrl-attrib {
+  background-color: transparent !important;
+  font-family: Graphik;
+}
+
+.mapboxgl-ctrl-attrib .mapbox-improve-map {
+  font-family: Graphik-Bold;
 }
 </style>

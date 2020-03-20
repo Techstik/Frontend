@@ -72,27 +72,27 @@
               </p>
             </div>
           </div>
-          <a-row type="flex" align="bottom" class="info-bar">
-            <a-col :span="8" class="date">
-              {{ post.date_created.toDate() | moment('from', 'now') }} |
+          <div>
+            <span class="date">
+              {{ post.date_created.toDate() | moment('from', 'now') }} &nbsp; |
+              &nbsp;
               <span v-if="post.location_based"
                 >{{ post.location.city }}, {{ post.location.country }}
               </span>
               <span v-else><b>Remote</b></span>
-            </a-col>
-            <a-col :span="16">
-              <div class="restriction-tags float-right">
-                <!-- <img v-if="post.remote" :src="globe" width="20" /> -->
-                <span
-                  v-if="
-                    post.residing_restrictions.by_country.restricted ||
-                      post.residing_restrictions.by_timezone.restricted
-                  "
-                  >RESTRICTIONS</span
-                >
-              </div>
-            </a-col>
-          </a-row>
+              <span v-if="!post.contract">&nbsp; | &nbsp; Contract</span>
+            </span>
+            <span class="restriction-tags float-right">
+              <!-- <img v-if="post.remote" :src="globe" width="20" /> -->
+              <span
+                v-if="
+                  post.residing_restrictions.by_country.restricted ||
+                    post.residing_restrictions.by_timezone.restricted
+                "
+                >RESTRICTIONS</span
+              >
+            </span>
+          </div>
         </div>
         <a-collapse
           :active-key="revealing ? 1 : 0"
@@ -105,7 +105,7 @@
                 <Skeleton />
               </div>
               <div v-else>
-                <div class="align-center">
+                <!-- <div class="align-center">
                   <a-button
                     v-if="details.data.application_url"
                     type="success"
@@ -114,7 +114,7 @@
                     target="_blank"
                     >Apply For This Position</a-button
                   >
-                </div>
+                </div> -->
 
                 <a-tabs
                   v-model="activeTabKey"
@@ -199,10 +199,13 @@
                     <Map
                       v-if="post.location_based"
                       :coords="{ lat: 37, lng: -122 }"
+                      :height="200"
                       class="mb-15"
                     />
                     <h3 class="subheading">Size</h3>
-                    <h3 class="subheading align-center">1-30 people</h3>
+                    <h3 class="subheading align-center">
+                      {{ post.size }} people
+                    </h3>
                     <h3 class="subheading">A Few Images</h3>
                     <Gallery :images="details.data.gallery" />
                   </a-tab-pane>
