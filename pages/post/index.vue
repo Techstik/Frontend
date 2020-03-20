@@ -181,6 +181,16 @@
                 </small>
                 <a-input v-model="$v.post.position.$model"></a-input>
               </div>
+              <div class="align-center pos-type">
+                <a-checkbox
+                  :checked="post.full_time"
+                  @change="post.full_time = !post.full_time"
+                /><span>Full-time</span>
+                <a-checkbox
+                  :checked="post.contract"
+                  @change="post.contract = !post.contract"
+                /><span>Contract</span>
+              </div>
               <div
                 id="id_position_about"
                 :class="{
@@ -361,6 +371,11 @@
                   </div>
                 </a-col>
               </a-row>
+            </div>
+            <div class="section">
+              <label class="mb-10 d-block">
+                Perks/Benefits
+              </label>
             </div>
             <div class="section">
               <div>
@@ -800,6 +815,8 @@ export default {
           city: '',
           country: ''
         },
+        full_time: true,
+        contract: false,
         location_based: false,
         remote: true,
         tech: [],
@@ -965,6 +982,20 @@ export default {
     }),
     activeStepToString() {
       return this.activeStep.toString()
+    },
+    fullTime() {
+      return this.post.full_time
+    },
+    contract() {
+      return this.post.contract
+    }
+  },
+  watch: {
+    fullTime(value) {
+      if (!value && !this.contract) this.post.contract = true
+    },
+    contract(value) {
+      if (!value && !this.fullTime) this.post.full_time = true
     }
   },
   mounted() {
@@ -1255,6 +1286,10 @@ small {
 .price-blocks {
   max-width: 750px;
   margin: auto;
+}
+.pos-type span {
+  font-size: 14px;
+  font-family: Graphik-Bold;
 }
 </style>
 
