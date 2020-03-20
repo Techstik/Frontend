@@ -266,6 +266,7 @@ h4 {
 
 .vs__search::placeholder {
   color: #c0c0c0 !important;
+  font-family: 'Graphik';
 }
 
 .vs__dropdown-toggle {
@@ -305,6 +306,11 @@ h4 {
   color: black;
   margin: 8px 5px;
   padding: 0px 0.5em;
+}
+
+.vs__dropdown-option--highlight{
+  background-color: #fcd668 !important;
+  color: black !important;
 }
 
 .vs-multiple .vs__dropdown-menu {

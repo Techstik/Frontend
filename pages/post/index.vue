@@ -583,7 +583,7 @@
                   "
                   class="vs-multiple"
                   label="name"
-                  placeholder="Select the countries here"
+                  placeholder="Select countries here"
                   multiple
                   :close-on-select="false"
                   :options="countries"
@@ -628,7 +628,7 @@
                   "
                   class="vs-multiple"
                   label="name"
-                  placeholder="Select the timezone(s) here"
+                  placeholder="Select timezone(s) here"
                   multiple
                   :close-on-select="false"
                   :options="[
