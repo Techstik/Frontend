@@ -373,9 +373,36 @@
               </a-row>
             </div>
             <div class="section">
-              <label class="mb-10 d-block">
+              <label class="d-block">
                 Perks/Benefits
               </label>
+              <small>
+                Any cool extras you provide? Things like 'a gym membership' or
+                'life insurance'
+              </small>
+              <div class="requirements">
+                <div
+                  v-for="(v, index) in $v.post_info.benefits.$each.$iter"
+                  :key="`benefit_${index}`"
+                  :class="{ validation_error: v.$error }"
+                >
+                  <a-input v-model="v.benefit.$model">
+                    <a-icon
+                      v-if="index >= 1"
+                      slot="suffix"
+                      type="delete"
+                      @click="removeBenefit(index)"
+                    />
+                  </a-input>
+                </div>
+                <a-button
+                  v-if="post_info.benefits.length < 8"
+                  class="btn-sm btn-outline-dark"
+                  @click="addBenefit"
+                >
+                  <a-icon type="plus" />Add
+                </a-button>
+              </div>
             </div>
             <div class="section">
               <div>
@@ -848,6 +875,11 @@ export default {
       post_info: {
         company_intro: '',
         about_position: '',
+        benefits: [
+          {
+            benefit: ''
+          }
+        ],
         requirements: [
           {
             requirement: ''
@@ -953,6 +985,15 @@ export default {
           }
         }
       },
+      benefits: {
+        required,
+        minLength: minLength(1),
+        $each: {
+          benefit: {
+            required
+          }
+        }
+      },
       responsibilities: {
         required,
         minLength: minLength(3),
@@ -1042,6 +1083,7 @@ export default {
       //       this.$v.post_info.responsibilities.$invalid ||
       //       this.$v.post.salary.maximum.$invalid ||
       //       this.$v.post.salary.minimum.$invalid ||
+      //       this.$v.post_info.benefits.$invalid ||
       //       this.$v.post.tech.$invalid
       //     )
       //       error_detected = true
@@ -1096,6 +1138,12 @@ export default {
     },
     removeRequirement(index) {
       this.post_info.requirements.splice(index, 1)
+    },
+    addBenefit() {
+      this.post_info.benefits.push({ benefit: '' })
+    },
+    removeBenefit(index) {
+      this.post_info.benefits.splice(index, 1)
     },
     onLocationUpdated(location) {
       this.post.location.city = location[0]
