@@ -117,7 +117,7 @@
                 </div>
 
                 <a-tabs
-                  default-active-key="1"
+                  v-model="activeTabKey"
                   tab-position="left"
                   class="mtb-15"
                 >
@@ -304,10 +304,10 @@ export default {
       thumbnailView: false,
       revealing: false,
       hovering: false,
+      activeTabKey: '1',
       details: {
         loading: true,
-        data: null,
-        galleryIndex: null
+        data: null
       },
       google,
       globe,
@@ -338,7 +338,10 @@ export default {
           this.details.data = details
           this.details.loading = false
         })
-      }
+      } else if (!isRevealing)
+        setTimeout(() => {
+          this.activeTabKey = '1'
+        }, 1000)
     }
   },
   methods: {
