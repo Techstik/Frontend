@@ -204,22 +204,7 @@
                     <h3 class="subheading">Size</h3>
                     <h3 class="subheading align-center">1-30 people</h3>
                     <h3 class="subheading">A Few Images</h3>
-                    <gallery
-                      :images="details.data.gallery"
-                      :index="details.galleryIndex"
-                      @close="details.galleryIndex = null"
-                    />
-                    <div
-                      v-for="(image, imageIndex) in details.data.gallery"
-                      :key="imageIndex"
-                      class="gallery-image"
-                      :style="{
-                        backgroundImage: 'url(' + image + ')',
-                        width: '33%',
-                        height: '150px'
-                      }"
-                      @click="details.galleryIndex = imageIndex"
-                    ></div>
+                    <Gallery :images="details.data.gallery" />
                   </a-tab-pane>
                   <a-tab-pane key="3" tab="Perks">Content of tab 3</a-tab-pane>
                 </a-tabs>
@@ -297,7 +282,7 @@ import globe from '@/assets/images/planet-earth.svg'
 import pin from '@/assets/images/pin.svg'
 import techicon from '@/components/techicon'
 import Map from '@/components/map'
-import VueGallery from 'vue-gallery'
+import Gallery from '@/components/gallery'
 import Skeleton from './skeleton'
 import { mapState, mapMutations } from 'vuex'
 
@@ -306,7 +291,7 @@ export default {
     techicon,
     Skeleton,
     Map,
-    gallery: VueGallery
+    Gallery
   },
   props: {
     post: {
@@ -572,14 +557,5 @@ export default {
 }
 .mb-15 {
   margin-bottom: 15px;
-}
-.gallery-image {
-  float: left;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-  border: 2px solid #ebebeb;
-  border-radius: 6px;
-  margin: 5px;
 }
 </style>
