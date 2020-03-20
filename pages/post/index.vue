@@ -35,7 +35,7 @@
                 :class="{ validation_error: $v.post.company_name.$error }"
               >
                 <label class="mb-10 d-block">
-                  Company Name
+                  Company name
                   <a-badge
                     count="required"
                     :number-style="{ backgroundColor: '#f4976c' }"
@@ -105,13 +105,21 @@
               <div>
                 <label class="d-block"
                   >Gallery
-                  <a-badge
-                    count="PREMIUM FEATURE"
-                    :number-style="{
-                      backgroundColor: '#161d2e',
-                      color: '#fcd669'
-                    }"
-                  />
+                  <a-tooltip>
+                    <template slot="title">
+                      <p>
+                        Images uploaded here will only be displayed if you
+                        purchase a professional post at the end of the process
+                      </p>
+                    </template>
+                    <a-badge
+                      count="PREMIUM FEATURE"
+                      :number-style="{
+                        backgroundColor: '#161d2e',
+                        color: '#fcd669'
+                      }"
+                    />
+                  </a-tooltip>
                 </label>
                 <small>
                   Upload some pictures of your team, work space or anything
@@ -374,7 +382,11 @@
             </div>
             <div class="section">
               <label class="d-block">
-                Perks/Benefits
+                Perks/benefits
+                <a-badge
+                  count="1+ required"
+                  :number-style="{ backgroundColor: '#f4976c' }"
+                />
               </label>
               <small>
                 Any cool extras you provide? Things like 'a gym membership' or
@@ -407,7 +419,7 @@
             <div class="section">
               <div>
                 <label class="d-block">
-                  Tech Stack
+                  Tech stack
                   <a-badge
                     count="2+ required"
                     :number-style="{ backgroundColor: '#f4976c' }"
@@ -431,7 +443,7 @@
           <a-tab-pane key="2" tab="requirements">
             <div class="section">
               <label class="mb-10 d-block">
-                Experience Level(s) Required
+                Experience level(s) required
                 <span class="cursor-pointer">
                   <a-tooltip>
                     <template slot="title">
@@ -516,7 +528,7 @@
               </div>
             </div>
             <div class="section">
-              <label class="d-block">Residing Restrictions</label>
+              <label class="d-block">Residing restrictions</label>
               <small>
                 If applicants should reside in close proximity, certain
                 countries or timezones, select them here
