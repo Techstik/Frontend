@@ -7,16 +7,16 @@
       </div>
     </a-affix>
     <h3 class="subheading">Posted Today</h3>
-    <listing v-for="post in searchFilter" :key="post.id" :post="post" />
+    <Post v-for="post in searchFilter" :key="post.id" :post="post" />
   </div>
 </template>
 
 <script>
-import listing from '@/components/listings/listing'
+import Post from '@/components/post'
 
 export default {
   components: {
-    listing
+    Post
   },
   data() {
     return {

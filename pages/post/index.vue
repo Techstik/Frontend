@@ -747,9 +747,7 @@
                   >Check out how your post will be displayed to the
                   community!</small
                 >
-                <div class="preview-container">
-                  <ListingPreview v-model="post" />
-                </div>
+                <div class="preview-container"></div>
               </div>
             </div>
             <div v-if="displayUploader">
@@ -799,7 +797,6 @@ import FilePond from '@/components/filepond'
 import Map from '@/components/map'
 import TechStack from '@/components/techstack'
 import ExperienceSelect from '@/components/experienceselect'
-import ListingPreview from '@/components/listings/preview'
 import Checkout from '@/components/cardcheckout'
 import MultipleFileUpload from '@/components/multifileupload'
 import { required, requiredIf, minLength, url } from 'vuelidate/lib/validators'
@@ -819,7 +816,6 @@ export default {
     FilePond,
     TechStack,
     ExperienceSelect,
-    ListingPreview,
     Checkout,
     MultipleFileUpload
   },
