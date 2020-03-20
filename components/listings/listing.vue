@@ -72,16 +72,20 @@
               </p>
             </div>
           </div>
-          <div>
-            <span class="date">
-              {{ post.date_created.toDate() | moment('from', 'now') }} &nbsp; |
-              &nbsp;
-              <span v-if="post.location_based"
-                >{{ post.location.city }}, {{ post.location.country }}
-              </span>
-              <span v-else><b>Remote</b></span>
-              <span v-if="!post.contract">&nbsp; | &nbsp; Contract</span>
+          <div class="fs-12 mt-5">
+            <span :class="{ expiring: isExpiring }">
+              {{ post.date_created.toDate() | moment('from', 'now') }}
             </span>
+            &nbsp; | &nbsp;
+            <span v-if="post.location_based"
+              >{{ post.location.city }}, {{ post.location.country }}
+            </span>
+            <span v-else><b>Remote</b></span>
+            <span v-if="post.contract"
+              >&nbsp; | &nbsp; Contract
+              {{ post.full_time ? 'or Full-Time' : '' }}</span
+            >
+
             <span class="restriction-tags float-right">
               <!-- <img v-if="post.remote" :src="globe" width="20" /> -->
               <span
@@ -105,17 +109,6 @@
                 <Skeleton />
               </div>
               <div v-else>
-                <!-- <div class="align-center">
-                  <a-button
-                    v-if="details.data.application_url"
-                    type="success"
-                    shape="round"
-                    :href="details.data.application_url"
-                    target="_blank"
-                    >Apply For This Position</a-button
-                  >
-                </div> -->
-
                 <a-tabs
                   v-model="activeTabKey"
                   tab-position="left"
@@ -203,13 +196,27 @@
                       class="mb-15"
                     />
                     <h3 class="subheading">Size</h3>
-                    <h3 class="subheading align-center">
-                      {{ post.size }} people
-                    </h3>
-                    <h3 class="subheading">A Few Images</h3>
-                    <Gallery :images="details.data.gallery" />
+                    <p>
+                      <b> {{ post.size }} people </b>
+                    </p>
+                    <div
+                      v-if="post.type == 'professional' && details.data.gallery"
+                    >
+                      <h3 class="subheading">A Few Images</h3>
+                      <Gallery :images="details.data.gallery" />
+                    </div>
                   </a-tab-pane>
-                  <a-tab-pane key="3" tab="Perks">Content of tab 3</a-tab-pane>
+                  <a-tab-pane key="3" tab="Perks">
+                    <h3 class="subheading">Perks/Benefits We Offer</h3>
+                    <p
+                      v-for="value in details.data.benefits.filter(benf => {
+                        return benf.benefit
+                      })"
+                      :key="value.id"
+                    >
+                      {{ value.benefit }}
+                    </p>
+                  </a-tab-pane>
                 </a-tabs>
 
                 <div
@@ -328,6 +335,14 @@ export default {
         initials += word.substring(0, 1)
       })
       return initials
+    },
+    isExpiring() {
+      var validperiod = new Date()
+
+      var dayspast = validperiod.getDate() - 25
+      validperiod.setDate(dayspast)
+
+      return this.post.date_created.toDate() < validperiod
     }
   },
   watch: {
@@ -460,6 +475,9 @@ export default {
 .mt-13 {
   margin-top: 13px;
 }
+.mt-5 {
+  margin-top: 5px;
+}
 .card-body {
   padding: 2.25rem;
 }
@@ -561,7 +579,14 @@ export default {
 .fs-40 {
   font-size: 40px;
 }
+.fs-12 {
+  font-size: 12px;
+}
 .mb-15 {
   margin-bottom: 15px;
+}
+.expiring {
+  font-family: Graphik-Bold;
+  color: red;
 }
 </style>
