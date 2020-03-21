@@ -4,7 +4,11 @@
       <a-input v-model="searchWord" />
       <p class="filter-text">Apply some filters</p>
     </div>
-    <vuescroll>
+    <vuescroll
+      ref="scroller"
+      class="scroll-container"
+      @handle-scroll="onScroll"
+    >
       <h3 class="subheading">Posted Today</h3>
       <Post v-for="post in searchFilter" :key="post.id" :post="post" />
     </vuescroll>
@@ -13,6 +17,7 @@
 
 <script>
 import vuescroll from 'vuescroll'
+import { db } from '@/plugins/firebase'
 import Post from '@/components/post'
 
 export default {
@@ -23,7 +28,10 @@ export default {
   data() {
     return {
       posts: [],
-      searchWord: ''
+      searchWord: '',
+      nextSet: null,
+      paging: false,
+      reachedEnd: false
     }
   },
   computed: {
@@ -41,30 +49,47 @@ export default {
     }
   },
   created() {
-    this.$readData('posts', {
-      order: { field: 'date_created', operation: 'desc' },
-      limit: 8
-    }).then(data => {
-      this.posts = data
-      this.scroll()
-    })
+    this.paginate()
   },
   methods: {
-    scroll() {
-      window.onscroll = () => {
-        let bottomOfWindow =
-          Math.max(
-            window.pageYOffset,
-            document.documentElement.scrollTop,
-            document.body.scrollTop
-          ) +
-            window.innerHeight ===
-          document.documentElement.offsetHeight
-        console.log(bottomOfWindow)
-        if (bottomOfWindow) {
-          this.scrolledToBottom = true // replace it with your code
-        }
+    onScroll() {
+      const { v, h } = this.$refs.scroller.getScrollProcess()
+
+      if (v > 0.8 && !this.paging && !this.reachedEnd) {
+        this.paginate()
       }
+    },
+    paginate() {
+      this.paging = true
+
+      var query = this.nextSet
+        ? this.nextSet
+        : db
+            .collection('posts')
+            .orderBy('date_created', 'desc')
+            .limit(8)
+
+      query.get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          //TODO: save these to vuex store
+
+          this.posts.push({
+            id: doc.id,
+            ...doc.data()
+          })
+        })
+
+        var lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1]
+
+        this.nextSet = db
+          .collection('posts')
+          .orderBy('date_created', 'desc')
+          .startAfter(lastVisible)
+          .limit(8)
+
+        this.reachedEnd = querySnapshot.docs.length < 8
+        this.paging = false
+      })
     }
   }
 }
@@ -82,5 +107,8 @@ export default {
   font-family: Graphik;
   text-align: center;
   color: white;
+}
+.scroll-container {
+  height: 400px !important;
 }
 </style>
