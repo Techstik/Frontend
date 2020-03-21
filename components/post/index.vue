@@ -191,7 +191,7 @@
                     </a-row>
                     <Map
                       v-if="post.location_based"
-                      :coords="{ lat: 37, lng: -122 }"
+                      :coords="post.location.coords"
                       :height="200"
                       class="mb-15"
                     />

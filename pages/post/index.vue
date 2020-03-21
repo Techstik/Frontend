@@ -1154,8 +1154,10 @@ export default {
       this.post_info.benefits.splice(index, 1)
     },
     onLocationUpdated(location) {
-      this.post.location.city = location[0]
-      this.post.location.country = location[1]
+      this.post.location.city = location.physical[0]
+      this.post.location.country = location.physical[1]
+      this.post.location.coords = location.coords
+      this.post.location.country_code = location.countryCode
     },
     setLocationRemote(value) {
       this.post.remote = value

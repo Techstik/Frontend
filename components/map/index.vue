@@ -51,7 +51,8 @@ export default {
     ...mapState({
       requestedLocationPermission: state => state.location.requestedPermission,
       locationRequestAnswered: state => state.location.requestAnswered,
-      locationPermissionGranted: state => state.location.permissionGranted
+      locationPermissionGranted: state => state.location.permissionGranted,
+      countries: state => state.countries.all
     })
   },
   watch: {
@@ -177,12 +178,39 @@ export default {
     },
     async displaySelectedLocation(coords) {
       if (this.coords) return
-      var location = await this.reverseGeocode(coords)
+      var physical = await this.reverseGeocode(coords)
       document.getElementById(
         'coordinates'
-      ).innerHTML = `${location[0]}, ${location[1]}`
+      ).innerHTML = `${physical[0]}, ${physical[1]}`
       document.getElementById('coordinates').style.display = 'block'
+
+      let country = this.countries.find(country => {
+        return (
+          country.name == physical[1] || country.alternate_name == physical[1]
+        )
+      })
+
+      let location = {
+        physical: physical,
+        coords: coords,
+        countryCode: country ? country.code : physical[1]
+      }
+
       this.$emit('location-updated', location)
+
+      if (!country)
+        this.$bugsnag.notify(
+          new Error(
+            `Alternate country name required! Country: ${physical[1]}, City: ${physical[0]}`,
+            {
+              severity: 'info',
+              metaData: {
+                city: physical[0],
+                country: physical[1]
+              }
+            }
+          )
+        )
     },
     async geolocate() {
       var response = await this.$axios.$post(
