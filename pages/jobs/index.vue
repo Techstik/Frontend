@@ -1,11 +1,9 @@
 <template>
   <div>
-    <a-affix :offset-top="85">
-      <div class="search-bar">
-        <a-input v-model="searchWord" />
-        <p class="filter-text">Apply some filters</p>
-      </div>
-    </a-affix>
+    <div class="search-bar">
+      <a-input v-model="searchWord" />
+      <p class="filter-text">Apply some filters</p>
+    </div>
     <h3 class="subheading">Posted Today</h3>
     <Post v-for="post in searchFilter" :key="post.id" :post="post" />
   </div>
@@ -39,9 +37,31 @@ export default {
     }
   },
   created() {
-    this.$readData('posts', { limit: 3 }).then(data => {
+    this.$readData('posts', {
+      order: { field: 'date_created', operation: 'desc' },
+      limit: 8
+    }).then(data => {
       this.posts = data
+      this.scroll()
     })
+  },
+  methods: {
+    scroll() {
+      window.onscroll = () => {
+        let bottomOfWindow =
+          Math.max(
+            window.pageYOffset,
+            document.documentElement.scrollTop,
+            document.body.scrollTop
+          ) +
+            window.innerHeight ===
+          document.documentElement.offsetHeight
+        console.log(bottomOfWindow)
+        if (bottomOfWindow) {
+          this.scrolledToBottom = true // replace it with your code
+        }
+      }
+    }
   }
 }
 </script>

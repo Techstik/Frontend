@@ -70,6 +70,9 @@ Vue.prototype.$readData = (collection, options) => {
         options.where.value
       )
 
+    if (options.order)
+      query = query.orderBy(options.order.field, options.order.operation)
+
     if (options.limit) query = query.limit(options.limit)
 
     query
