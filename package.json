@@ -47,7 +47,8 @@
     "vue-scrollto": "^2.17.1",
     "vue-select": "^3.4.0",
     "vuedraggable": "^2.23.2",
-    "vuelidate": "^0.7.5"
+    "vuelidate": "^0.7.5",
+    "vuescroll": "^4.15.0"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^1.0.1",

@@ -4,16 +4,20 @@
       <a-input v-model="searchWord" />
       <p class="filter-text">Apply some filters</p>
     </div>
-    <h3 class="subheading">Posted Today</h3>
-    <Post v-for="post in searchFilter" :key="post.id" :post="post" />
+    <vuescroll>
+      <h3 class="subheading">Posted Today</h3>
+      <Post v-for="post in searchFilter" :key="post.id" :post="post" />
+    </vuescroll>
   </div>
 </template>
 
 <script>
+import vuescroll from 'vuescroll'
 import Post from '@/components/post'
 
 export default {
   components: {
+    vuescroll,
     Post
   },
   data() {
