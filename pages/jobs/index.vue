@@ -1,8 +1,18 @@
 <template>
   <div class="post-wrapper">
-    <div class="search-bar">
-      <a-input v-model="searchWord" />
-      <p class="filter-text">Apply some filters</p>
+    <div :class="[{ showBackground: showFilters }, 'search']">
+      <a-input
+        v-model="searchWord"
+        placeholder="Know what you're looking for?"
+      />
+      <a-collapse :active-key="showFilters ? 1 : 0">
+        <a-collapse-panel key="1" :show-arrow="false">
+          <p>testing</p>
+        </a-collapse-panel>
+      </a-collapse>
+      <p class="filter-text" @click="showFilters = !showFilters">
+        Apply some filters
+      </p>
     </div>
 
     <div v-if="searchFilter.today.length">
@@ -49,7 +59,8 @@ export default {
     return {
       loading: true,
       searchWord: '',
-      setLimit: 8
+      setLimit: 8,
+      showFilters: true
     }
   },
   computed: {
@@ -173,12 +184,16 @@ export default {
 .subheading {
   color: white;
 }
-.search-bar {
+.search {
   background-color: transparent;
   padding: 30px 50px;
   border-radius: 6px;
+  transition: 500ms;
 }
-.search-bar .filter-text {
+.showBackground {
+  background-color: grey;
+}
+.search .filter-text {
   font-family: Graphik;
   text-align: center;
   color: white;
@@ -191,5 +206,15 @@ export default {
 }
 .skeleton:last-child {
   margin-bottom: 0px;
+}
+.ant-collapse {
+  border: none;
+}
+</style>
+<style>
+.search .ant-collapse-content {
+  background-color: grey !important;
+  border-top: none;
+  border-radius: 0px !important;
 }
 </style>
