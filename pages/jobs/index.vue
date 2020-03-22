@@ -60,7 +60,7 @@ export default {
       loading: true,
       searchWord: '',
       setLimit: 8,
-      showFilters: true
+      showFilters: false
     }
   },
   computed: {
