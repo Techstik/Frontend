@@ -30,21 +30,16 @@
                       :key="tech.id"
                       class="inline ms-2h"
                     >
-                      <techicon
-                        v-if="index < 3"
-                        :tech="tech"
-                        :width="revealing ? 50 : 20"
-                      />
+                      <techicon v-if="index < 3" :tech="tech" />
                       <techicon
                         v-else
-                        v-show="hovering || revealing"
+                        v-show="hovering || revealing || isSearching"
                         :tech="tech"
-                        :width="revealing ? 50 : 20"
                       />
                     </div>
                     <p
                       v-if="post.tech.length > 3"
-                      v-show="!hovering && !revealing"
+                      v-show="!hovering && !revealing && !isSearching"
                       class="elipsis"
                     >
                       ...
@@ -326,7 +321,8 @@ export default {
   },
   computed: {
     ...mapState({
-      currentlyRevealedPost: state => state.posts.user_selected
+      currentlyRevealedPost: state => state.posts.user_selected,
+      isSearching: state => state.paging.isSearching
     }),
     companyInitials() {
       let pieces = this.post.company_name.split(' ')

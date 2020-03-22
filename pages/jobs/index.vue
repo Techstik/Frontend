@@ -56,14 +56,19 @@ export default {
     ...mapState({
       posts: state => state.posts.all,
       allPostsLoaded: state => state.posts.all_loaded,
-      canPaginate: state => state.paging.canPaginate
+      canPaginate: state => state.paging.canPaginate,
+      isSearching: state => state.paging.isSearching
     }),
     searchFilter() {
       let filtered
+      let refinedWord = this.searchWord.toLowerCase().trim()
 
-      if (!this.searchWord) filtered = this.posts
-      else {
-        let refinedWord = this.searchWord.toLowerCase().trim()
+      if (!refinedWord) {
+        if (this.isSearching) this.setSearching(false)
+        filtered = this.posts
+      } else {
+        if (!this.isSearching) this.setSearching(true)
+
         filtered = this.posts.filter(post => {
           return (
             post.position.toLowerCase().includes(refinedWord) ||
@@ -126,7 +131,8 @@ export default {
     ...mapMutations({
       setPost: 'posts/set',
       setAllPostsLoaded: 'posts/setAllLoaded',
-      setPaginate: 'paging/setPaginate'
+      setPaginate: 'paging/setPaginate',
+      setSearching: 'paging/setSearching'
     }),
     paginate() {
       if (this.allPostsLoaded) return
