@@ -49,6 +49,7 @@ export default {
       setPaginate: 'paging/setPaginate'
     }),
     handleScroll() {
+      // eslint-disable-next-line no-unused-vars
       const { v, h } = this.$refs.scroll_container.getScrollProcess()
 
       if (v > 0.5 && !this.canPaginate) this.setPaginate(true)
