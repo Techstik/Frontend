@@ -62,17 +62,20 @@ export default {
       let filtered
 
       if (!this.searchWord) filtered = this.posts
+      else {
+        filtered = this.posts.filter(post => {
+          return (
+            post.position
+              .toLowerCase()
+              .includes(this.searchWord.toLowerCase().trim()) ||
+            post.company_name
+              .toLowerCase()
+              .includes(this.searchWord.toLowerCase().trim())
+          )
+        })
 
-      filtered = this.posts.filter(post => {
-        return (
-          post.position
-            .toLowerCase()
-            .includes(this.searchWord.toLowerCase().trim()) ||
-          post.company_name
-            .toLowerCase()
-            .includes(this.searchWord.toLowerCase().trim())
-        )
-      })
+        if (filtered.length < this.setLimit) this.paginate()
+      }
 
       let yesterday = this.$moment().subtract(1, 'days')
       let lastweek = this.$moment().subtract(7, 'days')
@@ -129,7 +132,7 @@ export default {
       if (this.allPostsLoaded) return
 
       this.loading = true
-      console.log('paginating')
+
       var query = this.posts.length
         ? db
             .collection('posts')
