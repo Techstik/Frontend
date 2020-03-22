@@ -65,10 +65,12 @@ export default {
 
       filtered = this.posts.filter(post => {
         return (
-          post.position.toLowerCase().includes(this.searchWord.toLowerCase()) ||
+          post.position
+            .toLowerCase()
+            .includes(this.searchWord.toLowerCase().trim()) ||
           post.company_name
             .toLowerCase()
-            .includes(this.searchWord.toLowerCase())
+            .includes(this.searchWord.toLowerCase().trim())
         )
       })
 
