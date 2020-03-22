@@ -4,8 +4,27 @@
       <a-input v-model="searchWord" />
       <p class="filter-text">Apply some filters</p>
     </div>
-    <h3 class="subheading">Posted Today</h3>
-    <Post v-for="post in searchFilter" :key="post.id" :post="post" />
+
+    <div v-if="searchFilter.today.length">
+      <h3 class="subheading">Today</h3>
+      <Post v-for="post in searchFilter.today" :key="post.id" :post="post" />
+    </div>
+    <div v-if="searchFilter.yesterday.length">
+      <h3 class="subheading">Yesterday</h3>
+      <Post
+        v-for="post in searchFilter.yesterday"
+        :key="post.id"
+        :post="post"
+      />
+    </div>
+    <div v-if="searchFilter.lastweek.length">
+      <h3 class="subheading">Last Week</h3>
+      <Post v-for="post in searchFilter.lastweek" :key="post.id" :post="post" />
+    </div>
+    <div v-if="searchFilter.older.length">
+      <h3 class="subheading">Older</h3>
+      <Post v-for="post in searchFilter.older" :key="post.id" :post="post" />
+    </div>
 
     <div v-if="loading">
       <PostSkeleton class="skeleton" />
@@ -30,12 +49,7 @@ export default {
     return {
       loading: true,
       searchWord: '',
-      paging: false,
-      reachedEnd: false,
-      setLimit: 8,
-      scrollHeight: 500,
-      page: 1,
-      list: []
+      setLimit: 8
     }
   },
   computed: {
@@ -45,9 +59,11 @@ export default {
       canPaginate: state => state.paging.canPaginate
     }),
     searchFilter() {
-      if (!this.searchWord) return this.posts
+      let filtered
 
-      return this.posts.filter(post => {
+      if (!this.searchWord) filtered = this.posts
+
+      filtered = this.posts.filter(post => {
         return (
           post.position.toLowerCase().includes(this.searchWord.toLowerCase()) ||
           post.company_name
@@ -55,6 +71,33 @@ export default {
             .includes(this.searchWord.toLowerCase())
         )
       })
+
+      let yesterday = this.$moment().subtract(1, 'days')
+      let lastweek = this.$moment().subtract(7, 'days')
+
+      return {
+        today: filtered.filter(post => {
+          return (
+            post.date_created.toDate() >= this.$moment().startOf('day') &&
+            post.date_created.toDate() <= this.$moment().endOf('day')
+          )
+        }),
+        yesterday: filtered.filter(post => {
+          return (
+            post.date_created.toDate() >= yesterday.startOf('day') &&
+            post.date_created.toDate() <= yesterday.endOf('day')
+          )
+        }),
+        lastweek: filtered.filter(post => {
+          return (
+            post.date_created.toDate() < yesterday.startOf('day') &&
+            post.date_created.toDate() >= lastweek.endOf('day')
+          )
+        }),
+        older: filtered.filter(post => {
+          return post.date_created.toDate() < lastweek.startOf('day')
+        })
+      }
     },
     scrollContainerStyles() {
       return {
@@ -69,8 +112,7 @@ export default {
   },
   created() {
     // eslint-disable-next-line no-undef
-    // this.setLimit = Math.floor(globalThis.outerHeight / 110)
-    this.setLimit = 3
+    this.setLimit = Math.floor(globalThis.outerHeight / 110)
     this.scrollHeight = (this.setLimit - 1) * 110
 
     this.paginate()
