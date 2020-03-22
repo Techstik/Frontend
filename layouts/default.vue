@@ -8,23 +8,50 @@
         <a-button class="btn-sm f-r btn-outline-orange">Post a job</a-button>
       </nuxt-link>
     </div>
-    <div class="nuxt-container">
-      <nuxt />
-    </div>
-    <div class="footer">
-      <a-row>
-        <a-col :span="12">accepted cards</a-col>
-        <a-col :span="12">col-6</a-col>
-      </a-row>
-    </div>
+    <vuescroll
+      ref="scroll_container"
+      class="scroll-container"
+      @handle-scroll="handleScroll"
+    >
+      <div class="nuxt-container">
+        <nuxt />
+      </div>
+      <div class="footer">
+        <a-row>
+          <a-col :span="12">accepted cards</a-col>
+          <a-col :span="12">col-6</a-col>
+        </a-row>
+      </div>
+    </vuescroll>
   </div>
 </template>
 <script>
+import { mapState, mapMutations } from 'vuex'
 import whiteLogo from '@/assets/images/logos/SmallWhiteSplashSolid.svg'
+import vuescroll from 'vuescroll'
+
 export default {
+  components: {
+    vuescroll
+  },
   data() {
     return {
       whiteLogo
+    }
+  },
+  computed: {
+    ...mapState({
+      canPaginate: state => state.paging.canPaginate
+    })
+  },
+  methods: {
+    ...mapMutations({
+      setPaginate: 'paging/setPaginate'
+    }),
+    handleScroll() {
+      const { v, h } = this.$refs.scroll_container.getScrollProcess()
+
+      if (v > 0.5 && !this.canPaginate) this.setPaginate(true)
     }
   }
 }
@@ -61,5 +88,8 @@ img {
 .nuxt-container {
   min-height: 100vh;
   padding: 100px;
+}
+.scroll-container {
+  height: 100vh !important;
 }
 </style>

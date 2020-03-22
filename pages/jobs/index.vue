@@ -1,40 +1,49 @@
 <template>
-  <div>
+  <div class="post-wrapper">
     <div class="search-bar">
       <a-input v-model="searchWord" />
       <p class="filter-text">Apply some filters</p>
     </div>
-    <vuescroll
-      ref="scroller"
-      class="scroll-container"
-      @handle-scroll="onScroll"
-    >
-      <h3 class="subheading">Posted Today</h3>
-      <Post v-for="post in searchFilter" :key="post.id" :post="post" />
-    </vuescroll>
+    <h3 class="subheading">Posted Today</h3>
+    <Post v-for="post in searchFilter" :key="post.id" :post="post" />
+
+    <div v-if="loading">
+      <PostSkeleton class="skeleton" />
+      <PostSkeleton class="skeleton" />
+      <PostSkeleton class="skeleton" />
+    </div>
   </div>
 </template>
 
 <script>
-import vuescroll from 'vuescroll'
+import { mapState, mapMutations } from 'vuex'
 import { db } from '@/plugins/firebase'
 import Post from '@/components/post'
+import PostSkeleton from '@/components/post/skeleton'
 
 export default {
   components: {
-    vuescroll,
-    Post
+    Post,
+    PostSkeleton
   },
   data() {
     return {
-      posts: [],
+      loading: true,
       searchWord: '',
-      nextSet: null,
       paging: false,
-      reachedEnd: false
+      reachedEnd: false,
+      setLimit: 8,
+      scrollHeight: 500,
+      page: 1,
+      list: []
     }
   },
   computed: {
+    ...mapState({
+      posts: state => state.posts.all,
+      allPostsLoaded: state => state.posts.all_loaded,
+      canPaginate: state => state.paging.canPaginate
+    }),
     searchFilter() {
       if (!this.searchWord) return this.posts
 
@@ -46,49 +55,62 @@ export default {
             .includes(this.searchWord.toLowerCase())
         )
       })
+    },
+    scrollContainerStyles() {
+      return {
+        height: `${this.scrollHeight}px`
+      }
+    }
+  },
+  watch: {
+    canPaginate(value) {
+      if (value) this.paginate()
     }
   },
   created() {
+    // eslint-disable-next-line no-undef
+    // this.setLimit = Math.floor(globalThis.outerHeight / 110)
+    this.setLimit = 3
+    this.scrollHeight = (this.setLimit - 1) * 110
+
     this.paginate()
   },
   methods: {
-    onScroll() {
-      const { v, h } = this.$refs.scroller.getScrollProcess()
-
-      if (v > 0.8 && !this.paging && !this.reachedEnd) {
-        this.paginate()
-      }
-    },
+    ...mapMutations({
+      setPost: 'posts/set',
+      setAllPostsLoaded: 'posts/setAllLoaded',
+      setPaginate: 'paging/setPaginate'
+    }),
     paginate() {
-      this.paging = true
+      if (this.allPostsLoaded) return
 
-      var query = this.nextSet
-        ? this.nextSet
+      this.loading = true
+      console.log('paginating')
+      var query = this.posts.length
+        ? db
+            .collection('posts')
+            .orderBy('date_created', 'desc')
+            .startAfter(this.posts[this.posts.length - 1].date_created)
+            .limit(this.setLimit)
         : db
             .collection('posts')
             .orderBy('date_created', 'desc')
-            .limit(8)
+            .limit(this.setLimit)
 
       query.get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          //TODO: save these to vuex store
-
-          this.posts.push({
+          this.setPost({
             id: doc.id,
             ...doc.data()
           })
         })
 
-        var lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1]
+        this.loading = false
 
-        this.nextSet = db
-          .collection('posts')
-          .orderBy('date_created', 'desc')
-          .startAfter(lastVisible)
-          .limit(8)
+        if (querySnapshot.docs.length < this.setLimit)
+          this.setAllPostsLoaded(true)
 
-        this.reachedEnd = querySnapshot.docs.length < 8
-        this.paging = false
+        this.setPaginate(false)
       })
     }
   }
@@ -109,6 +131,16 @@ export default {
   color: white;
 }
 .scroll-container {
-  height: 400px !important;
+  height: 90% !important;
+}
+.skeleton {
+  margin-bottom: 15px;
+}
+.skeleton:last-child {
+  margin-bottom: 0px;
+}
+.h-200 {
+  height: 400px;
+  color: white;
 }
 </style>

@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="big-block grey-shimmer"></div>
+    <div class="big-block blue-shimmer"></div>
   </div>
 </template>
 <style scoped>
 .big-block {
-  height: 30px;
+  height: 110px;
 }
 </style>

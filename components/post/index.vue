@@ -406,7 +406,7 @@ export default {
 <style scoped>
 .listing {
   text-align: left;
-  margin: 15px;
+  margin: 15px 0px;
   cursor: pointer;
   transition: 300ms;
 }
