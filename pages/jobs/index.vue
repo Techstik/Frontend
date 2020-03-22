@@ -63,14 +63,20 @@ export default {
 
       if (!this.searchWord) filtered = this.posts
       else {
+        let refinedWord = this.searchWord.toLowerCase().trim()
         filtered = this.posts.filter(post => {
           return (
-            post.position
-              .toLowerCase()
-              .includes(this.searchWord.toLowerCase().trim()) ||
-            post.company_name
-              .toLowerCase()
-              .includes(this.searchWord.toLowerCase().trim())
+            post.position.toLowerCase().includes(refinedWord) ||
+            post.company_name.toLowerCase().includes(refinedWord) ||
+            `${post.location.city.toLowerCase()}, ${post.location.country.toLowerCase()}`.includes(
+              refinedWord
+            ) ||
+            post.tech.find(tech => {
+              return tech.name.toLowerCase().includes(refinedWord)
+            }) ||
+            post.experience.find(exp => {
+              return exp.toLowerCase() == refinedWord
+            })
           )
         })
 
@@ -103,11 +109,6 @@ export default {
           return post.date_created.toDate() < lastweek.startOf('day')
         })
       }
-    },
-    scrollContainerStyles() {
-      return {
-        height: `${this.scrollHeight}px`
-      }
     }
   },
   watch: {
@@ -118,7 +119,6 @@ export default {
   created() {
     // eslint-disable-next-line no-undef
     this.setLimit = Math.floor(globalThis.outerHeight / 110)
-    this.scrollHeight = (this.setLimit - 1) * 110
 
     this.paginate()
   },
@@ -185,9 +185,5 @@ export default {
 }
 .skeleton:last-child {
   margin-bottom: 0px;
-}
-.h-200 {
-  height: 400px;
-  color: white;
 }
 </style>
