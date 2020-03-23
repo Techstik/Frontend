@@ -7,7 +7,7 @@
   </div>
 </template>
 <script>
-// import { db } from '@/plugins/firebase'
+import { functions } from '@/plugins/firebase'
 
 export default {
   data() {
