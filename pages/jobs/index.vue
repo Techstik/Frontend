@@ -7,7 +7,7 @@
       />
       <a-collapse :active-key="showFilters ? 1 : 0">
         <a-collapse-panel key="1" :show-arrow="false">
-          <p>testing</p>
+          <FilterBlock />
         </a-collapse-panel>
       </a-collapse>
       <p class="filter-text" @click="showFilters = !showFilters">
@@ -47,11 +47,13 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 import { db } from '@/plugins/firebase'
+import FilterBlock from '@/components/filter'
 import Post from '@/components/post'
 import PostSkeleton from '@/components/post/skeleton'
 
 export default {
   components: {
+    FilterBlock,
     Post,
     PostSkeleton
   },
@@ -60,7 +62,8 @@ export default {
       loading: true,
       searchWord: '',
       setLimit: 8,
-      showFilters: false
+      showFilters: false,
+      filters: []
     }
   },
   computed: {
@@ -192,11 +195,13 @@ export default {
 }
 .showBackground {
   background-color: grey;
+  margin-bottom: 15px;
 }
 .search .filter-text {
   font-family: Graphik;
   text-align: center;
   color: white;
+  margin-bottom: 0;
 }
 .scroll-container {
   height: 90% !important;
