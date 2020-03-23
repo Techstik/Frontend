@@ -1,6 +1,9 @@
 const firebase_functions = require('firebase-functions')
-const sgMail = require('@sendgrid/mail')
-sgMail.setApiKey(firebase_functions.config().sendgrid.api_key)
+const client = require('@sendgrid/client')
+
+//setup
+client.setApiKey(firebase_functions.config().sendgrid.api_key)
+client.setDefaultRequest('baseUrl', 'https://api.sendgrid.com/')
 
 exports.send_email = firebase_functions.https.onCall((data, context) => {
   //   console.info(
@@ -17,12 +20,36 @@ exports.send_email = firebase_functions.https.onCall((data, context) => {
   //     )
   //   }
 
-  const msg = {
-    to: 'test@example.com',
-    from: 'test@example.com',
-    subject: 'Sending with Twilio SendGrid is Fun',
-    text: 'and easy to do anywhere, even with Node.js',
-    html: '<strong>and easy to do anywhere, even with Node.js</strong>'
+  const requestBody = {
+    subject: data.subject,
+    from: {
+      email: 'sam.smith@example.com',
+      name: 'Sam Smith'
+    },
+    reply_to: {
+      email: 'sam.smith@example.com',
+      name: 'Sam Smith'
+    },
+    template_id: data.template_id,
+    personalizations: [
+      {
+        subject: data.subject, //string
+        to: data.to, //array of objects {name, email}
+        dynamic_template_data: data.merge_content //object with all merge fields
+      }
+    ]
   }
-  sgMail.send(msg)
+
+  const request = {
+    method: 'POST',
+    url: '/v3/mail/send',
+    body: requestBody
+  }
+
+  return client.request(request).then(([response, body]) => {
+    return {
+      status: response.statusCode,
+      content: body
+    }
+  })
 })
