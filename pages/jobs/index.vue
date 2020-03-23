@@ -7,7 +7,7 @@
       />
       <a-collapse :active-key="showFilters ? 1 : 0">
         <a-collapse-panel key="1" :show-arrow="false">
-          <FilterBlock />
+          <FilterBlock @filtersApplied="updateFilters" />
         </a-collapse-panel>
       </a-collapse>
       <p class="filter-text" @click="showFilters = !showFilters">
@@ -74,30 +74,133 @@ export default {
       isSearching: state => state.paging.isSearching
     }),
     searchFilter() {
-      let filtered
+      let filtered = this.posts
       let refinedWord = this.searchWord.toLowerCase().trim()
 
-      if (!refinedWord) {
+      if (!refinedWord && !this.filters.length) {
         if (this.isSearching) this.setSearching(false)
-        filtered = this.posts
       } else {
         if (!this.isSearching) this.setSearching(true)
 
-        filtered = this.posts.filter(post => {
-          return (
-            post.position.toLowerCase().includes(refinedWord) ||
-            post.company_name.toLowerCase().includes(refinedWord) ||
-            `${post.location.city.toLowerCase()}, ${post.location.country.toLowerCase()}`.includes(
-              refinedWord
-            ) ||
-            post.tech.find(tech => {
-              return tech.name.toLowerCase().includes(refinedWord)
-            }) ||
-            post.experience.find(exp => {
-              return exp.toLowerCase() == refinedWord
+        if (refinedWord)
+          filtered = filtered.filter(post => {
+            return (
+              post.position.toLowerCase().includes(refinedWord) ||
+              post.company_name.toLowerCase().includes(refinedWord) ||
+              `${post.location.city.toLowerCase()}, ${post.location.country.toLowerCase()}`.includes(
+                refinedWord
+              ) ||
+              post.tech.find(tech => {
+                return tech.name.toLowerCase().includes(refinedWord)
+              }) ||
+              post.experience.find(exp => {
+                return exp.toLowerCase() == refinedWord
+              })
+            )
+          })
+
+        if (this.filters.length) {
+          this.filters.forEach(filter => {
+            filtered = filtered.filter(post => {
+              let result = false
+
+              switch (filter.name) {
+                case 'tech stack':
+                  filter.values.forEach(tech => {
+                    if (
+                      post.tech.find(post_tech => {
+                        return post_tech.name
+                          .toLowerCase()
+                          .includes(tech.name.toLowerCase().trim())
+                      })
+                    ) {
+                      result = true
+                      return
+                    }
+                  })
+                  break
+                case 'experience':
+                  filter.values.forEach(exp => {
+                    if (
+                      post.experience.find(post_exp => {
+                        return post_exp == exp
+                      })
+                    ) {
+                      result = true
+                      return
+                    }
+                  })
+                  break
+                case 'contract':
+                  result = post.contract
+                  break
+                case 'full-time':
+                  result = post.full_time
+                  break
+                case 'city':
+                  result = post.location.city
+                    .toLowerCase()
+                    .includes(filter.values.toLowerCase().trim())
+                  break
+                case 'country':
+                  filter.values.forEach(country => {
+                    if (
+                      post.location.country
+                        .toLowerCase()
+                        .includes(country.name.toLowerCase())
+                    ) {
+                      result = true
+                      return
+                    }
+                  })
+                  break
+                case 'salary currency':
+                  filter.values.forEach(currency => {
+                    if (post.salary.currency.code == currency.code) {
+                      result = true
+                      return
+                    }
+                  })
+                  break
+                case 'salary amount (p.a.)':
+                  if (filter.condition == 'more than')
+                    result =
+                      parseInt(
+                        post.salary.maximum.toString().replace(',', '')
+                      ) > parseInt(filter.values.toString().replace(',', ''))
+                  else
+                    result =
+                      parseInt(
+                        post.salary.maximum.toString().replace(',', '')
+                      ) < parseInt(filter.values.toString().replace(',', ''))
+                  break
+                case 'company size':
+                  filter.values.forEach(size => {
+                    if (post.size == size) {
+                      result = true
+                      return
+                    }
+                  })
+                  break
+                case 'date posted':
+                  if (filter.condition == 'before')
+                    result =
+                      post.date_created.toDate() < filter.values.startOf('day')
+                  else if (filter.condition == 'after')
+                    result =
+                      post.date_created.toDate() > filter.values.endOf('day')
+                  else
+                    result =
+                      post.date_created.toDate() >=
+                        filter.values.startOf('day') &&
+                      post.date_created.toDate() <= filter.values.endOf('day')
+                  break
+              }
+
+              return result
             })
-          )
-        })
+          })
+        }
 
         if (filtered.length < this.setLimit) this.paginate()
       }
@@ -179,6 +282,9 @@ export default {
 
         this.setPaginate(false)
       })
+    },
+    updateFilters(filters) {
+      this.filters = filters
     }
   }
 }

@@ -161,7 +161,7 @@
 
             <a-input
               v-else-if="filter.conditions.includes('like')"
-              v-model="filter.value"
+              v-model="filter.values"
             />
           </a-col>
         </a-row>
@@ -201,11 +201,13 @@ export default {
         {
           name: 'contract',
           conditions: [''],
+          values: [true],
           selected: false
         },
         {
           name: 'full-time',
           conditions: [''],
+          values: [true],
           selected: false
         },
         {
@@ -283,7 +285,21 @@ export default {
       }).values = date.toDate()
     },
     emit() {
-      this.$emit('filtersApplied', this.selectedFilters)
+      let refined = this.selectedFilters
+        .filter(filter => {
+          return filter.values.length || typeof filter.values == 'object'
+        })
+        .map(filter => {
+          return {
+            name: filter.name,
+            condition:
+              filter.conditions.length == 1
+                ? filter.conditions[0]
+                : filter.selected_condition,
+            values: filter.values
+          }
+        })
+      this.$emit('filtersApplied', refined)
     }
   }
 }
