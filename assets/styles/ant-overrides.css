@@ -235,3 +235,46 @@ a.ant-btn:hover {
 .ant-tabs-nav .ant-tabs-tab-active, .ant-tabs-nav .ant-tabs-tab:hover {
     color: #ffa500 !important;
 }
+
+.ant-calendar-picker {
+    width: 100%;
+}
+
+.ant-calendar {
+    border-radius: 10px;
+}
+
+.ant-calendar-picker-container {
+    font-family: Graphik !important;
+}
+
+.ant-calendar-picker-container a {
+    color: black !important;
+}
+
+.ant-calendar-year-panel-selected-cell .ant-calendar-year-panel-year, .ant-calendar-decade-panel-selected-cell .ant-calendar-decade-panel-decade, .ant-calendar-year-panel-year:hover, .ant-calendar-decade-panel-decade:hover {
+    background: #fcd668 !important;
+    border-radius: 10px !important;
+}
+
+.ant-calendar-selected-date .ant-calendar-date, .ant-calendar-selected-start-date .ant-calendar-date, .ant-calendar-selected-end-date .ant-calendar-date, .ant-calendar-date:hover, .ant-calendar-selected-day .ant-calendar-date {
+    color: black !important;
+    background: #fcd668 !important;
+}
+
+.ant-calendar-today .ant-calendar-date {
+    color: black !important;
+    border-color: #fcd668 !important;
+}
+
+.btn-yellow {
+    background-color: #fcd668;
+    border-color: #fcd668;
+    color: black;
+}
+
+.btn-grey {
+    background-color: #f2f2f2;
+    border-color: #f2f2f2;
+    color: black;
+}

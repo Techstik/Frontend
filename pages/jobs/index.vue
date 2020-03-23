@@ -3,7 +3,7 @@
     <div :class="[{ showBackground: showFilters }, 'search']">
       <a-input
         v-model="searchWord"
-        placeholder="Know what you're looking for?"
+        placeholder="Know what you're looking for? Search here..."
       />
       <a-collapse :active-key="showFilters ? 1 : 0">
         <a-collapse-panel key="1" :show-arrow="false">
@@ -121,7 +121,7 @@ export default {
         lastweek: filtered.filter(post => {
           return (
             post.date_created.toDate() < yesterday.startOf('day') &&
-            post.date_created.toDate() >= lastweek.endOf('day')
+            post.date_created.toDate() >= lastweek.startOf('day')
           )
         }),
         older: filtered.filter(post => {
@@ -191,10 +191,10 @@ export default {
   background-color: transparent;
   padding: 30px 50px;
   border-radius: 6px;
-  transition: 500ms;
+  transition: 300ms;
 }
 .showBackground {
-  background-color: grey;
+  background-color: #f3976b;
   margin-bottom: 15px;
 }
 .search .filter-text {
@@ -214,11 +214,12 @@ export default {
 }
 .ant-collapse {
   border: none;
+  background-color: transparent;
 }
 </style>
 <style>
 .search .ant-collapse-content {
-  background-color: grey !important;
+  background-color: transparent !important;
   border-top: none;
   border-radius: 0px !important;
 }
