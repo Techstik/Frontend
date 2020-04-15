@@ -65,23 +65,23 @@ module.exports = {
    ** Plugins to load before mounting the App
    */
   plugins: [
-    '@/plugins/injections/bugsnag',
-    '@/plugins/firebase',
-    '@plugins/injections/storage',
-    '@plugins/injections/firestore',
-    '@plugins/injections/locationservices',
-    '@plugins/injections/eventBus',
-    '@plugins/injections/localStorage',
-    '@plugins/injections/analytics',
-    '@/plugins/antd-ui',
-    '@/plugins/vuex-seed',
-    '@/plugins/lodash',
-    '@/plugins/moment',
-    '@/plugins/vuelidate',
-    '@/plugins/vue-select',
-    '@/plugins/devicon',
-    '@/plugins/filters',
-    '@/plugins/lazy-load'
+    '@/plugins/injections/bugsnag.js',
+    '@/plugins/firebase.js',
+    '@plugins/injections/storage.js',
+    '@plugins/injections/firestore.js',
+    '@plugins/injections/locationservices.js',
+    '@plugins/injections/eventBus.js',
+    '@plugins/injections/localStorage.js',
+    '@plugins/injections/analytics.js',
+    '@/plugins/antd-ui.js',
+    '@/plugins/vuex-seed.js',
+    '@/plugins/lodash.js',
+    '@/plugins/moment.js',
+    '@/plugins/vuelidate.js',
+    '@/plugins/vue-select.js',
+    '@/plugins/devicon.js',
+    '@/plugins/filters.js',
+    '@/plugins/lazy-load.js'
   ],
   /*
    ** Nuxt.js dev-modules
