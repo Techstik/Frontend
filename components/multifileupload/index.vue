@@ -59,9 +59,15 @@ export default {
           } else
             this.progressBytes = this.completedBytes + snapshot.bytesTransferred
         },
-        // eslint-disable-next-line no-unused-vars
         error => {
-          //TODO: log with bugsnag
+          this.$bugsnag.notify(error, {
+            severity: 'info',
+            metaData: {
+              explanation:
+                'Error whilst uploading multiple files to firebase during the status_changed event.',
+              destination: 'components/multifileupload/index.vue'
+            }
+          })
         },
         () => {
           this.uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
@@ -76,6 +82,7 @@ export default {
     complete() {
       if (this.complete) {
         this.$emit('uploadComplete', this.downloadURLS)
+        this.$logAnalytic(`multifileupload-completed`)
       }
     }
   },
@@ -87,6 +94,11 @@ export default {
       },
       0
     )
+
+    this.$logAnalytic(`begin_multifileupload`, {
+      number_of_files: this.files.length,
+      totalSize: this.totalBytes
+    })
 
     this.uploadFile(this.files[0])
   },

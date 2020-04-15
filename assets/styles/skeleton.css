@@ -1,0 +1,43 @@
+:root {
+    --gray-light: #ececed;
+    --gray-accent: #e9e9ea;
+}
+
+@keyframes loading {
+    0% {
+        background-position-x: 0;
+    }
+    40%, 100% {
+        background-position-x: -200%;
+    }
+}
+
+.blue-shimmer, .grey-shimmer, .gold-shimmer {
+    border-radius: 10px;
+    background-size: 200% 100%;
+    background-position: 0 center;
+    animation: 2s ease-in-out loading infinite;
+}
+
+.gold-shimmer {
+    animation: 3.5s ease-in-out loading infinite;
+    transition: 300ms;
+}
+
+.blue-shimmer, img[lazy=loading] {
+    background-color: #303c6c;
+    border-color: #303c6c;
+    background-image: linear-gradient( 110deg, #303c6c 73%, #303c6c 77%, #303c6c 78%, #2b3561 84%, #2b3561 88%, #303c6c 94%, #303c6c 100%);
+}
+
+.grey-shimmer {
+    background-color: #f2f2f2;
+    border-color: #f2f2f2;
+    background-image: linear-gradient( 110deg, #f2f2f2 73%, #f2f2f2 77%, #f2f2f2 78%, #e8e8e8 84%, #e8e8e8 88%, #f2f2f2 94%, #f2f2f2 100%);
+}
+
+.gold-shimmer {
+    background-color: #b5a264;
+    border-color: #b5a264;
+    background-image: linear-gradient( 110deg, #b5a264 73%, #b5a264 77%, #b5a264 78%, #c5b270 84%, #c5b270 88%, #b5a264 94%, #b5a264 100%);
+}

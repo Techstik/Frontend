@@ -112,7 +112,15 @@ export default {
   },
   computed: {
     ...mapState({
-      tech: state => state.tech.all
+      tech: state => {
+        return state.tech.all.map(tech => {
+          let result = {
+            name: tech.name
+          }
+          if (tech.iconname) result.iconname = tech.iconname
+          return result
+        })
+      }
     }),
     placeholdersRequired() {
       return this.selectedTech.length > 2 ? 0 : 2 - this.selectedTech.length
@@ -135,20 +143,16 @@ export default {
         })
       } else if (this.selectedTech.length < 8) {
         this.selectedTech.push(tech)
+        this.searchWord = ''
       }
       this.emitChange()
     },
     addUnknown() {
-      this.updateTech({ iconname: '', name: this.searchWord })
+      this.updateTech({ custom: true, name: this.searchWord })
       this.searchWord = ''
     },
     emitChange() {
-      this.$emit(
-        'input',
-        this.selectedTech.map(tech => {
-          return tech.name
-        })
-      )
+      this.$emit('input', this.selectedTech)
     }
   }
 }
@@ -168,14 +172,15 @@ export default {
   margin: 5px;
 }
 .tech-icon i {
-  font-size: 65px;
+  font-size: 40px;
 }
 .tech-icon:hover {
   border-color: #e4e4e4 !important;
 }
 .tech-icon p {
   font-size: 12px;
-  font-family: Graphik-Bold;
+  font-family: 'Graphik-Bold', 'Helvetica Neue', helvetica, 'Apple Color Emoji',
+    arial, sans-serif;
   text-align: center;
   margin-bottom: 0px;
 }
@@ -222,6 +227,18 @@ export default {
   margin-top: 15px;
   margin-bottom: 15px;
 }
+@media (max-width: 750px) {
+  .search {
+    width: 100%;
+  }
+  .tech-icon i {
+    font-size: 30px;
+  }
+  .tech-icon {
+    padding: 10px;
+    margin: 3px;
+  }
+}
 </style>
 <style>
 .validation_error .placeholder .tech-icon {
@@ -236,8 +253,10 @@ export default {
 .validation_error .tech-blocks input:hover {
   border-color: #e4e4e4 !important;
 }
-
 .validation_error .tech-blocks input:focus {
   border-color: #f4976c !important;
+}
+.tech-block .ant-badge-count {
+  font-size: 0.5em;
 }
 </style>

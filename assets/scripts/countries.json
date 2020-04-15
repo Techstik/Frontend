@@ -1133,17 +1133,13 @@
     {
         "code": "US",
         "name": "United States",
+        "alternate_name": "United States of America",
         "id": "kHwPIq3KirmE56Enc9Yw"
     },
     {
         "code": "VI",
         "name": "U.S. Virgin Islands",
         "id": "tfnOkkX7FHctZkDjAwPs"
-    },
-    {
-        "code": "UM",
-        "name": "United States Minor Outlying Islands",
-        "id": "PwdMQjAY9sSuQhQqSy37"
     },
     {
         "code": "UY",

@@ -92,11 +92,9 @@
             <div ref="cvv" class="ant-input field"></div>
           </a-col>
         </a-row>
-        <a-button @click="submitPayment">
-          Pay $25.00
-        </a-button>
+        <a-button @click="submitPayment"> Pay ${{ amount }}.00 </a-button>
         <a target="_blank" href="https://stripe.com/"
-          ><img class="logo" :src="stripelogo"
+          ><img class="logo" :src="stripelogo" alt="Stripe"
         /></a>
       </div>
       <div ref="error_block" class="error" role="alert">
@@ -151,16 +149,26 @@
           </svg>
         </div>
         <h2 class="subheading" data-tid="elements_examples.success.title">
-          Payment Successful
+          {{
+            amount == 0 || operatingAsAdmin
+              ? "We're done here!"
+              : 'Payment Successful'
+          }}
         </h2>
         <p class="message">
-          Your post has been assigned to post-fectionist <b>Matt</b>, and will
-          be verified shortly.
+          Awesome! Your post will go through a couple of extra steps
+          <b>before it goes live</b> to ensure it has the best possible reach.
+          This will be monitored by:
         </p>
+        <AvatarCard
+          v-if="assignee"
+          :staff-member="assignee"
+          :mailto-extras="mailtoExtras"
+          class="mtb-10"
+        />
         <p class="message">
-          Contact him at
-          <b><a href="mailto:matt@magicdiv.com">matt@magicdiv.com</a></b> if you
-          have any questions in the mean time.
+          Feel free to contact {{ assignee ? assignee.salutation : 'him' }}
+          if you have any questions or requests.
         </p>
       </div>
     </div>
@@ -170,9 +178,13 @@
 import { functions } from '@/plugins/firebase'
 import { required, requiredIf, email } from 'vuelidate/lib/validators'
 import stripelogo from '@/assets/images/logos/stripe/solid_dark.svg'
+import AvatarCard from '@/components/avatarcard'
 import { mapState } from 'vuex'
 
 export default {
+  components: {
+    AvatarCard
+  },
   props: {
     amount: {
       type: Number,
@@ -181,6 +193,14 @@ export default {
     currency: {
       type: String,
       default: 'usd'
+    },
+    assignee: {
+      type: Object,
+      default: null
+    },
+    mailtoExtras: {
+      type: String,
+      default: null
     }
   },
   data() {
@@ -222,16 +242,41 @@ export default {
   },
   computed: {
     ...mapState({
+      operatingAsAdmin: state => state.users.operatingAsAdmin,
       countries: state => state.countries.all
     })
   },
   mounted() {
     this.$refs.container.classList.add('submitting')
+
+    if (this.amount == 0 || this.operatingAsAdmin) {
+      this.$emit('paymentBypassed')
+
+      this.$eventbus.$on('post-set', () => {
+        this.$refs.container.classList.remove('submitting')
+        this.$refs.container.classList.add('submitted')
+      })
+
+      this.$logAnalytic('checkout-bypassed')
+      return
+    }
+
+    this.$logAnalytic('begin_checkout', {
+      value: this.amount,
+      currency: 'USD',
+      items: [
+        {
+          name: 'post',
+          price: this.amount
+        }
+      ]
+    })
+
     var create_payment_intent = functions.httpsCallable(
       'stripe-create_payment_intent'
     )
     create_payment_intent({
-      amount: this.amount,
+      amount: this.amount * 100,
       currency: this.currency
     })
       .then(response => {
@@ -241,7 +286,14 @@ export default {
         this.initializeComponents(response.data.data.publishableKey)
       })
       .catch(error => {
-        console.log(error)
+        this.$bugsnag.notify(error, {
+          severity: 'info',
+          metaData: {
+            explanation:
+              'Error creating payment intent from the cardcheckout component.',
+            destination: 'components/cardcheckout/index.vue'
+          }
+        })
       })
   },
   methods: {
@@ -259,8 +311,8 @@ export default {
       var elementStyles = {
         base: {
           color: 'black',
-          fontWeight: 600,
-          fontFamily: 'Graphik-Bold',
+          fontWeight: 'normal',
+          fontFamily: 'Graphik',
           fontSize: '16px',
           fontSmoothing: 'antialiased',
           ':focus': {
@@ -305,7 +357,9 @@ export default {
         style: elementStyles,
         classes: elementClasses
       })
+
       this.form_elements[2].mount(this.$refs.cvv)
+
       this.form_elements[2].on('ready', () => {
         this.$refs.container.classList.remove('submitting')
       })
@@ -367,7 +421,7 @@ export default {
       return true
     },
     async submitPayment() {
-      if (!this.clearToSubmit()) return this.$scrollTo('#container')
+      if (!this.clearToSubmit()) return this.$eventbus.$emit('scroll-to', 300)
 
       this.$refs.container.classList.add('submitting')
       this.$emit('submitting')
@@ -425,13 +479,25 @@ export default {
           this.$refs.container.classList.remove('submitting')
 
           if (result.error) {
-            this.$emit('onError', result.error.message)
             this.confirm.failure_message = result.error.message
             this.confirm.failed = true
+            this.$logAnalytic('checkout-exception', {
+              description: 'result.error.message'
+            })
           } else {
             if (result.paymentIntent.status === 'succeeded') {
               this.$refs.container.classList.add('submitted')
-              this.$emit('onSuccess')
+              this.$logAnalytic('checkout-complete', {
+                transaction_id: this.payment_intent_id,
+                value: this.amount,
+                currency: 'USD',
+                items: [
+                  {
+                    name: 'post',
+                    price: this.amount
+                  }
+                ]
+              })
             }
           }
         })
@@ -720,7 +786,9 @@ button:active {
 .error_repsonse p {
   margin: 0px;
   color: red;
-  font-family: 'Graphik-Bold';
+  font-family: 'Graphik-Bold', 'Helvetica Neue', helvetica, 'Apple Color Emoji',
+    arial, sans-serif;
+  font-weight: 700;
 }
 .error_repsonse p:last-child {
   color: black;
@@ -737,6 +805,14 @@ button:active {
 }
 .mt-6 {
   margin-top: 6px;
+}
+@media (max-width: 750px) {
+  .container[data-v-f7410458] {
+    padding: 20px 0px;
+  }
+  .success .icon {
+    display: none;
+  }
 }
 </style>
 <style>

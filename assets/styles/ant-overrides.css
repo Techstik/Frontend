@@ -25,18 +25,18 @@
 }
 
 [class*="ant-col-"] {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 0.9em;
+    padding-right: 0.9em;
 }
 
-.ant-row-flex>[class*="ant-col-"] {
+/* .ant-row-flex>[class*="ant-col-"] {
     padding-left: 0px;
     padding-right: 0px;
-}
+} */
 
 .ant-row, .ant-row-flex {
-    margin-left: -15px;
-    margin-right: -15px;
+    margin-left: -0.9em;
+    margin-right: -0.9em;
 }
 
 .ant-collapse>.ant-collapse-item>.ant-collapse-header {
@@ -51,29 +51,31 @@
 
 .ant-steps-item-title {
     color: white !important;
-    font-family: 'Graphik-Bold';
+    font-family: "Graphik-Bold", "Helvetica Neue", helvetica, "Apple Color Emoji", arial, sans-serif;
+    font-weight: 700;
 }
 
 .ant-radio-group {
     width: 100%;
 }
 
-.ant-btn:hover, .ant-btn:focus {
+/* .ant-btn:hover, .ant-btn:focus {
     color: #ffa500;
     background-color: #19262d;
     cursor: pointer;
     text-decoration: none;
     border-color: #19262d;
-}
+} */
 
-.ant-btn {
+.ant-btn, .ant-btn:focus {
     height: unset;
-    font-family: 'Graphik-Bold';
+    font-family: "Graphik-Bold", "Helvetica Neue", helvetica, "Apple Color Emoji", arial, sans-serif;
+    font-weight: 700;
     transition: all 0.2s ease;
     transition-property: color, background-color, border-color;
     display: inline-block;
     padding: 0.5em 1em;
-    background-color: #19262d;
+    background-color: #283b6c;
     color: #fff;
     font-size: 75%;
     font-weight: bold;
@@ -81,8 +83,14 @@
     text-align: center;
     line-height: normal;
     -webkit-appearance: none;
-    border: 0.1em solid #19262d;
-    border-radius: 0;
+    border: 0.1em solid #283b6c;
+    border-radius: 5px;
+}
+
+.ant-btn:active, .ant-btn.active, .ant-btn:hover {
+    color: black;
+    background-color: #ffa500 !important;
+    border-color: #ffa500;
 }
 
 .ant-checkbox-inner, .ant-radio-inner {
@@ -123,12 +131,12 @@
     border-radius: 10px;
     color: black;
     padding: 0 35px 0 35px;
-    font-family: Graphik;
-    font-size: 16px;
+    font-family: "Graphik", "Helvetica Neue", helvetica, "Apple Color Emoji", arial, sans-serif;
+    font-size: 85%;
 }
 
-.ant-input-number {
-    font-size: 70%;
+.ant-input-group, .ant-input-affix-wrapper{
+    font-size: 85%;
 }
 
 .ant-input-number-input {
@@ -202,8 +210,17 @@
     padding-bottom: 8px;
 }
 
+.ant-badge {
+    font-size: .6em;
+}
+
+.ant-badge-count {
+    font-size: .9em;
+}
+
 .ant-badge-count, .ant-divider-inner-text {
-    font-family: 'Graphik-Bold';
+    font-family: "Graphik-Bold", "Helvetica Neue", helvetica, "Apple Color Emoji", arial, sans-serif;
+    font-weight: 700;
 }
 
 a {
@@ -211,9 +228,86 @@ a {
 }
 
 a:hover {
-    color: #19262d !important;
+    color: #fcd669 !important;
 }
 
 .ant-badge-count {
     box-shadow: none !important;
+}
+
+a.ant-btn {
+    line-height: initial;
+    color: white !important;
+}
+
+a.ant-btn:hover {
+    color: #ffa500 !important;
+    cursor: pointer !important;
+}
+
+.ant-tabs-ink-bar {
+    background-color: #ffa500 !important;
+}
+
+.ant-tabs-nav .ant-tabs-tab-active, .ant-tabs-nav .ant-tabs-tab:hover {
+    color: #ffa500 !important;
+}
+
+.ant-calendar-picker {
+    width: 100%;
+}
+
+.ant-calendar {
+    border-radius: 10px;
+}
+
+.ant-calendar-picker-container {
+    font-family: "Graphik", "Helvetica Neue", helvetica, "Apple Color Emoji", arial, sans-serif !important;
+}
+
+.ant-calendar-picker-container a {
+    color: black !important;
+}
+
+.ant-calendar-year-panel-selected-cell .ant-calendar-year-panel-year, .ant-calendar-decade-panel-selected-cell .ant-calendar-decade-panel-decade, .ant-calendar-year-panel-year:hover, .ant-calendar-decade-panel-decade:hover {
+    background: #fcd668 !important;
+    border-radius: 10px !important;
+}
+
+.ant-calendar-selected-date .ant-calendar-date, .ant-calendar-selected-start-date .ant-calendar-date, .ant-calendar-selected-end-date .ant-calendar-date, .ant-calendar-date:hover, .ant-calendar-selected-day .ant-calendar-date {
+    color: black !important;
+    background: #fcd668 !important;
+}
+
+.ant-calendar-today .ant-calendar-date {
+    color: black !important;
+    border-color: #fcd668 !important;
+}
+
+.btn-yellow {
+    background-color: #fcd668;
+    border-color: #fcd668;
+    color: black;
+}
+
+.btn-grey {
+    background-color: #f2f2f2;
+    border-color: #f2f2f2;
+    color: black;
+}
+
+a:focus {
+    text-decoration: none !important;
+}
+
+.ant-tabs, .ant-collapse {
+    font-size: unset !important;
+    color: unset;
+}
+
+.ant-collapse {
+    background-color: transparent !important;
+}
+textarea.ant-input {
+    padding-top: 10px;
 }

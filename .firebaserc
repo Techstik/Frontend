@@ -2,6 +2,6 @@
   "projects": {
     "default": "softserved-28b00",
     "development": "softserved-28b00",
-    "production": "softserved-28b00"
+    "production": "techstik-production"
   }
 }

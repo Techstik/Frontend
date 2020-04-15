@@ -1,3 +1,5 @@
+/* eslint-disable promise/always-return */
+/* eslint-disable promise/no-nesting */
 const firebase_functions = require('firebase-functions')
 const firebase_admin = require('firebase-admin')
 const stripe = require('stripe')(firebase_functions.config().stripe.secret_key)
@@ -84,6 +86,46 @@ exports.update_payment_intent = firebase_functions.https.onCall(
       .catch(error => {
         console.error(
           `Error whilst updating a payment intent: ${JSON.stringify(error)}`
+        )
+        return {
+          success: false,
+          data: {
+            ...error
+          }
+        }
+      })
+  }
+)
+
+exports.get_payment_intent = firebase_functions.https.onCall(
+  (data, context) => {
+    console.info(
+      `Received request to retrieve payment intent with data: ${JSON.stringify(
+        data
+      )}`
+    )
+
+    if (!(typeof data.id === 'string')) {
+      throw new firebase_functions.https.HttpsError(
+        'invalid-argument',
+        'The function has not been called with the required parameters.'
+      )
+    }
+
+    return stripe.paymentIntents
+      .retrieve(data.id)
+      .then(paymentIntent => {
+        console.info(`Successful`)
+        return {
+          success: true,
+          data: {
+            ...paymentIntent
+          }
+        }
+      })
+      .catch(error => {
+        console.error(
+          `Error whilst retrieving payment intent: ${JSON.stringify(error)}`
         )
         return {
           success: false,
@@ -221,15 +263,10 @@ exports.list_customers = firebase_functions.https.onCall((data, context) => {
 })
 
 exports.payment_hook = firebase_functions.https.onRequest(
-  (request, response) => {
+  async (request, response) => {
     console.info(
       `Received request with data ${JSON.stringify(request.body)}...`
     )
-
-    let result = {
-      success: false,
-      message: null
-    }
 
     let event
 
@@ -242,32 +279,78 @@ exports.payment_hook = firebase_functions.https.onRequest(
 
       const paymentIntent = event.data.object
 
-      switch (event.type) {
-        case 'payment_intent.succeeded':
-        case 'charge.succeeded':
-          result.success = true
-          result.message = 'PaymentIntent was successful!'
-          //TDOD: update the payment status on the listing
-          break
-        case 'payment_intent.payment_failed':
-          result.success = true
-          result.message = `PaymentIntent failed. Received object :-: ${JSON.stringify(
-            event.data.object
-          )}`
-          break
-        case 'payment_intent.canceled':
-          result.success = true
-          result.message = `PaymentIntent was canceled. Received object :-: ${JSON.stringify(
-            event.data.object
-          )}`
-          break
-        default:
-          return response.status(400).json(`Unsupported type: ${event.type}`)
-      }
+      let customer = await stripe.customers.retrieve(paymentIntent.customer)
+
+      await firebase_admin
+        .firestore()
+        .collection('posts')
+        .where('stripe_payment_intent_id', '==', paymentIntent.id)
+        .get()
+        // eslint-disable-next-line promise/always-return
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            switch (event.type) {
+              case 'payment_intent.succeeded':
+              case 'charge.succeeded':
+                doc.ref
+                  .update({
+                    'payment_details.paid': true,
+                    email: customer.email
+                  })
+                  .catch(error => {
+                    console.error(
+                      `Error getting updating post: ${JSON.stringify(error)}`
+                    )
+                  })
+                break
+              case 'payment_intent.payment_failed':
+                doc.ref
+                  .update({
+                    'payment_details.paid': false,
+                    email: customer.email,
+                    'payment_details.failure_reasons': firebase_admin.firestore.FieldValue.arrayUnion(
+                      paymentIntent.last_payment_error
+                        ? paymentIntent.last_payment_error.message
+                        : 'Failed'
+                    ),
+                    'payment_details.last_failure': firebase_admin.firestore.FieldValue.serverTimestamp()
+                  })
+                  .catch(error => {
+                    console.error(
+                      `Error getting updating post: ${JSON.stringify(error)}`
+                    )
+                  })
+                break
+              case 'payment_intent.canceled':
+                doc.ref
+                  .update({
+                    'payment_details.paid': false,
+                    email: customer.email,
+                    'payment_details.failure_reasons': firebase_admin.firestore.FieldValue.arrayUnion(
+                      'Canceled'
+                    ),
+                    'payment_details.last_failure': firebase_admin.firestore.FieldValue.serverTimestamp()
+                  })
+                  .catch(error => {
+                    console.error(
+                      `Error getting updating post: ${JSON.stringify(error)}`
+                    )
+                  })
+                break
+            }
+          })
+        })
+        .catch(error => {
+          console.error(
+            `Error fetching/updating the post: ${JSON.stringify(error)}`
+          )
+        })
     } catch (error) {
-      return response.status(400).json(error.message)
+      console.error(
+        `Error processing webhook request: ${JSON.stringify(error)}`
+      )
     }
 
-    return response.json({ received: true })
+    return response.sendStatus(200)
   }
 )
