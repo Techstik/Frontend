@@ -1,7 +1,11 @@
 <template>
-  <div>
-    <div class="experience-level">
+  <div class="experience-select">
+    <div
+      v-if="(preview && selections.includes('entry-level')) || !preview"
+      :class="[{ 'no-margin previewing': preview }, 'experience-level']"
+    >
       <a-checkbox
+        v-if="!preview"
         :default-checked="true"
         @change="updateSelection('entry-level')"
       ></a-checkbox>
@@ -13,8 +17,14 @@
         :show-info="false"
       />
     </div>
-    <div class="experience-level">
-      <a-checkbox @change="updateSelection('intermediate')"></a-checkbox>
+    <div
+      v-if="(preview && selections.includes('intermediate')) || !preview"
+      :class="[{ 'no-margin previewing': preview }, 'experience-level']"
+    >
+      <a-checkbox
+        v-if="!preview"
+        @change="updateSelection('intermediate')"
+      ></a-checkbox>
       <p>Intermediate</p>
       <a-progress
         :stroke-width="15"
@@ -23,8 +33,14 @@
         :show-info="false"
       />
     </div>
-    <div class="experience-level">
-      <a-checkbox @change="updateSelection('senior')"></a-checkbox>
+    <div
+      v-if="(preview && selections.includes('senior')) || !preview"
+      :class="[{ 'no-margin previewing': preview }, 'experience-level']"
+    >
+      <a-checkbox
+        v-if="!preview"
+        @change="updateSelection('senior')"
+      ></a-checkbox>
       <p>Senior</p>
       <a-progress
         :stroke-width="15"
@@ -41,6 +57,14 @@ export default {
     value: {
       type: Array,
       default: null
+    },
+    selections: {
+      type: Array,
+      default: null
+    },
+    preview: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -75,7 +99,9 @@ export default {
   float: right;
   margin-top: 5px;
 }
-
+.no-margin div {
+  margin-top: 0px;
+}
 .experience-level {
   margin-bottom: 10px;
 }
@@ -84,13 +110,33 @@ export default {
   display: inline-block;
   font-size: 14px;
   width: 130px;
-  font-family: Graphik-Bold;
+  font-family: 'Graphik-Bold', 'Helvetica Neue', helvetica, 'Apple Color Emoji',
+    arial, sans-serif;
   text-align: center;
+}
+@media (max-width: 750px) {
+  .experience-level.previewing p {
+    display: block;
+    text-align: left;
+    width: 105px;
+  }
+  .experience-level.previewing div {
+    width: 100%;
+    float: left;
+  }
+  .ant-progress-bg {
+    height: 12px !important;
+  }
 }
 </style>
 <style>
 .validation_error .ant-checkbox-inner {
   border-color: #fa755a;
   background-color: #fa755a;
+}
+@media (max-width: 750px) {
+  .experience-select .ant-progress-bg {
+    height: 12px !important;
+  }
 }
 </style>

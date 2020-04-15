@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata&display=swap');
 @font-face {
   font-family: 'Graphik';
   font-weight: normal;
@@ -19,7 +20,7 @@ html {
 }
 
 body {
-  font-family: 'Graphik';
+  font-family: "Graphik", "Helvetica Neue", helvetica, "Apple Color Emoji", arial, sans-serif;
   background-attachment: fixed;
   background-size: cover;
   height: 100%;
@@ -43,7 +44,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6, label {
-  font-family: 'Graphik-Bold';
+  font-family: "Graphik-Bold", "Helvetica Neue", helvetica, "Apple Color Emoji", arial, sans-serif; font-weight: 700;
   font-weight: 600;
 }
 
@@ -148,6 +149,11 @@ h4 {
   margin: 0 0 0.25em 0;
   font-size: 250%;
   line-height: 1.05;
+  color: white;
+}
+
+.catch-phrase {
+  color: white;
 }
 
 @media (min-width: 57.5em) {
@@ -182,6 +188,45 @@ h4 {
   font-size: 160%;
   line-height: 1.125;
 }
+.x-small {
+  font-size: 80%;
+}
+
+.small {
+  font-size: 85%;
+}
+
+.medium {
+  font-size: 100%;
+}
+.large {
+  font-size: 120%;
+}
+.flush {
+  margin: 0 !important;
+}
+.cover-button {
+  transition: all 0.2s ease;
+  transition-property: color, background-color, border-color;
+  display: inline-block;
+  padding: 0.5em 1em;
+  background-color: #1d2d35;
+  color: #fff;
+  font-size: 100%;
+  font-family: 'Graphik-Bold', 'Helvetica Neue', helvetica, 'Apple Color Emoji',
+    arial, sans-serif;
+  text-decoration: none;
+  text-align: center;
+  line-height: normal;
+  -webkit-appearance: none;
+  border: 0.1em solid #1d2d35;
+  border-radius: 5px;
+  background-color: #ffa500;
+  border-color: #ffa500;
+}
+a.cover-button {
+  color: #1d2d35 !important;
+}
 
 .validation_error {
   animation-name: shakeError;
@@ -190,7 +235,7 @@ h4 {
   animation-timing-function: ease-in-out;
 }
 
-.validation_error input, .validation_error .ck.ck-editor__editable_inline, .validation_error .vs__dropdown-toggle, .validation_error .vs__search::placeholder, .validation_error input:hover, .validation_error .ant-input-affix-wrapper:hover .ant-input:not(.ant-input-disabled), .validation_error .ck.ck-editor__editable_inline:hover, .validation_error input:focus, .validation_error .ck.ck-editor__editable_inline:focus {
+.validation_error input, .validation_error textarea, .validation_error .ck.ck-editor__editable_inline, .validation_error .vs__dropdown-toggle, .validation_error .vs__search::placeholder, .validation_error input:hover, .validation_error textarea:hover, .validation_error .ant-input-affix-wrapper:hover .ant-input:not(.ant-input-disabled), .validation_error .ck.ck-editor__editable_inline:hover, .validation_error input:focus, .validation_error textarea:focus, .validation_error .ck.ck-editor__editable_inline:focus {
   border-color: #fa755a !important;
   background-color: #fa755a !important;
   color: white !important;
@@ -200,7 +245,7 @@ h4 {
   color: white;
 }
 
-.validation_error .vs__open-indicator{
+.validation_error .vs__open-indicator {
   fill: white;
 }
 
@@ -259,13 +304,15 @@ h4 {
   background: white !important;
   border-color: white !important;
   border-radius: 10px !important;
-  font-size: 16px;
-  font-family: 'Graphik-Bold';
-  height: 47.5px;
+  font-size: 75%;
+  font-family: "Graphik-Bold", "Helvetica Neue", helvetica, "Apple Color Emoji", arial, sans-serif; font-weight: 700;
+  min-height: 47.5px;
 }
 
 .vs__search::placeholder {
+  font-size: 100%;
   color: #c0c0c0 !important;
+  font-family: "Graphik", "Helvetica Neue", helvetica, "Apple Color Emoji", arial, sans-serif;
 }
 
 .vs__dropdown-toggle {
@@ -277,16 +324,31 @@ h4 {
   border-bottom-right-radius: 0px !important;
 }
 
+.vs--open.drop-up .vs__dropdown-toggle {
+  border-top-left-radius: 0px !important;
+  border-top-right-radius: 0px !important;
+  border-bottom-left-radius: 10px !important;
+  border-bottom-right-radius: 10px !important;
+}
+
 .vs__dropdown-menu {
   background: white !important;
   border-color: white !important;
   border-bottom-left-radius: 10px !important;
   border-bottom-right-radius: 10px !important;
-  font-size: 16px;
-  font-family: 'Graphik-Bold';
+  font-size: 75%;
+  font-family: "Graphik-Bold", "Helvetica Neue", helvetica, "Apple Color Emoji", arial, sans-serif; font-weight: 700;
   box-shadow: unset !important
 }
-
+.vs__dropdown-menu[data-popper-placement]{
+  font-size: 60%;
+}
+.vs__dropdown-menu[data-popper-placement="top"]{
+  border-bottom-left-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
+  border-top-left-radius: 10px ;
+  border-top-right-radius: 10px ;
+}
 .vs__actions {
   cursor: pointer;
 }
@@ -307,16 +369,16 @@ h4 {
   padding: 0px 0.5em;
 }
 
+.vs__dropdown-option--highlight {
+  background-color: #fcd668 !important;
+  color: black !important;
+}
+
 .vs-multiple .vs__dropdown-menu {
   position: unset !important;
 }
-
-.small {
-  font-size: 85%;
-}
-
 b, strong {
-  font-family: Graphik-Bold;
+  font-family: "Graphik-Bold", "Helvetica Neue", helvetica, "Apple Color Emoji", arial, sans-serif;;
 }
 
 .toasted {
@@ -333,15 +395,213 @@ b, strong {
 
 .toasted-container .toasted .action:hover {
   text-decoration: none !important;
-  color: #fcd668 !important;
+  color: #fcd669 !important;
 }
 
 .ant-input-group .ant-input {
   margin-bottom: 10px !important;
 }
-.mtb-10{
+
+.mtb-10 {
   margin: 10px 0px;
 }
-.mtb-25{
+
+.mtb-25 {
   margin: 25px 0px;
 }
+
+.mtb-15 {
+  margin: 15px 0px;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+.mb-30 {
+  margin-bottom: 30px;
+}
+
+.mt-10 {
+  margin-top: 10px;
+  transition: 500ms;
+}
+
+.mb-15 {
+  margin-bottom: 15px;
+}
+
+.mtb-30 {
+  margin: 30px 0px;
+}
+
+.mt-5 {
+  margin-top: 5px;
+}
+
+.v-select ::-webkit-scrollbar, .vs__dropdown-menu::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+
+.v-select ::-webkit-scrollbar-track, .vs__dropdown-menu::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+/* Handle */
+
+.v-select ::-webkit-scrollbar-thumb, .vs__dropdown-menu::-webkit-scrollbar-thumb  {
+  background: #f3976b;
+  border-radius: 10px;
+}
+
+.p-m-0 p {
+  margin: 0;
+}
+
+.display-block {
+  display: block;
+}
+
+.display-inline {
+  display: inline-block;
+}
+
+.no-padding{
+  padding: 0 !important;
+}
+
+.fade-in {
+  animation: fadeIn ease 1s;
+  -webkit-animation: fadeIn ease 1s;
+  -moz-animation: fadeIn ease 1s;
+  -o-animation: fadeIn ease 1s;
+  -ms-animation: fadeIn ease 1s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-o-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-ms-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fade-out {
+  animation: fadeOut ease .5s;
+  -webkit-animation: fadeOut ease .5s;
+  -moz-animation: fadeOut ease .5s;
+  -o-animation: fadeOut ease .5s;
+  -ms-animation: fadeOut ease .5s;
+  opacity: 0;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@-moz-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@-o-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@-ms-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+::selection {
+  background: #fcd668;
+  color: black;
+}
+
+::-moz-selection {
+  background: #fcd668;
+  color: black;
+}
+svg:focus{
+  outline: none;
+}
+@media (max-width: 750px) {
+  .ant-input,
+  .vs__dropdown-toggle,
+  .input-phone-number input {
+    padding: 0 15px !important;
+  }
+  .vs__dropdown-toggle {
+    min-height: 35px !important;
+  }
+  .ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-rounded-corners{
+    padding: 0 10px 0 15px !important;
+  }
+}
+

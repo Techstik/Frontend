@@ -4,21 +4,44 @@ module.exports = {
     DEVELOPMENT: process.env.NODE_ENV !== 'production',
     GOOGLE_API_KEY: 'AIzaSyDVa0vRTfMXY1qBXz1ctMDHZGpPhC6TRvU',
     LOCATION_IQ_API_KEY: '96fbe635b05579',
+    BUGSNAG_KEY: '645bb4eb67f94b231df6229fa34acdd4',
     MAPBOX_ACCESS_TOKEN:
-      'pk.eyJ1IjoibWF0dC1ncmVwcGwiLCJhIjoiY2s1ZTYxbHhvMXZvMzNqcmY0amtoMWg2YSJ9.9hJ2XBQZxFIoxhwbB1Pb4w'
+      'pk.eyJ1IjoibWF0dC1ncmVwcGwiLCJhIjoiY2s1ZTYxbHhvMXZvMzNqcmY0amtoMWg2YSJ9.9hJ2XBQZxFIoxhwbB1Pb4w',
+    ALGOLIA_APP_ID: 'I37MW9PNFT',
+    ALGOLIA_SEARCH_KEY: '5d53904af631e8943798b04607dbfcce'
   },
   head: {
-    title: process.env.npm_package_name || '',
+    title: 'Techstik | Tech Jobs Around the World',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || ''
+        content:
+          'Explore remote and location-based tech opportunities around the world. A hub for Software Developers, Designers, DevOps and more. With upfront salary offers and tech stack transparency, your search ends here.'
       }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [
+      {
+        rel: 'apple-touch-icon',
+        sizes: '180x180',
+        href: '/apple-touch-icon.png'
+      },
+      {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '32x32',
+        href: '/favicon-32x32.png'
+      },
+      {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '16x16',
+        href: '/favicon-16x16.png'
+      },
+      { rel: 'manifest', href: '/site.webmanifest' }
+    ],
     script: [{ src: 'https://js.stripe.com/v3/' }]
   },
   /*
@@ -35,24 +58,30 @@ module.exports = {
     '@/assets/styles/site-wide.css',
     '@/assets/styles/grid.css',
     '@/assets/styles/currency-flags.min.css',
-    '@/node_modules/flag-icon-css/css/flag-icon.min.css'
+    '@/node_modules/flag-icon-css/css/flag-icon.min.css',
+    '@/assets/styles/skeleton.css'
   ],
   /*
    ** Plugins to load before mounting the App
    */
   plugins: [
-    '@/plugins/antd-ui',
+    '@/plugins/injections/bugsnag',
     '@/plugins/firebase',
+    '@plugins/injections/storage',
+    '@plugins/injections/firestore',
+    '@plugins/injections/locationservices',
+    '@plugins/injections/eventBus',
+    '@plugins/injections/localStorage',
+    '@plugins/injections/analytics',
+    '@/plugins/antd-ui',
     '@/plugins/vuex-seed',
     '@/plugins/lodash',
     '@/plugins/moment',
     '@/plugins/vuelidate',
     '@/plugins/vue-select',
     '@/plugins/devicon',
-    //==== INJECTIONS =======
-    '@plugins/injections/storage',
-    '@plugins/injections/firestore',
-    '@plugins/injections/locationservices'
+    '@/plugins/filters',
+    '@/plugins/lazy-load'
   ],
   /*
    ** Nuxt.js dev-modules
@@ -64,7 +93,7 @@ module.exports = {
    ** Nuxt.js modules
    */
   modules: [
-    // Doc: https://axios.nuxtjs.org/usage
+    '@nuxtjs/sitemap',
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     '@nuxtjs/toast',
@@ -74,6 +103,12 @@ module.exports = {
       { globalOptions: { allowNegative: false, currency: null } }
     ]
   ],
+
+  sitemap: {
+    hostname: 'https://techstik.com',
+    exclude: ['/leads/**', '/post-a-job/adminbypass/**', '/previewpost__/**'],
+    gzip: true
+  },
 
   toast: {
     position: 'top-center',

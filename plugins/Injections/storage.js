@@ -15,10 +15,26 @@ Vue.prototype.$uploadFile = (basepath, file) => {
           })
           .catch(error => {
             reject(error)
-          }) //TODO: log on bugsnag
+            this.$bugsnag.notify(error, {
+              severity: 'info',
+              metaData: {
+                explanation: 'Error whilst getting the download URL.',
+                destination: 'plugins/injections/storage.js',
+                snapshotRef: snapshot.ref
+              }
+            })
+          })
       })
       .catch(error => {
         reject(error)
-      }) //TODO: log on bugsnag
+        this.$bugsnag.notify(error, {
+          severity: 'info',
+          metaData: {
+            explanation: 'Error whilst uploading a file to firebase storage.',
+            destination: 'plugins/injections/storage.js',
+            basepath: basepath
+          }
+        })
+      })
   })
 }

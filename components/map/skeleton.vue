@@ -1,42 +1,23 @@
 <template>
   <div>
-    <div class="big-block"></div>
+    <div
+      :style="{ height: `${height}px` }"
+      class="big-block blue-shimmer"
+    ></div>
   </div>
 </template>
+<script>
+export default {
+  props: {
+    height: {
+      type: Number,
+      default: 300
+    }
+  }
+}
+</script>
 <style scoped>
-:root {
-  --gray-light: #ececed;
-  --gray-accent: #e9e9ea;
-}
-
-@keyframes loading {
-  0% {
-    background-position-x: 0;
-  }
-  40%,
-  100% {
-    background-position-x: -200%;
-  }
-}
-
 .big-block {
-  background-color: #303c6c;
-  border-color: #303c6c;
-  border-radius: 10px;
-  background-image: linear-gradient(
-    110deg,
-    #303c6c 73%,
-    #303c6c 77%,
-    #303c6c 78%,
-    #2b3561 84%,
-    #2b3561 88%,
-    #303c6c 94%,
-    #303c6c 100%
-  );
-  background-size: 200% 100%;
-  background-position: 0 center;
-  animation: 2s ease-in-out loading infinite;
-
   height: 300px;
 }
 </style>

@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /api/*
+Disallow: /leads/*
+Disallow: /post-a-job/adminbypass/*
+Disallow: /previewpost__/*
+Sitemap: https://techstik.com/sitemap.xml
