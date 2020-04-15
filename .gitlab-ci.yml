@@ -73,6 +73,7 @@ staging-build:
   only:
   - staging
   script:
+    - npm install
     - npm run generate
   artifacts:
     expire_in: 1 week
