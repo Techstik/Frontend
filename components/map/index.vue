@@ -60,7 +60,7 @@ export default {
     }
   },
   mounted() {
-    if (!this.coords && !this.$getFromLocalStorage('lp'))
+    if (!this.coords && !this.$getFromLocalStorage('lp__tscom'))
       this.$requestLocationPermission()
     else this.initialize()
   },
@@ -73,7 +73,7 @@ export default {
 
       let location
 
-      if (this.$getFromLocalStorage('lp') === 'true' && !this.coords)
+      if (this.$getFromLocalStorage('lp__tscom') === 'true' && !this.coords)
         location = await this.geolocate()
       else if (this.coords)
         location = {

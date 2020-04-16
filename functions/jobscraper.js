@@ -7,9 +7,11 @@ const allListedTech = require('./scripts/tech.json')
 let Parser = require('rss-parser')
 
 exports.scrape = firebase_functions.pubsub
-  .schedule('every 24 hours')
+  .schedule('every 30 minutes')
   .onRun(async () => {
     let leadStats
+
+    if (firebase_functions.config().base.environment !== 'production') return
 
     await firebase_admin
       .firestore()
@@ -32,7 +34,7 @@ exports.scrape = firebase_functions.pubsub
 
     await stackoverflow(leadStats)
     await indeed_UK(leadStats)
-    return true
+    await landing_jobs(leadStats)
   })
 
 async function stackoverflow(leadStats) {
@@ -46,13 +48,7 @@ async function stackoverflow(leadStats) {
   let freshSyncList = []
   let statUpdateRequired = false
 
-  //temporary
-  let itemCount = -1
-
   feed.items.forEach(item => {
-    //temporary
-    if (++itemCount > 2) return
-
     let publishDate = moment(item.pubDate)
     if (
       publishDate.startOf('day') <
@@ -240,12 +236,7 @@ async function indeed_UK(leadStats) {
   let freshSyncList = []
   let statUpdateRequired = false
 
-  //temporary
-  let itemCount = -1
-
   feed.items.forEach(item => {
-    if (++itemCount > 2) return
-
     let publishDate = moment(item.pubDate)
     if (
       publishDate.startOf('day') <
@@ -273,7 +264,7 @@ async function indeed_UK(leadStats) {
       scraped: true,
       URL: item.link,
       approved: true,
-      company_name: '',
+      company_name: item.source,
       email: item.guid,
       position: item.title,
       date_created: firebase_admin.firestore.Timestamp.fromDate(new Date()),
@@ -418,5 +409,181 @@ async function indeed_UK(leadStats) {
       .doc('3PZW2KyTYobELMpg9SSq')
       .update({
         indeed_UK_scraped_guids: freshSyncList
+      })
+}
+
+async function landing_jobs(leadStats) {
+  let parser = new Parser({
+    customFields: {
+      item: ['published', 'content', 'id', ['entry', 'item']]
+    }
+  })
+
+  let feed = await parser.parseURL('https://landing.jobs/feed')
+
+  let freshSyncList = []
+  let statUpdateRequired = false
+
+  feed.items.forEach(item => {
+    let publishDate = moment(item.published)
+    if (
+      publishDate.startOf('day') <
+      moment()
+        .subtract(1, 'days')
+        .startOf('day')
+    )
+      return
+
+    freshSyncList.push(item.id)
+
+    if (leadStats.landing_jobs_scraped_guids.includes(item.id)) return
+
+    statUpdateRequired = true
+
+    let lead = {
+      scraped: true,
+      URL: item.id,
+      approved: true,
+      company_name: '',
+      email: '',
+      position: item.title,
+      date_created: firebase_admin.firestore.Timestamp.fromDate(new Date()),
+      deleted: false
+    }
+
+    let post = {
+      type: {
+        name: 'Scraped',
+        price: 0
+      },
+      date_created: firebase_admin.firestore.Timestamp.fromDate(
+        moment(item.published).toDate()
+      ),
+      verified: false,
+      deleted: false,
+      position: item.title,
+      company_logo: '',
+      company_name: '',
+      company_website: '',
+      experience: [],
+      full_time: true,
+      contract: false,
+      remote:
+        item.title.toLowerCase().includes('remote') ||
+        item.content.toLowerCase().includes('remote'),
+      location: {
+        city: '',
+        country: 'United Kingdom',
+        country_code: 'GB'
+      },
+      tech: [],
+      salary: {
+        set: true,
+        minimum: 1000,
+        maximum: 1000,
+        currency: {
+          name: 'British Pound',
+          code: 'GBP'
+        }
+      },
+      size: '1-10',
+      payment_details: {
+        paid: false
+      },
+      residing_restrictions: {
+        by_country: {
+          restricted: false,
+          countries: []
+        },
+        by_timezone: {
+          restricted: false,
+          timezones: []
+        }
+      }
+    }
+
+    post.location_based = !post.remote
+
+    if (['senior', 'lead'].some(val => item.title.toLowerCase().includes(val)))
+      post.experience.push('senior')
+
+    if (
+      ['intermediate', 'mid-level'].some(val =>
+        item.title.toLowerCase().includes(val)
+      )
+    )
+      post.experience.push('intermediate')
+
+    if (
+      ['junior', 'entry-level', 'graduate', 'beginner'].some(val =>
+        item.title.toLowerCase().includes(val)
+      )
+    )
+      post.experience.push('entry-level')
+
+    let post_info = {
+      company_intro: '',
+      about_position: item.content,
+      benefits: [
+        {
+          benefit: ''
+        }
+      ],
+      requirements: [
+        {
+          requirement: ''
+        },
+        {
+          requirement: ''
+        }
+      ],
+      responsibilities: [
+        {
+          responsibility: ''
+        },
+        {
+          responsibility: ''
+        },
+        {
+          responsibility: ''
+        }
+      ],
+      application_url: item.id,
+      application_instr: '',
+      application_email: ''
+    }
+
+    firebase_admin
+      .firestore()
+      .collection('postdetails')
+      .add(post_info)
+      .then(post_details_doc => {
+        post.postdetails_ref = `postdetails/${post_details_doc.id}`
+
+        return firebase_admin
+          .firestore()
+          .collection('posts')
+          .add(post)
+          .then(post_doc => {
+            lead.post_ref = `posts/${post_doc.id}`
+
+            return firebase_admin
+              .firestore()
+              .collection('leads')
+              .add(lead)
+              .catch(error => console.log(`Error adding lead: ${error}`))
+          })
+          .catch(error => console.log(`Error adding post: ${error}`))
+      })
+      .catch(error => console.log(`Error adding postdetails: ${error}`))
+  })
+
+  if (statUpdateRequired)
+    firebase_admin
+      .firestore()
+      .collection('leadstatistics')
+      .doc('3PZW2KyTYobELMpg9SSq')
+      .update({
+        landing_jobs_scraped_guids: freshSyncList
       })
 }
