@@ -88,6 +88,7 @@ production-build:
   only:
   - master
   script:
+    - npm install
     - npm run prod-switch
     - npm run generate
   artifacts:

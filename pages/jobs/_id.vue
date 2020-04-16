@@ -165,7 +165,14 @@ export default {
           }
         })
         .catch(error => {
-          console.log(error)
+          this.$bugsnag.notify(error, {
+            severity: 'error',
+            metaData: {
+              explanation: 'Error reading post details on single page.',
+              postId: this.post.postdetails_ref,
+              destination: 'pages/jobs/_id.vue'
+            }
+          })
         })
     })
   },

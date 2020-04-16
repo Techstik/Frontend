@@ -283,10 +283,10 @@ export default {
       if (!this.fetchedSticky) return this.fetchSticky()
 
       if (this.isSearching) {
-        console.log('searching complex')
+        // console.log('searching complex')
         this.organizeSearch()
       } else {
-        console.log('searching normal')
+        // console.log('searching normal')
         this.normalFetch()
       }
     },
@@ -297,7 +297,6 @@ export default {
         results: [],
         allLoaded: false
       }
-      console.log(filters)
       this.determineSearching()
       this.paginate()
 
@@ -306,7 +305,7 @@ export default {
       })
     },
     fetchSticky() {
-      console.log('fetchin sticky')
+      // console.log('fetchin sticky')
       this.stickyPosts().then(results => {
         results.forEach(post => {
           if (!this.lodash.find(this.posts, { id: post.id }))
