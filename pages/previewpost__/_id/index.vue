@@ -15,7 +15,6 @@
 import Post from '@/components/post'
 import { db } from '@/plugins/firebase'
 import PostSkeleton from '@/components/post/skeleton'
-import '@/node_modules/iframe-resizer/js/iframeResizer.contentWindow'
 
 export default {
   layout: 'previewpost',
