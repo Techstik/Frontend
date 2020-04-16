@@ -38,7 +38,14 @@ export default {
         })
       })
       .catch(error => {
-        console.log(error)
+        this.$bugsnag.notify(error, {
+          severity: 'info',
+          metaData: {
+            explanation: 'Could not find post on preview page.',
+            postId: this.$route.params.id.substring(6),
+            destination: 'pages/previewpost__/_id/index.vue'
+          }
+        })
         return this.$router.push('/')
       })
   },

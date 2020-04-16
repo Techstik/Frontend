@@ -91,6 +91,9 @@ export default {
       getType: ['posttypes/getByName']
     })
   },
+  created() {
+    this.$eventbus.$emit('scroll-to', 0, 0)
+  },
   head() {
     return {
       title: 'Techstik | Job Post Pricing',

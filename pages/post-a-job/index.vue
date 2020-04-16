@@ -1162,6 +1162,9 @@ export default {
       this.post.salary.maximum = parseInt(value.replace(',', ''))
     }
   },
+  created() {
+    this.$eventbus.$emit('scroll-to', 0, 0)
+  },
   mounted() {
     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
       'proceed_to_payment',
