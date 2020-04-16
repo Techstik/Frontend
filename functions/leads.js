@@ -7,19 +7,6 @@ exports.on_created = firebase_functions.firestore
   .onCreate(async (snap, context) => {
     const lead = snap.data()
 
-    firebase_admin
-      .firestore()
-      .collection('leadlogs')
-      .add({
-        date_created: firebase_admin.firestore.FieldValue.serverTimestamp(),
-        ref: `leads/${post.id}`,
-        title: 'Created',
-        severity: 'success'
-      })
-      .catch(error => {
-        console.log(`Error adding lead log: ${error}`)
-      })
-
     if (lead.scraped)
       return pushNotifications.send(`Lead Scraped - ${lead.position}`)
 

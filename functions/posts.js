@@ -191,7 +191,11 @@ exports.on_updated = firebase_functions.firestore
       //     }
       //   )
     } else {
-      if (updatedPost.verified) await algolia.saveDocument(updatedPost)
+      if (
+        updatedPost.verified ||
+        (!updatedPost.verified && originalPost.verified)
+      )
+        await algolia.saveDocument(updatedPost)
 
       // if (
       //   updatedPost.verified &&

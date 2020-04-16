@@ -1,7 +1,10 @@
 <template>
   <div>
+    <div v-if="loading">
+      <PostSkeleton class="skeleton" />
+    </div>
     <Post
-      v-if="!loading"
+      v-else
       :post="post"
       :post-info="postdetails"
       :gallary-u-r-ls="postdetails.gallery ? postdetails.gallery : []"
@@ -10,11 +13,14 @@
 </template>
 <script>
 import Post from '@/components/post'
+import { db } from '@/plugins/firebase'
+import PostSkeleton from '@/components/post/skeleton'
 
 export default {
   layout: 'previewpost',
   components: {
-    Post
+    Post,
+    PostSkeleton
   },
   data() {
     return {
@@ -26,28 +32,58 @@ export default {
   created() {
     if (!this.$route.params.id || this.$route.params.id.length < 10)
       return this.$nuxt.error({ statusCode: 404 })
-    this.$readDocument('posts', this.$route.params.id.substring(6))
-      .then(document => {
-        this.post = document
-        this.$readDocument(
-          'postdetails',
-          this.post.postdetails_ref.split('/')[1]
-        ).then(document => {
-          this.postdetails = document
-          this.loading = false
-        })
-      })
-      .catch(error => {
-        this.$bugsnag.notify(error, {
-          severity: 'info',
-          metaData: {
-            explanation: 'Could not find post on preview page.',
-            postId: this.$route.params.id.substring(6),
-            destination: 'pages/previewpost__/_id/index.vue'
+
+    this.fetchPost()
+  },
+  methods: {
+    fetchPost() {
+      db.collection('posts')
+        .doc(this.$route.params.id.substring(6))
+        .onSnapshot(
+          doc => {
+            this.post = {
+              id: doc.id,
+              ...doc.data()
+            }
+            this.fetchPostDetails()
+          },
+          error => {
+            this.$bugsnag.notify(error, {
+              severity: 'info',
+              metaData: {
+                explanation: 'Could not find post on preview page.',
+                postId: this.$route.params.id.substring(6),
+                destination: 'pages/previewpost__/_id/index.vue'
+              }
+            })
+            return this.$nuxt.error({ statusCode: 404 })
           }
-        })
-        return this.$router.push('/')
-      })
+        )
+    },
+    fetchPostDetails() {
+      db.collection('postdetails')
+        .doc(this.post.postdetails_ref.split('/')[1])
+        .onSnapshot(
+          doc => {
+            this.postdetails = {
+              id: doc.id,
+              ...doc.data()
+            }
+            this.loading = false
+          },
+          error => {
+            this.$bugsnag.notify(error, {
+              severity: 'info',
+              metaData: {
+                explanation: 'Could not find post on preview page.',
+                postId: this.$route.params.id.substring(6),
+                destination: 'pages/previewpost__/_id/index.vue'
+              }
+            })
+            return this.$nuxt.error({ statusCode: 404 })
+          }
+        )
+    }
   },
   head() {
     return {
