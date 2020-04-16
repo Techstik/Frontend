@@ -11,6 +11,8 @@ exports.scrape = firebase_functions.pubsub
   .onRun(async () => {
     let leadStats
 
+    if (firebase_functions.config().base.environment !== 'production') return
+
     await firebase_admin
       .firestore()
       .collection('leadstatistics')
@@ -32,7 +34,6 @@ exports.scrape = firebase_functions.pubsub
 
     await stackoverflow(leadStats)
     await indeed_UK(leadStats)
-    return true
   })
 
 async function stackoverflow(leadStats) {
