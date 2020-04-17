@@ -3,6 +3,7 @@
 const firebase_functions = require('firebase-functions')
 const firebase_admin = require('firebase-admin')
 const moment = require('moment')
+let pushNotifications = require('./pushNotifications')
 const allListedTech = require('./scripts/tech.json')
 let Parser = require('rss-parser')
 
@@ -32,9 +33,13 @@ exports.scrape = firebase_functions.pubsub
         )
       })
 
-    await stackoverflow(leadStats)
-    await indeed_UK(leadStats)
-    await landing_jobs(leadStats)
+    let newScrapes = false
+
+    newScrapes = await stackoverflow(leadStats)
+    newScrapes = newScrapes || (await indeed_UK(leadStats))
+    newScrapes = newScrapes || (await landing_jobs(leadStats))
+
+    if (newScrapes) pushNotifications.send('New Leads Scraped')
   })
 
 async function stackoverflow(leadStats) {
@@ -63,6 +68,8 @@ async function stackoverflow(leadStats) {
     if (leadStats.stackoverflow_scraped_guids.includes(item.guid)) return
     if (['india', 'japan'].some(val => item.title.toLowerCase().includes(val)))
       return
+
+    statUpdateRequired = true
 
     let lead = {
       scraped: true,
@@ -222,6 +229,8 @@ async function stackoverflow(leadStats) {
       .update({
         stackoverflow_scraped_guids: freshSyncList
       })
+
+  return statUpdateRequired
 }
 
 async function indeed_UK(leadStats) {
@@ -412,6 +421,8 @@ async function indeed_UK(leadStats) {
       .update({
         indeed_UK_scraped_guids: freshSyncList
       })
+
+  return statUpdateRequired
 }
 
 async function landing_jobs(leadStats) {
@@ -588,4 +599,6 @@ async function landing_jobs(leadStats) {
       .update({
         landing_jobs_scraped_guids: freshSyncList
       })
+
+  return statUpdateRequired
 }

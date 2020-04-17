@@ -6,6 +6,7 @@ const moment = require('moment')
 const axios = require('axios')
 let algolia = require('./algolia')
 let pushNotifications = require('./pushNotifications')
+let google = require('./google')
 let sendGrid = require('./sendgrid')
 
 exports.update_statistics = firebase_functions.https.onRequest(
@@ -175,21 +176,16 @@ exports.on_updated = firebase_functions.firestore
     if (updatedPost.deleted && !originalPost.deleted) {
       await algolia.deleteDocument(updatedPost)
 
-      // if (firebase_functions.config().base.environment === 'production')
-      //   axios.post(
-      //     `https://us-central1-${
-      //       firebase_functions.config().base.project_id
-      //     }.cloudfunctions.net/google-request_index`,
-      //     {
-      //       delete: true,
-      //       url: `https://techstik.com/jobs/${updatedPost.position
-      //         .toLowerCase()
-      //         .replace(
-      //           ' ',
-      //           '-'
-      //         )}-at-${updatedPost.company_name.toLowerCase().replace(' ', '-')}`
-      //     }
-      //   )
+      if (firebase_functions.config().base.environment === 'production')
+        google.index({
+          delete: true,
+          url: `https://techstik.com/jobs/${updatedPost.position
+            .toLowerCase()
+            .replace(
+              ' ',
+              '-'
+            )}-at-${updatedPost.company_name.toLowerCase().replace(' ', '-')}`
+        })
     } else {
       if (
         updatedPost.verified ||
@@ -197,23 +193,18 @@ exports.on_updated = firebase_functions.firestore
       )
         await algolia.saveDocument(updatedPost)
 
-      // if (
-      //   updatedPost.verified &&
-      //   firebase_functions.config().base.environment === 'production'
-      // )
-      //   axios.post(
-      //     `https://us-central1-${
-      //       firebase_functions.config().base.project_id
-      //     }.cloudfunctions.net/google-request_index`,
-      //     {
-      //       url: `https://techstik.com/jobs/${updatedPost.position
-      //         .toLowerCase()
-      //         .replace(
-      //           ' ',
-      //           '-'
-      //         )}-at-${updatedPost.company_name.toLowerCase().replace(' ', '-')}`
-      //     }
-      //   )
+      if (
+        updatedPost.verified &&
+        firebase_functions.config().base.environment === 'production'
+      )
+        google.index({
+          url: `https://techstik.com/jobs/${updatedPost.position
+            .toLowerCase()
+            .replace(
+              ' ',
+              '-'
+            )}-at-${updatedPost.company_name.toLowerCase().replace(' ', '-')}`
+        })
 
       if (
         !originalPost.payment_details.paid &&
