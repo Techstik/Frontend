@@ -1,7 +1,7 @@
 module.exports = {
   mode: 'spa',
   env: {
-    DEVELOPMENT: process.env.NODE_ENV === 'production',
+    DEVELOPMENT: process.env.NODE_ENV !== 'production',
     GOOGLE_API_KEY: 'AIzaSyDVa0vRTfMXY1qBXz1ctMDHZGpPhC6TRvU',
     LOCATION_IQ_API_KEY: '96fbe635b05579',
     BUGSNAG_KEY: '645bb4eb67f94b231df6229fa34acdd4',
