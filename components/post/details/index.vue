@@ -162,6 +162,7 @@
                 <a-col v-if="!isMobile" span="6" class="align-center location">
                   <div>
                     <span
+                      v-if="post.location.country_code"
                       :class="
                         `flag-icon flag-icon-${post.location.country_code.toLowerCase()}`
                       "
@@ -174,15 +175,23 @@
                 </a-col>
               </a-row>
               <Map
-                v-if="post.location_based && post.location.coords.lat"
+                v-if="
+                  post.location_based &&
+                    post.location.coords &&
+                    post.location.coords.lat
+                "
                 :coords="post.location.coords"
                 :height="isMobile ? 150 : 200"
                 class="mb-15"
               />
-              <h3 class="subheading">Size</h3>
-              <p>
-                <b> {{ post.size }} people </b>
-              </p>
+              <div v-if="post.size != 'Do Not Show'">
+                <h3 class="subheading">
+                  Size
+                </h3>
+                <p>
+                  <b> {{ post.size }} people </b>
+                </p>
+              </div>
               <div
                 v-if="
                   (post.type.name == 'Premium' ||

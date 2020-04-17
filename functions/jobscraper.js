@@ -61,8 +61,8 @@ async function stackoverflow(leadStats) {
     freshSyncList.push(item.guid)
 
     if (leadStats.stackoverflow_scraped_guids.includes(item.guid)) return
-
-    statUpdateRequired = true
+    if (['india', 'japan'].some(val => item.title.toLowerCase().includes(val)))
+      return
 
     let lead = {
       scraped: true,
