@@ -1213,8 +1213,8 @@ export default {
             this.$v.post.position.$invalid ||
             this.$v.post_info.about_position.$invalid ||
             this.$v.post_info.responsibilities.$invalid ||
-            this.$v.post.salary.maximum.$invalid ||
-            this.$v.post.salary.minimum.$invalid ||
+            this.$v.formattedMaxSalary.$invalid ||
+            this.$v.formattedMinSalary.$invalid ||
             this.$v.post_info.benefits.$invalid ||
             this.$v.post.tech.$invalid
           )
