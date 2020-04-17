@@ -94,19 +94,21 @@ async function stackoverflow(leadStats) {
       contract: false,
       location_based: item.location ? true : false,
       remote: item.location ? false : true,
-      tech: item.categories.map(tech => {
-        let match = allListedTech.find(_tech => {
-          return _tech.name.toLowerCase() === tech.toLowerCase()
-        })
-        return match
-          ? {
-              name: match.name
-            }
-          : {
-              name: tech,
-              custom: true
-            }
-      }),
+      tech: !item.categories
+        ? []
+        : item.categories.map(tech => {
+            let match = allListedTech.find(_tech => {
+              return _tech.name.toLowerCase() === tech.toLowerCase()
+            })
+            return match
+              ? {
+                  name: match.name
+                }
+              : {
+                  name: tech,
+                  custom: true
+                }
+          }),
       salary: {
         set: true,
         minimum: 1000,
