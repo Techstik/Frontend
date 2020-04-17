@@ -7,7 +7,7 @@ const allListedTech = require('./scripts/tech.json')
 let Parser = require('rss-parser')
 
 exports.scrape = firebase_functions.pubsub
-  .schedule('every 30 minutes')
+  .schedule('every 1 hours')
   .onRun(async () => {
     let leadStats
 
