@@ -603,5 +603,8 @@ svg:focus{
   .ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-rounded-corners{
     padding: 0 10px 0 15px !important;
   }
+  .toasted {
+    transform: translateY(50px) !important
+  }
 }
 
