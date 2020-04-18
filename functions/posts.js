@@ -182,9 +182,9 @@ exports.on_updated = firebase_functions.firestore
           url: `https://techstik.com/jobs/${updatedPost.position
             .toLowerCase()
             .replace(
-              ' ',
+              / /g,
               '-'
-            )}-at-${updatedPost.company_name.toLowerCase().replace(' ', '-')}`
+            )}-at-${updatedPost.company_name.toLowerCase().replace(/ /g, '-')}`
         })
     } else {
       if (
@@ -201,9 +201,9 @@ exports.on_updated = firebase_functions.firestore
           url: `https://techstik.com/jobs/${updatedPost.position
             .toLowerCase()
             .replace(
-              ' ',
+              / /g,
               '-'
-            )}-at-${updatedPost.company_name.toLowerCase().replace(' ', '-')}`
+            )}-at-${updatedPost.company_name.toLowerCase().replace(/ /g, '-')}`
         })
 
       if (
@@ -316,9 +316,9 @@ function sendScrapedEmailNotification(post) {
         staff_member_email: 'matt@techstik.com',
         link_to_post: `https://techstik.com/jobs/${post.position
           .toLowerCase()
-          .replace(' ', '-')}-at-${post.company_name
+          .replace(/ /g, '-')}-at-${post.company_name
           .toLowerCase()
-          .replace(' ', '-')}`
+          .replace(/ /g, '-')}`
       },
       cc: [
         {

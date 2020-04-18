@@ -37,9 +37,9 @@ exports.scrape = firebase_functions.pubsub
 
     let newScrapes = false
 
-    //newScrapes = await stackoverflow(leadStats)
+    newScrapes = await stackoverflow(leadStats)
     newScrapes = newScrapes || (await remote_OK(leadStats))
-    // newScrapes = newScrapes || (await landing_jobs(leadStats))
+    newScrapes = newScrapes || (await landing_jobs(leadStats))
 
     if (newScrapes) pushNotifications.send('New Leads Scraped')
   })

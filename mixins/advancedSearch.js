@@ -74,7 +74,7 @@ export default {
                 al_filters.push(
                   `salary.maximum ${
                     filter.condition == 'more than' ? '>' : '<'
-                  } ${filter.values.toString().replace(',', '')}`
+                  } ${filter.values.toString().replace(/,/g, '')}`
                 )
                 break
               case 'company size':
