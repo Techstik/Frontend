@@ -70,7 +70,6 @@ async function stackoverflow(leadStats) {
       return
 
     statUpdateRequired = true
-
     let lead = {
       scraped: true,
       URL: item.link,
