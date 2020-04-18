@@ -3,6 +3,8 @@
 const firebase_functions = require('firebase-functions')
 const firebase_admin = require('firebase-admin')
 const moment = require('moment')
+var request = require('request')
+var fs = require('fs')
 let pushNotifications = require('./pushNotifications')
 const allListedTech = require('./scripts/tech.json')
 let Parser = require('rss-parser')
@@ -35,9 +37,9 @@ exports.scrape = firebase_functions.pubsub
 
     let newScrapes = false
 
-    newScrapes = await stackoverflow(leadStats)
-    //newScrapes = newScrapes || (await indeed_UK(leadStats))
-    newScrapes = newScrapes || (await landing_jobs(leadStats))
+    //newScrapes = await stackoverflow(leadStats)
+    newScrapes = newScrapes || (await remote_OK(leadStats))
+    // newScrapes = newScrapes || (await landing_jobs(leadStats))
 
     if (newScrapes) pushNotifications.send('New Leads Scraped')
   })
@@ -59,7 +61,7 @@ async function stackoverflow(leadStats) {
       publishDate.startOf('day') <
       moment()
         .subtract(1, 'days')
-        .startOf('day')
+        .endOf('day')
     )
       return
 
@@ -253,7 +255,7 @@ async function indeed_UK(leadStats) {
       publishDate.startOf('day') <
       moment()
         .subtract(1, 'days')
-        .startOf('day')
+        .endOf('day')
     )
       return
 
@@ -443,7 +445,7 @@ async function landing_jobs(leadStats) {
       publishDate.startOf('day') <
       moment()
         .subtract(1, 'days')
-        .startOf('day')
+        .endOf('day')
     )
       return
 
@@ -601,4 +603,217 @@ async function landing_jobs(leadStats) {
       })
 
   return statUpdateRequired
+}
+
+async function remote_OK(leadStats) {
+  let parser = new Parser({
+    customFields: {
+      item: [
+        'company',
+        'description',
+        'pubDate',
+        'guid',
+        'link',
+        'image',
+        'tags'
+      ]
+    }
+  })
+
+  let feed = await parser.parseURL('https://remoteok.io/remote-jobs.rss')
+
+  let freshSyncList = []
+  let statUpdateRequired = false
+
+  feed.items.forEach(async item => {
+    let publishDate = moment(item.pubDate)
+    if (
+      publishDate.startOf('day') <
+      moment()
+        .subtract(1, 'days')
+        .endOf('day')
+    )
+      return
+
+    freshSyncList.push(item.guid)
+
+    if (leadStats.remote_OK_guids.includes(item.guid)) return
+
+    statUpdateRequired = true
+
+    let lead = {
+      scraped: true,
+      URL: item.link,
+      approved: true,
+      company_name: item.company,
+      email: item.guid,
+      position: item.title,
+      date_created: firebase_admin.firestore.Timestamp.fromDate(new Date()),
+      deleted: false
+    }
+
+    let post = {
+      type: {
+        name: 'Scraped',
+        price: 0
+      },
+      date_created: firebase_admin.firestore.Timestamp.fromDate(
+        moment(item.pubDate).toDate()
+      ),
+      verified: false,
+      deleted: false,
+      position: item.title,
+      company_logo: '',
+      company_name: item.company,
+      company_website: '',
+      experience: [],
+      full_time: true,
+      contract: false,
+      remote: true,
+      location_based: false,
+      tech: !item.tags
+        ? []
+        : item.tags.map(tech => {
+            let match = allListedTech.find(_tech => {
+              return _tech.name.toLowerCase() === tech.toLowerCase()
+            })
+            return match
+              ? {
+                  name: match.name
+                }
+              : {
+                  name: tech,
+                  custom: true
+                }
+          }),
+      salary: {
+        set: true,
+        minimum: 1000,
+        maximum: 1000,
+        currency: {
+          name: 'British Pound',
+          code: 'GBP'
+        }
+      },
+      size: '1-10',
+      payment_details: {
+        paid: false
+      },
+      residing_restrictions: {
+        by_country: {
+          restricted: false,
+          countries: []
+        },
+        by_timezone: {
+          restricted: false,
+          timezones: []
+        }
+      }
+    }
+
+    if (['senior', 'lead'].some(val => item.title.toLowerCase().includes(val)))
+      post.experience.push('senior')
+
+    if (
+      ['intermediate', 'mid-level'].some(val =>
+        item.title.toLowerCase().includes(val)
+      )
+    )
+      post.experience.push('intermediate')
+
+    if (
+      ['junior', 'entry-level', 'graduate', 'beginner'].some(val =>
+        item.title.toLowerCase().includes(val)
+      )
+    )
+      post.experience.push('entry-level')
+
+    if (item.image !== 'https://remoteok.io/assets/logo-square.png') {
+      let logo = await download(item.image, `${item.guid}_logo.png`)
+
+      let snapshot = await firebase_admin.storage
+        .ref(`Companies/Logos/${item.company}`)
+        .put(logo)
+
+      post.company_logo = await snapshot.ref.getDownloadURL()
+    }
+
+    let post_info = {
+      company_intro: '',
+      about_position: item.description,
+      benefits: [
+        {
+          benefit: ''
+        }
+      ],
+      requirements: [
+        {
+          requirement: ''
+        },
+        {
+          requirement: ''
+        }
+      ],
+      responsibilities: [
+        {
+          responsibility: ''
+        },
+        {
+          responsibility: ''
+        },
+        {
+          responsibility: ''
+        }
+      ],
+      application_url: item.link,
+      application_instr: '',
+      application_email: ''
+    }
+
+    firebase_admin
+      .firestore()
+      .collection('postdetails')
+      .add(post_info)
+      .then(post_details_doc => {
+        post.postdetails_ref = `postdetails/${post_details_doc.id}`
+
+        return firebase_admin
+          .firestore()
+          .collection('posts')
+          .add(post)
+          .then(post_doc => {
+            lead.post_ref = `posts/${post_doc.id}`
+
+            return firebase_admin
+              .firestore()
+              .collection('leads')
+              .add(lead)
+              .catch(error => console.log(`Error adding lead: ${error}`))
+          })
+          .catch(error => console.log(`Error adding post: ${error}`))
+      })
+      .catch(error => console.log(`Error adding postdetails: ${error}`))
+  })
+
+  if (statUpdateRequired)
+    firebase_admin
+      .firestore()
+      .collection('leadstatistics')
+      .doc('3PZW2KyTYobELMpg9SSq')
+      .update({
+        remote_OK_guids: freshSyncList
+      })
+
+  return statUpdateRequired
+}
+
+function download(uri, filename) {
+  return new Promise((resolve, reject) => {
+    request.head(uri, (err, res, body) => {
+      if (err) reject(err)
+      request(uri)
+        .pipe(fs.createWriteStream(filename))
+        .on('close', resolve())
+    })
+  })
 }
