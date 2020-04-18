@@ -728,16 +728,6 @@ async function remote_OK(leadStats) {
     )
       post.experience.push('entry-level')
 
-    if (item.image !== 'https://remoteok.io/assets/logo-square.png') {
-      let logo = await download(item.image, `${item.guid}_logo.png`)
-
-      let snapshot = await firebase_admin.storage
-        .ref(`Companies/Logos/${item.company}`)
-        .put(logo)
-
-      post.company_logo = await snapshot.ref.getDownloadURL()
-    }
-
     let post_info = {
       company_intro: '',
       about_position: item.description,
