@@ -872,7 +872,7 @@ import firebase from 'firebase'
 import { mapState, mapGetters } from 'vuex'
 
 const currencyValidator = value =>
-  parseInt(!value ? '1' : value.replace(',', '')) > 1
+  parseInt(!value ? '1' : value.replace(/,/g, '')) > 1
 
 export default {
   components: {
@@ -1156,10 +1156,10 @@ export default {
       this.post.payment_details.paid = value == 0
     },
     formattedMinSalary(value) {
-      this.post.salary.minimum = parseInt(value.replace(',', ''))
+      this.post.salary.minimum = parseInt(value.replace(/,/g, ''))
     },
     formattedMaxSalary(value) {
-      this.post.salary.maximum = parseInt(value.replace(',', ''))
+      this.post.salary.maximum = parseInt(value.replace(/,/g, ''))
     }
   },
   created() {
