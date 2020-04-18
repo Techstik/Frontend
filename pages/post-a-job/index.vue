@@ -1244,8 +1244,9 @@ export default {
       return error_detected
     },
     previousStep() {
-      if (this.displayCheckout) {
+      if (this.displayCheckout || this.displayOTP) {
         this.displayCheckout = false
+        this.displayOTP = false
         this.checkingOut = false
         window.recaptchaVerifier.reset()
       } else {
