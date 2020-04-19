@@ -8,6 +8,7 @@
       :alt="altTag"
       class="gallery-image"
       @click="index = imageIndex"
+      @close="index = null"
     />
   </div>
 </template>
@@ -55,6 +56,15 @@ img[lazy='loading'] {
 @media (max-width: 750px) {
   .gallery-image {
     max-width: 30%;
+    padding: 0.4em;
+    margin: 2px;
+  }
+}
+</style>
+<style>
+@media (max-width: 750px) {
+  .blueimp-gallery-controls > .close {
+    transform: translateY(55px);
   }
 }
 </style>

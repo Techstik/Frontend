@@ -498,6 +498,9 @@ export default {
   .search {
     padding: 0.8em;
   }
+  .subheading {
+    font-size: 120%;
+  }
 }
 </style>
 <style>

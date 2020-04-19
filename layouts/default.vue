@@ -173,8 +173,8 @@
           <nuxt />
         </transition>
       </div>
-      <div v-if="!isMobile" class="footer">
-        <div class="sitelinks">
+      <div :class="[{ 'mobile-footer': isMobile }, 'footer']">
+        <div v-if="!isMobile" class="sitelinks">
           <nuxt-link to="/jobs" @click.native="scrollToTop"
             ><b>Jobs</b></nuxt-link
           >
@@ -358,6 +358,9 @@ export default {
   color: white;
   padding: 1.25em;
   padding-right: 85px;
+}
+.footer.mobile-footer {
+  background-color: #161d2d;
 }
 .nuxt-container {
   min-height: 100vh;

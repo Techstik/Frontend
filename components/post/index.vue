@@ -459,6 +459,7 @@ export default {
   width: 55px;
   padding: 5px;
   border-radius: 8px;
+  max-height: 55px;
 }
 .company {
   font-size: 13px;
