@@ -38,8 +38,10 @@ exports.scrape = firebase_functions.pubsub
     let newScrapes = false
 
     newScrapes = await stackoverflow(leadStats)
-    newScrapes = newScrapes || (await remote_OK(leadStats))
-    newScrapes = newScrapes || (await landing_jobs(leadStats))
+    newScrapes = (await remote_OK(leadStats)) || newScrapes
+    newScrapes = (await landing_jobs(leadStats)) || newScrapes
+    newScrapes = (await authentic_jobs(leadStats)) || newScrapes
+    newScrapes = (await ux_jobs_board(leadStats)) || newScrapes
 
     if (newScrapes) pushNotifications.send('New Leads Scraped')
   })
@@ -630,7 +632,7 @@ async function remote_OK(leadStats) {
       publishDate.startOf('day') <
       moment()
         .subtract(1, 'days')
-        .endOf('day')
+        .startOf('day')
     )
       return
 
@@ -796,13 +798,380 @@ async function remote_OK(leadStats) {
   return statUpdateRequired
 }
 
-function download(uri, filename) {
-  return new Promise((resolve, reject) => {
-    request.head(uri, (err, res, body) => {
-      if (err) reject(err)
-      request(uri)
-        .pipe(fs.createWriteStream(filename))
-        .on('close', resolve())
-    })
+async function authentic_jobs(leadStats) {
+  let parser = new Parser({
+    customFields: {
+      item: [
+        'pubDate',
+        'guid',
+        'link',
+        ['content:encoded', 'content'],
+        ['job_listing:location', 'location'],
+        ['job_listing:job_type', 'type'],
+        ['job_listing:company', 'company']
+      ]
+    }
   })
+
+  let feed = await parser.parseURL('https://authenticjobs.com/?feed=job_feed')
+
+  let freshSyncList = []
+  let statUpdateRequired = false
+
+  feed.items.forEach(async item => {
+    let publishDate = moment(item.pubDate)
+    if (
+      publishDate.startOf('day') <
+      moment()
+        .subtract(1, 'days')
+        .startOf('day')
+    )
+      return
+
+    freshSyncList.push(item.guid)
+
+    if (leadStats.authentic_jobs_guids.includes(item.guid)) return
+
+    statUpdateRequired = true
+
+    let lead = {
+      scraped: true,
+      URL: item.link,
+      approved: true,
+      company_name: item.company,
+      email: '',
+      position: item.title,
+      date_created: firebase_admin.firestore.Timestamp.fromDate(new Date()),
+      deleted: false
+    }
+
+    let post = {
+      type: {
+        name: 'Scraped',
+        price: 0
+      },
+      date_created: firebase_admin.firestore.Timestamp.fromDate(
+        moment(item.pubDate).toDate()
+      ),
+      verified: false,
+      deleted: false,
+      position: item.title,
+      company_logo: '',
+      company_name: item.company,
+      company_website: '',
+      experience: [],
+      full_time: true,
+      contract: false,
+      remote: item.location
+        ? item.location.toLowerCase().includes('remote')
+        : true,
+      location_based: item.location
+        ? !item.location.toLowerCase().includes('remote')
+        : false,
+      tech: [],
+      salary: {
+        set: true,
+        minimum: 1000,
+        maximum: 1000,
+        currency: {
+          name: 'British Pound',
+          code: 'GBP'
+        }
+      },
+      size: '1-10',
+      payment_details: {
+        paid: false
+      },
+      residing_restrictions: {
+        by_country: {
+          restricted: false,
+          countries: []
+        },
+        by_timezone: {
+          restricted: false,
+          timezones: []
+        }
+      }
+    }
+
+    if (['senior', 'lead'].some(val => item.title.toLowerCase().includes(val)))
+      post.experience.push('senior')
+
+    if (
+      ['intermediate', 'mid-level'].some(val =>
+        item.title.toLowerCase().includes(val)
+      )
+    )
+      post.experience.push('intermediate')
+
+    if (
+      ['junior', 'entry-level', 'graduate', 'beginner'].some(val =>
+        item.title.toLowerCase().includes(val)
+      )
+    )
+      post.experience.push('entry-level')
+
+    if (post.location_based)
+      post.location = {
+        city: '',
+        country: '',
+        country_code: '',
+        coords: {
+          lat: 0,
+          lng: 0
+        }
+      }
+
+    let post_info = {
+      company_intro: '',
+      about_position: item['content:encoded'],
+      benefits: [
+        {
+          benefit: ''
+        }
+      ],
+      requirements: [
+        {
+          requirement: ''
+        },
+        {
+          requirement: ''
+        }
+      ],
+      responsibilities: [
+        {
+          responsibility: ''
+        },
+        {
+          responsibility: ''
+        },
+        {
+          responsibility: ''
+        }
+      ],
+      application_url: item.link,
+      application_instr: '',
+      application_email: ''
+    }
+
+    firebase_admin
+      .firestore()
+      .collection('postdetails')
+      .add(post_info)
+      .then(post_details_doc => {
+        post.postdetails_ref = `postdetails/${post_details_doc.id}`
+
+        return firebase_admin
+          .firestore()
+          .collection('posts')
+          .add(post)
+          .then(post_doc => {
+            lead.post_ref = `posts/${post_doc.id}`
+
+            return firebase_admin
+              .firestore()
+              .collection('leads')
+              .add(lead)
+              .catch(error => console.log(`Error adding lead: ${error}`))
+          })
+          .catch(error => console.log(`Error adding post: ${error}`))
+      })
+      .catch(error => console.log(`Error adding postdetails: ${error}`))
+  })
+
+  if (statUpdateRequired)
+    firebase_admin
+      .firestore()
+      .collection('leadstatistics')
+      .doc('3PZW2KyTYobELMpg9SSq')
+      .update({
+        authentic_jobs_guids: freshSyncList
+      })
+
+  return statUpdateRequired
+}
+
+async function ux_jobs_board(leadStats) {
+  let parser = new Parser({
+    customFields: {
+      item: [
+        'pubDate',
+        'guid',
+        'link',
+        ['content:encoded', 'content'],
+        ['dc:creator', 'company']
+      ]
+    }
+  })
+
+  let feed = await parser.parseURL('https://www.uxjobsboard.com/feed')
+
+  let freshSyncList = []
+  let statUpdateRequired = false
+
+  feed.items.forEach(async item => {
+    let publishDate = moment(item.pubDate)
+    if (
+      publishDate.startOf('day') <
+      moment()
+        .subtract(1, 'days')
+        .startOf('day')
+    )
+      return
+
+    freshSyncList.push(item.guid)
+
+    if (leadStats.ux_jobs_board_guids.includes(item.guid)) return
+
+    statUpdateRequired = true
+
+    let lead = {
+      scraped: true,
+      URL: item.guid,
+      approved: true,
+      company_name: item.company,
+      email: '',
+      position: item.title,
+      date_created: firebase_admin.firestore.Timestamp.fromDate(new Date()),
+      deleted: false
+    }
+
+    let post = {
+      type: {
+        name: 'Scraped',
+        price: 0
+      },
+      date_created: firebase_admin.firestore.Timestamp.fromDate(
+        moment(item.pubDate).toDate()
+      ),
+      verified: false,
+      deleted: false,
+      position: item.title,
+      company_logo: '',
+      company_name: item.company,
+      company_website: '',
+      experience: [],
+      full_time: true,
+      contract: false,
+      remote: false,
+      location_based: true,
+      location: {
+        city: '',
+        country: '',
+        country_code: '',
+        coords: {
+          lat: 0,
+          lng: 0
+        }
+      },
+      tech: [],
+      salary: {
+        set: true,
+        minimum: 1000,
+        maximum: 1000,
+        currency: {
+          name: 'British Pound',
+          code: 'GBP'
+        }
+      },
+      size: '1-10',
+      payment_details: {
+        paid: false
+      },
+      residing_restrictions: {
+        by_country: {
+          restricted: false,
+          countries: []
+        },
+        by_timezone: {
+          restricted: false,
+          timezones: []
+        }
+      }
+    }
+
+    if (['senior', 'lead'].some(val => item.title.toLowerCase().includes(val)))
+      post.experience.push('senior')
+
+    if (
+      ['intermediate', 'mid-level'].some(val =>
+        item.title.toLowerCase().includes(val)
+      )
+    )
+      post.experience.push('intermediate')
+
+    if (
+      ['junior', 'entry-level', 'graduate', 'beginner'].some(val =>
+        item.title.toLowerCase().includes(val)
+      )
+    )
+      post.experience.push('entry-level')
+
+    let post_info = {
+      company_intro: '',
+      about_position: item['content:encoded'],
+      benefits: [
+        {
+          benefit: ''
+        }
+      ],
+      requirements: [
+        {
+          requirement: ''
+        },
+        {
+          requirement: ''
+        }
+      ],
+      responsibilities: [
+        {
+          responsibility: ''
+        },
+        {
+          responsibility: ''
+        },
+        {
+          responsibility: ''
+        }
+      ],
+      application_url: item.guid,
+      application_instr: '',
+      application_email: ''
+    }
+
+    firebase_admin
+      .firestore()
+      .collection('postdetails')
+      .add(post_info)
+      .then(post_details_doc => {
+        post.postdetails_ref = `postdetails/${post_details_doc.id}`
+
+        return firebase_admin
+          .firestore()
+          .collection('posts')
+          .add(post)
+          .then(post_doc => {
+            lead.post_ref = `posts/${post_doc.id}`
+
+            return firebase_admin
+              .firestore()
+              .collection('leads')
+              .add(lead)
+              .catch(error => console.log(`Error adding lead: ${error}`))
+          })
+          .catch(error => console.log(`Error adding post: ${error}`))
+      })
+      .catch(error => console.log(`Error adding postdetails: ${error}`))
+  })
+
+  if (statUpdateRequired)
+    firebase_admin
+      .firestore()
+      .collection('leadstatistics')
+      .doc('3PZW2KyTYobELMpg9SSq')
+      .update({
+        ux_jobs_board_guids: freshSyncList
+      })
+
+  return statUpdateRequired
 }

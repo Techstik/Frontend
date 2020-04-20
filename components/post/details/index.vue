@@ -138,13 +138,8 @@
               </div>
             </a-tab-pane>
             <a-tab-pane key="2" tab="Company">
-              <a-row
-                v-if="post.location_based"
-                align="middle"
-                type="flex"
-                justify="space-around"
-              >
-                <a-col :span="!isMobile ? 18 : 24">
+              <a-row align="middle" type="flex" justify="space-around">
+                <a-col :span="!isMobile && !post.remote ? 18 : 24">
                   <h3 class="subheading">{{ post.company_name }}</h3>
                   <div
                     class="p-m-0 mb-15"
@@ -159,7 +154,11 @@
                     >See our website</a-button
                   >
                 </a-col>
-                <a-col v-if="!isMobile" span="6" class="align-center location">
+                <a-col
+                  v-if="!isMobile && !post.remote"
+                  span="6"
+                  class="align-center location"
+                >
                   <div>
                     <span
                       v-if="post.location.country_code"
