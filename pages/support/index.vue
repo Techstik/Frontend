@@ -44,7 +44,7 @@
 </template>
 <script>
 import { required, email } from 'vuelidate/lib/validators'
-import { fullpackage } from '@/plugins/firebase'
+import { auth } from 'firebase/app'
 
 export default {
   data() {
@@ -68,21 +68,18 @@ export default {
     }
   },
   mounted() {
-    window.recaptchaVerifier = new fullpackage.auth.RecaptchaVerifier(
-      'submit-btn',
-      {
-        size: 'invisible',
-        callback: () => {
-          this.loading = true
-          if (!this.validate()) {
-            this.loading = false
-            return window.recaptchaVerifier.reset()
-          }
-
-          this.submit()
+    window.recaptchaVerifier = new auth.RecaptchaVerifier('submit-btn', {
+      size: 'invisible',
+      callback: () => {
+        this.loading = true
+        if (!this.validate()) {
+          this.loading = false
+          return window.recaptchaVerifier.reset()
         }
+
+        this.submit()
       }
-    )
+    })
     window.recaptchaVerifier.render()
   },
   methods: {

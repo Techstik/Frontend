@@ -1,4 +1,4 @@
-import { fullpackage } from '@/plugins/firebase'
+import { firestore } from 'firebase/app'
 import algoliasearch from 'algoliasearch'
 var algolia_client = algoliasearch(
   process.env.ALGOLIA_APP_ID,
@@ -137,7 +137,7 @@ export default {
           .search(searchWord ? searchWord : '', searchOptions)
           .then(response => {
             response.hits.forEach(post => {
-              post.date_created = new fullpackage.firestore.Timestamp(
+              post.date_created = new firestore.Timestamp(
                 post.date_created._seconds,
                 post.date_created._nanoseconds
               )
@@ -186,7 +186,7 @@ export default {
           })
           .then(response => {
             response.hits.forEach(post => {
-              post.date_created = new fullpackage.firestore.Timestamp(
+              post.date_created = new firestore.Timestamp(
                 post.date_created._seconds,
                 post.date_created._nanoseconds
               )
@@ -238,7 +238,7 @@ export default {
 
             let result = response.hits[0]
 
-            result.date_created = new fullpackage.firestore.Timestamp(
+            result.date_created = new firestore.Timestamp(
               result.date_created._seconds,
               result.date_created._nanoseconds
             )

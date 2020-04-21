@@ -104,7 +104,8 @@
 
 <script>
 import { mapState, mapMutations, mapGetters } from 'vuex'
-import { db, fullpackage } from '@/plugins/firebase'
+import { db } from '@/plugins/firebase'
+import { firestore } from 'firebase/app'
 import advancedSearch from '@/mixins/advancedSearch'
 import FilterBlock from '@/components/filter'
 import Post from '@/components/post'
@@ -326,7 +327,7 @@ export default {
         .where(
           'date_created',
           '>=',
-          fullpackage.firestore.Timestamp.fromDate(
+          firestore.Timestamp.fromDate(
             this.$moment()
               .subtract(30, 'days')
               .startOf('day')

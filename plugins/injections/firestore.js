@@ -1,6 +1,7 @@
 /* eslint-disable no-async-promise-executor */
 import Vue from 'vue'
-import { fullpackage, db, auth } from '@/plugins/firebase'
+import { db, auth } from '@/plugins/firebase'
+import { firestore } from 'firebase/app'
 
 Vue.prototype.$addDocument = (
   collection,
@@ -14,8 +15,8 @@ Vue.prototype.$addDocument = (
 
     db.collection(collection)
       .add({
-        date_created: fullpackage.firestore.FieldValue.serverTimestamp(),
-        last_edited: fullpackage.firestore.FieldValue.serverTimestamp(),
+        date_created: firestore.FieldValue.serverTimestamp(),
+        last_edited: firestore.FieldValue.serverTimestamp(),
         deleted: false,
         ...data
       })
@@ -44,7 +45,7 @@ Vue.prototype.$setDocument = (collection, docId, data, merge = false) => {
       .doc(docId)
       .set(
         {
-          last_edited: fullpackage.firestore.FieldValue.serverTimestamp(),
+          last_edited: firestore.FieldValue.serverTimestamp(),
           ...data
         },
         { merge: merge }
@@ -85,7 +86,7 @@ Vue.prototype.$updateDocument = async (
     db.collection(collection)
       .doc(docId)
       .update({
-        last_edited: fullpackage.firestore.FieldValue.serverTimestamp(),
+        last_edited: firestore.FieldValue.serverTimestamp(),
         ...data
       })
       .then(docRef => {
@@ -239,7 +240,7 @@ Vue.prototype.$createLog = (collection, docRef, data, anonymous = false) => {
     }
     db.collection(collection)
       .add({
-        date_created: fullpackage.firestore.FieldValue.serverTimestamp(),
+        date_created: firestore.FieldValue.serverTimestamp(),
         ref: docRef,
         ...data
       })

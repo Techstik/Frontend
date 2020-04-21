@@ -208,7 +208,7 @@ import globe from '@/assets/images/planet-earth.svg'
 import techicon from '@/components/techicon'
 import Details from './details'
 import { mapState, mapMutations, mapGetters } from 'vuex'
-import { fullpackage } from '@/plugins/firebase'
+import { firestore } from 'firebase/app'
 
 export default {
   components: {
@@ -362,7 +362,7 @@ export default {
               'posts',
               this.post.id,
               {
-                opens: fullpackage.firestore.FieldValue.increment(1)
+                opens: firestore.FieldValue.increment(1)
               },
               true
             )
@@ -374,7 +374,7 @@ export default {
             'posts',
             this.post.id,
             {
-              opens: fullpackage.firestore.FieldValue.increment(1)
+              opens: firestore.FieldValue.increment(1)
             },
             true
           )
@@ -415,7 +415,7 @@ export default {
         'posts',
         this.post.id,
         {
-          apply_clicks: fullpackage.firestore.FieldValue.increment(1)
+          apply_clicks: firestore.FieldValue.increment(1)
         },
         true
       )
@@ -426,7 +426,7 @@ export default {
         'posts',
         this.post.id,
         {
-          site_clicks: fullpackage.firestore.FieldValue.increment(1)
+          site_clicks: firestore.FieldValue.increment(1)
         },
         true
       )

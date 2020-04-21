@@ -52,4 +52,3 @@ export const storage = app.storage()
 export const functions = app.functions()
 export const auth = app.auth()
 export const analytics = app.analytics()
-export const fullpackage = firebase

@@ -868,7 +868,7 @@ import {
   url,
   email
 } from 'vuelidate/lib/validators'
-import firebase from 'firebase'
+import { auth } from 'firebase/app'
 import { mapState, mapGetters } from 'vuex'
 
 const currencyValidator = value =>
@@ -1166,7 +1166,7 @@ export default {
     this.$eventbus.$emit('scroll-to', 0, 0)
   },
   mounted() {
-    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
+    window.recaptchaVerifier = new auth.RecaptchaVerifier(
       'proceed_to_payment',
       {
         size: 'invisible',
