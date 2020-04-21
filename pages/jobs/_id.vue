@@ -67,6 +67,12 @@ export default {
     ...mapGetters({
       getSelectedExchangeRates: ['currencies/getSelectedExchangeRates']
     }),
+    computedDescription() {
+      if (!this.post_details) return ''
+      var tmp = document.createElement('DIV')
+      tmp.innerHTML = this.post_details.about_position
+      return tmp.textContent || tmp.innerText || ''
+    },
     computedSalary() {
       if (
         !this.post ||
@@ -104,7 +110,7 @@ export default {
             '@context': 'https://schema.org/',
             '@type': 'JobPosting',
             title: this.post.position,
-            description: this.post_details.about_position,
+            description: this.computedDescription,
             identifier: {
               '@type': 'PropertyValue',
               name: `${this.post.position.toLowerCase()} at ${this.post.company_name.toLowerCase()}`,
@@ -183,9 +189,14 @@ export default {
         : 'Techstik | Tech-Related Jobs Worldwide',
       meta: [
         {
-          hid: 'job-single-description',
+          hid: 'description',
           name: 'description',
-          content: this.post_details ? this.post_details.about_position : ''
+          content: this.computedDescription.substring(0, 200)
+        },
+        {
+          hid: 'og:description',
+          name: 'og:description',
+          content: this.computedDescription.substring(0, 200)
         }
       ],
       script: [

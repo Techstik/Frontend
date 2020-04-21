@@ -1423,8 +1423,14 @@ export default {
       title: 'Post A Job | Software Development, DevOps, Design and More',
       meta: [
         {
-          hid: 'post-a-job-description',
+          hid: 'description',
           name: 'description',
+          content:
+            'Looking for a new tech guru to join your team? Post a remote or location-based job to the global tech community.'
+        },
+        {
+          hid: 'og:description',
+          name: 'og:description',
           content:
             'Looking for a new tech guru to join your team? Post a remote or location-based job to the global tech community.'
         }

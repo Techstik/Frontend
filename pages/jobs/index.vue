@@ -400,10 +400,16 @@ export default {
       title: 'Jobs | Software Development, DevOps, Design and More',
       meta: [
         {
-          hid: 'jobs-description',
+          hid: 'description',
           name: 'description',
           content:
-            'Are you on the hunt for a fresh start in the tech community? Find remote or location-based jobs at leading tech companies around the globe with upfront salary offers.'
+            'Find remote or location-based jobs at leading tech companies around the globe with upfront salary offers.'
+        },
+        {
+          hid: 'og:description',
+          name: 'og:description',
+          content:
+            'Find remote or location-based jobs at leading tech companies around the globe with upfront salary offers.'
         }
       ]
     }

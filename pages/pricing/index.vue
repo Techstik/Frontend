@@ -99,8 +99,14 @@ export default {
       title: 'Techstik | Job Post Pricing',
       meta: [
         {
-          hid: 'post-a-job-description',
+          hid: 'description',
           name: 'description',
+          content:
+            'Transparent pricing at a fraction of the going rate. Allow your search to get the maximum reach.'
+        },
+        {
+          hid: 'og:description',
+          name: 'og:description',
           content:
             'Transparent pricing at a fraction of the going rate. Allow your search to get the maximum reach.'
         }

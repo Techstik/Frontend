@@ -133,8 +133,14 @@ export default {
       title: 'Reach out | Out team is available 24/7 to assist you',
       meta: [
         {
-          hid: 'support-description',
+          hid: 'description',
           name: 'description',
+          content:
+            "Send us a message to get detailed assistance with the issue you're facing."
+        },
+        {
+          hid: 'og:description',
+          name: 'og:description',
           content:
             "Send us a message to get detailed assistance with the issue you're facing."
         }
