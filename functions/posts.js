@@ -9,86 +9,86 @@ let pushNotifications = require('./pushNotifications')
 let google = require('./google')
 let sendGrid = require('./sendgrid')
 
-exports.update_statistics = firebase_functions.https.onRequest(
-  async (request, response) => {
-    let last30days = moment()
-      .subtract(30, 'days')
-      .endOf('day')
-    let posts = []
+// exports.update_statistics = firebase_functions.https.onRequest(
+//   async (request, response) => {
+//     let last30days = moment()
+//       .subtract(30, 'days')
+//       .endOf('day')
+//     let posts = []
 
-    await firebase_admin
-      .firestore()
-      .collection('posts')
-      .where(
-        'date_created',
-        '>=',
-        firebase_admin.firestore.Timestamp.fromDate(last30days.toDate())
-      )
-      .where('verified', '==', true)
-      .where('deleted', '==', false)
-      .get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          posts.push({
-            id: doc.id,
-            ...doc.data()
-          })
-        })
-      })
-      .catch(error => {
-        console.error(`Error getting posts: ${JSON.stringify(error)}`)
-        response.status(400).send(error)
-      })
+//     await firebase_admin
+//       .firestore()
+//       .collection('posts')
+//       .where(
+//         'date_created',
+//         '>=',
+//         firebase_admin.firestore.Timestamp.fromDate(last30days.toDate())
+//       )
+//       .where('verified', '==', true)
+//       .where('deleted', '==', false)
+//       .get()
+//       .then(querySnapshot => {
+//         querySnapshot.forEach(doc => {
+//           posts.push({
+//             id: doc.id,
+//             ...doc.data()
+//           })
+//         })
+//       })
+//       .catch(error => {
+//         console.error(`Error getting posts: ${JSON.stringify(error)}`)
+//         response.status(400).send(error)
+//       })
 
-    console.log(`Number of posts: ${posts.length}`)
+//     console.log(`Number of posts: ${posts.length}`)
 
-    const stick_1_week =
-      4 -
-      posts.filter(post => {
-        return post.type.extras && post.type.extras.includes('stick_1_week')
-      }).length
+//     const stick_1_week =
+//       4 -
+//       posts.filter(post => {
+//         return post.type.extras && post.type.extras.includes('stick_1_week')
+//       }).length
 
-    const stick_duration =
-      4 -
-      posts.filter(post => {
-        return post.type.extras && post.type.extras.includes('stick_duration')
-      }).length
+//     const stick_duration =
+//       4 -
+//       posts.filter(post => {
+//         return post.type.extras && post.type.extras.includes('stick_duration')
+//       }).length
 
-    console.log(`Number of stick_1_week: ${stick_1_week}`)
-    console.log(`Number of stick_duration: ${stick_duration}`)
+//     console.log(`Number of stick_1_week: ${stick_1_week}`)
+//     console.log(`Number of stick_duration: ${stick_duration}`)
 
-    await firebase_admin
-      .firestore()
-      .collection('poststatistics')
-      .limit(1)
-      .get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          doc.ref
-            .update({
-              stick_1_week: stick_1_week,
-              stick_duration: stick_duration
-            })
-            .catch(error => {
-              console.error(
-                `Error getting updating post statistics: ${JSON.stringify(
-                  error
-                )}`
-              )
-              response.status(400).send(error)
-            })
-        })
-      })
-      .catch(error => {
-        console.error(
-          `Error getting fetching post statistics: ${JSON.stringify(error)}`
-        )
-        response.status(400).send(error)
-      })
+//     await firebase_admin
+//       .firestore()
+//       .collection('poststatistics')
+//       .limit(1)
+//       .get()
+//       .then(querySnapshot => {
+//         querySnapshot.forEach(doc => {
+//           doc.ref
+//             .update({
+//               stick_1_week: stick_1_week,
+//               stick_duration: stick_duration
+//             })
+//             .catch(error => {
+//               console.error(
+//                 `Error getting updating post statistics: ${JSON.stringify(
+//                   error
+//                 )}`
+//               )
+//               response.status(400).send(error)
+//             })
+//         })
+//       })
+//       .catch(error => {
+//         console.error(
+//           `Error getting fetching post statistics: ${JSON.stringify(error)}`
+//         )
+//         response.status(400).send(error)
+//       })
 
-    response.status(200).send()
-  }
-)
+//     response.status(200).send()
+//   }
+// )
 
 exports.seed_algolia = firebase_functions.https.onRequest(
   async (request, response) => {
@@ -142,17 +142,7 @@ exports.on_created = firebase_functions.firestore
     if (post.payment_details.paid) {
       sendProcessingEmailNotification(post)
 
-      if (post.type.extras && post.type.extras.length > 0)
-        //update extras stats
-        axios
-          .post(
-            `https://us-central1-${
-              firebase_functions.config().base.project_id
-            }.cloudfunctions.net/posts-update_statistics`
-          )
-          .catch(error => {
-            console.error(`Error posting to update stats function: ${error}`)
-          })
+      if (post.type.extras && post.type.extras.length > 0) updateStatistics()
 
       return pushNotifications.send(
         `POST ADDED - ${post.position} @ ${post.company_name}`
@@ -236,16 +226,8 @@ exports.on_updated = firebase_functions.firestore
       }
     }
 
-    //update extras stats
-    axios
-      .post(
-        `https://us-central1-${
-          firebase_functions.config().base.project_id
-        }.cloudfunctions.net/posts-update_statistics`
-      )
-      .catch(error => {
-        console.error(`Error posting to update stats function: ${error}`)
-      })
+    if (updatedPost.type.extras && updatedPost.type.extras.length)
+      updateStatistics()
   })
 
 async function sendProcessingEmailNotification(post) {
@@ -347,4 +329,83 @@ function sendScrapedEmailNotification(post) {
     .catch(error =>
       console.error(`Issue sending scrape email notification: ${error}`)
     )
+}
+
+function updateStatistics() {
+  return new Promise(async (resolve, reject) => {
+    let last30days = moment()
+      .subtract(30, 'days')
+      .endOf('day')
+    let posts = []
+
+    await firebase_admin
+      .firestore()
+      .collection('posts')
+      .where(
+        'date_created',
+        '>=',
+        firebase_admin.firestore.Timestamp.fromDate(last30days.toDate())
+      )
+      .where('verified', '==', true)
+      .where('deleted', '==', false)
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          posts.push({
+            id: doc.id,
+            ...doc.data()
+          })
+        })
+      })
+      .catch(error => {
+        console.error(`Error getting posts: ${JSON.stringify(error)}`)
+        reject(error)
+      })
+
+    console.log(`Number of posts: ${posts.length}`)
+
+    const stick_1_week =
+      4 -
+      posts.filter(post => {
+        return post.type.extras && post.type.extras.includes('stick_1_week')
+      }).length
+
+    const stick_duration =
+      4 -
+      posts.filter(post => {
+        return post.type.extras && post.type.extras.includes('stick_duration')
+      }).length
+
+    console.log(`Number of stick_1_week: ${stick_1_week}`)
+    console.log(`Number of stick_duration: ${stick_duration}`)
+
+    await firebase_admin
+      .firestore()
+      .collection('poststatistics')
+      .limit(1)
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          doc.ref
+            .update({
+              stick_1_week: stick_1_week,
+              stick_duration: stick_duration
+            })
+            .catch(error => {
+              console.error(
+                `Error getting updating post statistics: ${JSON.stringify(
+                  error
+                )}`
+              )
+              reject(error)
+            })
+        })
+      })
+      .catch(error => {
+        console.error(
+          `Error getting fetching post statistics: ${JSON.stringify(error)}`
+        )
+        reject(error)
+      })
+  })
 }

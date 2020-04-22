@@ -96,7 +96,8 @@ export default {
   },
   head() {
     return {
-      title: 'Techstik | Job Post Pricing',
+      title:
+        'Job Post Pricing | Transparent pricing at a fraction of the going rate.',
       meta: [
         {
           hid: 'description',

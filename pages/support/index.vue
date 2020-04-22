@@ -130,7 +130,7 @@ export default {
   },
   head() {
     return {
-      title: 'Reach out | Out team is available 24/7 to assist you',
+      title: 'Reach Out | Our team is available 24/7 to assist you',
       meta: [
         {
           hid: 'description',
