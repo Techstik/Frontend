@@ -260,7 +260,7 @@
       </div>
       <div v-if="postDetails.application_instr" class="apply-container">
         <h3 class="subheading">How to apply</h3>
-        <div v-html="postDetails.application_instr"></div>
+        <div class="p-m-0" v-html="postDetails.application_instr"></div>
       </div>
       <div class="align-center mt-10">
         <a-button
