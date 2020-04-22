@@ -3,7 +3,6 @@
 const firebase_functions = require('firebase-functions')
 const firebase_admin = require('firebase-admin')
 const moment = require('moment')
-const axios = require('axios')
 let algolia = require('./algolia')
 let pushNotifications = require('./pushNotifications')
 let google = require('./google')
