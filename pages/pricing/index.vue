@@ -108,8 +108,22 @@ export default {
         {
           hid: 'og:description',
           name: 'og:description',
+          property: 'og:description',
           content:
             'Transparent pricing at a fraction of the going rate. Allow your search to get the maximum reach.'
+        },
+        {
+          hid: 'og:url',
+          name: 'og:url',
+          property: 'og:url',
+          content: `https://techstik.com/pricing`
+        },
+        {
+          hid: 'og:title',
+          name: 'og:title',
+          property: 'og:title',
+          content:
+            'Job Post Pricing | Transparent pricing at a fraction of the going rate'
         }
       ]
     }

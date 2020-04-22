@@ -141,8 +141,21 @@ export default {
         {
           hid: 'og:description',
           name: 'og:description',
+          property: 'og:description',
           content:
             "Send us a message to get detailed assistance with the issue you're facing."
+        },
+        {
+          hid: 'og:url',
+          name: 'og:url',
+          property: 'og:url',
+          content: `https://techstik.com/support`
+        },
+        {
+          hid: 'og:title',
+          name: 'og:title',
+          property: 'og:title',
+          content: 'Reach Out | Our team is available 24/7 to assist you'
         }
       ]
     }

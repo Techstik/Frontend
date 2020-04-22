@@ -196,7 +196,22 @@ export default {
         {
           hid: 'og:description',
           name: 'og:description',
+          property: 'og:description',
           content: this.computedDescription.substring(0, 200)
+        },
+        {
+          hid: 'og:url',
+          name: 'og:url',
+          property: 'og:url',
+          content: `https://techstik.com${this.$route.path}`
+        },
+        {
+          hid: 'og:title',
+          name: 'og:title',
+          property: 'og:title',
+          content: this.post
+            ? `${this.post.position} at ${this.post.company_name} | Techstik`
+            : 'Techstik | Tech-Related Jobs Worldwide'
         }
       ],
       script: [

@@ -24,8 +24,33 @@ module.exports = {
       {
         hid: 'og:description',
         name: 'og:description',
+        property: 'og:description',
         content:
           'Explore remote and location-based tech opportunities around the world. A hub for Software Developers, Designers, DevOps and more. With upfront salary offers and tech stack transparency, your search ends here.'
+      },
+      {
+        hid: 'og:url',
+        name: 'og:url',
+        property: 'og:url',
+        content: 'https://techstik.com'
+      },
+      {
+        hid: 'og:title',
+        name: 'og:title',
+        property: 'og:title',
+        content: 'Techstik | Tech Jobs Around the World'
+      },
+      {
+        hid: 'og:site_name',
+        name: 'og:site_name',
+        property: 'og:site_name',
+        content: 'Techstik'
+      },
+      {
+        hid: 'og:image',
+        name: 'og:image',
+        property: 'og:image',
+        content: 'https://techstik.com/favicon-32x32.png'
       }
     ],
     link: [

@@ -408,8 +408,21 @@ export default {
         {
           hid: 'og:description',
           name: 'og:description',
+          property: 'og:description',
           content:
             'Find remote or location-based jobs at leading tech companies around the globe with upfront salary offers.'
+        },
+        {
+          hid: 'og:url',
+          name: 'og:url',
+          property: 'og:url',
+          content: `https://techstik.com/jobs`
+        },
+        {
+          hid: 'og:title',
+          name: 'og:title',
+          property: 'og:title',
+          content: 'Jobs | Software Development, DevOps, Design and More'
         }
       ]
     }

@@ -390,25 +390,6 @@ export default {
           this.typeWriter('Find Tech-Related Jobs Around the World.', 0)
         }, 700)
     }
-  },
-  head() {
-    return {
-      title: 'Techstik | Tech Jobs Around the World',
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content:
-            'Explore remote and location-based tech opportunities around the world. A hub for Software Developers, Designers, DevOps and more. With upfront salary offers and tech stack transparency, your search ends here.'
-        },
-        {
-          hid: 'og:description',
-          name: 'og:description',
-          content:
-            'Explore remote and location-based tech opportunities around the world. A hub for Software Developers, Designers, DevOps and more. With upfront salary offers and tech stack transparency, your search ends here.'
-        }
-      ]
-    }
   }
 }
 </script>

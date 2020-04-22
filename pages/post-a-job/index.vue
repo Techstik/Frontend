@@ -1431,8 +1431,21 @@ export default {
         {
           hid: 'og:description',
           name: 'og:description',
+          property: 'og:description',
           content:
             'Looking for a new tech guru to join your team? Post a remote or location-based job to the global tech community.'
+        },
+        {
+          hid: 'og:url',
+          name: 'og:url',
+          property: 'og:url',
+          content: `https://techstik.com/post-a-job`
+        },
+        {
+          hid: 'og:title',
+          name: 'og:title',
+          property: 'og:title',
+          content: 'Post A Job | Software Development, DevOps, Design and More'
         }
       ]
     }
