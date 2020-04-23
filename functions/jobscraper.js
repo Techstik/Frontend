@@ -3,8 +3,7 @@
 const firebase_functions = require('firebase-functions')
 const firebase_admin = require('firebase-admin')
 const moment = require('moment')
-var request = require('request')
-var fs = require('fs')
+const axios = require('axios')
 let pushNotifications = require('./pushNotifications')
 const allListedTech = require('./scripts/tech.json')
 let Parser = require('rss-parser')
@@ -57,7 +56,7 @@ async function stackoverflow(leadStats) {
   let freshSyncList = []
   let statUpdateRequired = false
 
-  feed.items.forEach(item => {
+  feed.items.forEach(async item => {
     let publishDate = moment(item.pubDate)
     if (
       publishDate.startOf('day') <
@@ -72,6 +71,10 @@ async function stackoverflow(leadStats) {
     if (leadStats.stackoverflow_scraped_guids.includes(item.guid)) return
     if (['india', 'japan'].some(val => item.title.toLowerCase().includes(val)))
       return
+
+    var response = await axios.get(item.link)
+    console.log(response.data)
+    if (!response.data.includes('QuantitativeValue')) return
 
     statUpdateRequired = true
     let lead = {

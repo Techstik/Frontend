@@ -7,6 +7,9 @@ let algolia = require('./algolia')
 let pushNotifications = require('./pushNotifications')
 let google = require('./google')
 let sendGrid = require('./sendgrid')
+let twitter = require('./twitter')
+let flags = require('./scripts/country_flags.json')
+let currency_symbols = require('./scripts/currency_symbols.json')
 
 // exports.update_statistics = firebase_functions.https.onRequest(
 //   async (request, response) => {
@@ -225,6 +228,9 @@ exports.on_updated = firebase_functions.firestore
       }
     }
 
+    if (updatedPost.verified && !updatedPost.tweeted)
+      tweetPost(updatedPost, change.after.ref)
+
     if (updatedPost.type.extras && updatedPost.type.extras.length)
       updateStatistics()
   })
@@ -407,4 +413,37 @@ function updateStatistics() {
         reject(error)
       })
   })
+}
+
+function tweetPost(post, postRef) {
+  let expString = post.experience
+    .sort()
+    .map(exp => {
+      if (exp === 'entry-level') return 'Junior'
+      return exp.charAt(0).toUpperCase() + exp.substring(1)
+    })
+    .join('/')
+
+  let tag = post.remote ? '(remote)' : flags[post.location.country_code].emoji
+
+  twitter
+    .tweet(
+      `${expString} ${post.position} at ${post.company_name} ${tag}. Offering ${
+        currency_symbols[post.salary.currency.code].symbol
+      }${
+        post.salary.set
+          ? `${post.salary.maximum / 1000}k`
+          : `${post.salary.minimum / 1000}k - ${post.salary.maximum / 1000}k`
+      }. Details here 👉 https://techstik.com/jobs/${post.position
+        .toLowerCase()
+        .replace(/ /g, '-')}-at-${post.company_name
+        .toLowerCase()
+        .replace(/ /g, '-')}`
+    )
+    .then(() => {
+      return postRef.update({ tweeted: true })
+    })
+    .catch(error =>
+      console.log(`Error sending tweet: ${JSON.stringify(error)}`)
+    )
 }
