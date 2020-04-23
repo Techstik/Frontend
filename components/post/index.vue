@@ -204,7 +204,6 @@
   </div>
 </template>
 <script>
-import globe from '@/assets/images/planet-earth.svg'
 import techicon from '@/components/techicon'
 import Details from './details'
 import { mapState, mapMutations, mapGetters } from 'vuex'
@@ -243,8 +242,7 @@ export default {
       revealing: false,
       hovering: false,
       activeTabKey: '1',
-      details: null,
-      globe
+      details: null
     }
   },
   computed: {

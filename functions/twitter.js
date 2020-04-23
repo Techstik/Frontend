@@ -8,7 +8,7 @@ const client = new Twitter({
   access_token_secret: firebase_functions.config().twitter.access_token_secret
 })
 
-function tweet(thread) {
+function tweet(status) {
   return new Promise((resolve, reject) => {
     client
       .post('statuses/update', {
@@ -17,4 +17,8 @@ function tweet(thread) {
       .then(() => resolve())
       .catch(error => reject(error))
   })
+}
+
+module.exports = {
+  tweet
 }

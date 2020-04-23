@@ -1447,7 +1447,8 @@ export default {
           property: 'og:title',
           content: 'Post A Job | Software Development, DevOps, Design and More'
         }
-      ]
+      ],
+      script: [{ src: 'https://js.stripe.com/v3/' }]
     }
   }
 }

@@ -59,7 +59,12 @@
         </nuxt-link>
         <ul v-if="!isMobile" class="top-nav__list">
           <li class="top-nav__list-item">
-            <nuxt-link to="/pricing">
+            <nuxt-link v-if="$route.name == 'jobs-id'" to="/jobs">
+              <a class="f-r cover-button" @click="logClick()"
+                >Check Out Other Jobs</a
+              >
+            </nuxt-link>
+            <nuxt-link v-else to="/pricing">
               <a-button class="f-r" @click="logClick()">Post a job</a-button>
             </nuxt-link>
           </li>
@@ -158,6 +163,30 @@
             <a @click="navigateFromSideMenu('/support')">
               <h3 class="subheading">Support</h3>
             </a>
+            <div class="align-center mt-20">
+              <a href="https://twitter.com/Techstik_Jobs" target="_blank"
+                ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 250 203.14"
+                  class="twitter"
+                >
+                  <defs>
+                    <style>
+                      .twitter-bird {
+                        fill: white;
+                      }
+                    </style>
+                  </defs>
+                  <g id="Layer_2" data-name="Layer 2">
+                    <g id="Layer_1-2" data-name="Layer 1">
+                      <path
+                        class="twitter-bird"
+                        d="M78.62,203.14C173,203.14,224.56,125,224.56,57.2c0-2.22,0-4.43-.15-6.63A104.36,104.36,0,0,0,250,24a102.24,102.24,0,0,1-29.46,8.07A51.46,51.46,0,0,0,243.09,3.72a103,103,0,0,1-32.57,12.45A51.34,51.34,0,0,0,123.11,63,145.63,145.63,0,0,1,17.4,9.36,51.33,51.33,0,0,0,33.28,77.83,51,51,0,0,1,10,71.41v.65a51.32,51.32,0,0,0,41.15,50.28,51.2,51.2,0,0,1-23.16.88,51.36,51.36,0,0,0,47.92,35.62,103,103,0,0,1-63.7,22A106,106,0,0,1,0,180.1a145.22,145.22,0,0,0,78.62,23"
+                      />
+                    </g>
+                  </g></svg
+              ></a>
+            </div>
           </div>
         </Slide>
       </nav>
@@ -175,6 +204,31 @@
       </div>
       <div :class="[{ 'mobile-footer': isMobile }, 'footer']">
         <div v-if="!isMobile" class="sitelinks">
+          <a
+            href="https://twitter.com/Techstik_Jobs"
+            target="_blank"
+            class="f-l"
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 250 203.14"
+              class="twitter"
+            >
+              <defs>
+                <style>
+                  .twitter-bird {
+                    fill: #161d2d;
+                  }
+                </style>
+              </defs>
+              <g id="Layer_2" data-name="Layer 2">
+                <g id="Layer_1-2" data-name="Layer 1">
+                  <path
+                    class="twitter-bird"
+                    d="M78.62,203.14C173,203.14,224.56,125,224.56,57.2c0-2.22,0-4.43-.15-6.63A104.36,104.36,0,0,0,250,24a102.24,102.24,0,0,1-29.46,8.07A51.46,51.46,0,0,0,243.09,3.72a103,103,0,0,1-32.57,12.45A51.34,51.34,0,0,0,123.11,63,145.63,145.63,0,0,1,17.4,9.36,51.33,51.33,0,0,0,33.28,77.83,51,51,0,0,1,10,71.41v.65a51.32,51.32,0,0,0,41.15,50.28,51.2,51.2,0,0,1-23.16.88,51.36,51.36,0,0,0,47.92,35.62,103,103,0,0,1-63.7,22A106,106,0,0,1,0,180.1a145.22,145.22,0,0,0,78.62,23"
+                  />
+                </g>
+              </g></svg
+          ></a>
           <nuxt-link to="/jobs" @click.native="scrollToTop"
             ><b>Jobs</b></nuxt-link
           >
@@ -295,7 +349,13 @@ export default {
     font-weight: 500;
   }
 }
-
+.twitter {
+  width: 40px;
+}
+.twitter-bird:hover {
+  transition: 0.3s;
+  fill: #1da1f2;
+}
 .top-nav {
   position: relative;
   z-index: 19000;
@@ -398,6 +458,10 @@ export default {
 }
 .sitelinks a:last-child {
   margin-right: 0;
+}
+.cover-button {
+  height: 38px;
+  line-height: 1;
 }
 @keyframes slide-in {
   from {

@@ -29,6 +29,9 @@
           {{ post.company_name }}</a
         >
         <span v-else>{{ post.company_name }}</span>
+        <small class="date-posted">{{
+          post.date_created.toDate() | moment('from', 'now')
+        }}</small>
       </h3>
       <div class="job-container grid__item grid__item--mobile-large">
         <PostDetails
@@ -230,6 +233,13 @@ export default {
 }
 .subheading {
   color: white;
+  position: relative;
+}
+.date-posted {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: 60%;
 }
 .job-container {
   border-radius: 10px;

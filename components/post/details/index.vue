@@ -281,7 +281,6 @@
   </div>
 </template>
 <script>
-import globe from '@/assets/images/planet-earth.svg'
 import techicon from '@/components/techicon'
 import Map from '@/components/map'
 import Gallery from '@/components/gallery'
@@ -325,7 +324,6 @@ export default {
   },
   data() {
     return {
-      globe,
       activeTabKey: '1'
     }
   },

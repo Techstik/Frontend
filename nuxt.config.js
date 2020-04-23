@@ -72,8 +72,7 @@ module.exports = {
         href: '/favicon-16x16.png'
       },
       { rel: 'manifest', href: '/site.webmanifest' }
-    ],
-    script: [{ src: 'https://js.stripe.com/v3/' }]
+    ]
   },
   /*
    ** Customize the progress-bar color

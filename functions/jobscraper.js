@@ -674,7 +674,7 @@ async function remote_OK(leadStats) {
       location_based: false,
       tech: !item.tags
         ? []
-        : item.tags.map(tech => {
+        : item.tags.split(', ').map(tech => {
             let match = allListedTech.find(_tech => {
               return _tech.name.toLowerCase() === tech.toLowerCase()
             })
