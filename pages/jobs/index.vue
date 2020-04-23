@@ -145,6 +145,7 @@ export default {
     ...mapState({
       posts: state => state.posts.all,
       allPostsLoaded: state => state.posts.all_loaded,
+      newestPostSubscription: state => state.posts.newestSubscription,
       canPaginate: state => state.paging.canPaginate,
       isSearching: state => state.paging.isSearching,
       currentlyRevealedPost: state => state.posts.selected
@@ -159,6 +160,8 @@ export default {
 
       if (this.location_based)
         filtered = filtered.filter(post => post.location_based)
+
+      filtered = this.lodash.orderBy(filtered, ['date_created'], ['desc'])
 
       let yesterday = this.$moment().subtract(1, 'days')
       let lastweek = this.$moment().subtract(7, 'days')
@@ -231,6 +234,8 @@ export default {
     this.setLimit = Math.floor(globalThis.outerHeight / 110)
     this.paginate()
 
+    if (!this.newestPostSubscription) this.setupNewPostSubscription()
+
     document.addEventListener('click', evt => {
       if (!this.currentlyRevealedPost) return
       let revealed = document.getElementById(
@@ -244,7 +249,6 @@ export default {
           if (targetElement == revealed || targetElement == currencyDropdown)
             return
 
-          // Go up the DOM
           targetElement = targetElement.parentNode
         } while (targetElement)
       }
@@ -262,7 +266,8 @@ export default {
       setAllPostsLoaded: 'posts/setAllLoaded',
       setPaginate: 'paging/setPaginate',
       setSearching: 'paging/setSearching',
-      setCurrentlyRevealed: 'posts/setSelected'
+      setCurrentlyRevealed: 'posts/setSelected',
+      setNewestPostSubscription: 'posts/setNewestSubscription'
     }),
     determineSearching() {
       this.setSearching(
@@ -283,13 +288,8 @@ export default {
       //first need to pull all the stuck posts
       if (!this.fetchedSticky) return this.fetchSticky()
 
-      if (this.isSearching) {
-        // console.log('searching complex')
-        this.organizeSearch()
-      } else {
-        // console.log('searching normal')
-        this.normalFetch()
-      }
+      if (this.isSearching) this.organizeSearch()
+      else this.normalFetch()
     },
     updateFilters(filters) {
       this.filters = filters
@@ -305,8 +305,36 @@ export default {
         filters: JSON.stringify(filters)
       })
     },
+    setupNewPostSubscription() {
+      this.setNewestPostSubscription(
+        db
+          .collection('posts')
+          .where('verified', '==', true)
+          .where('deleted', '==', false)
+          .orderBy('date_created', 'desc')
+          .limit(1)
+          .onSnapshot(querySnapshot => {
+            let doc = querySnapshot.docs[0]
+            console.log(doc)
+            if (
+              !this.posts.find(post => {
+                return post.id == doc.id
+              })
+            ) {
+              let post = {
+                id: doc.id,
+                ...doc.data()
+              }
+
+              if (doc.data().type.extras && doc.data().type.extras.length)
+                post.sticky = true
+
+              this.setPost(post)
+            }
+          })
+      )
+    },
     fetchSticky() {
-      // console.log('fetchin sticky')
       this.stickyPosts().then(results => {
         results.forEach(post => {
           if (!this.lodash.find(this.posts, { id: post.id }))

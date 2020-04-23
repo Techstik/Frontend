@@ -22,8 +22,8 @@
             if we can try and fix it for you!
           </p>
           <p v-else class="large">
-            Damn - this is an issue on our side. We have notified the team and
-            will resolve it shortly.
+            This is an issue on our side. We have notified the team and will
+            resolve it shortly.
           </p>
         </div>
         <div class="grid__item grid__item--half centered-medium">

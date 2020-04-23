@@ -1,7 +1,8 @@
 export const state = () => ({
   all: [],
   all_loaded: false,
-  selected: null
+  selected: null,
+  newestSubscription: null
 })
 
 export const mutations = {
@@ -13,5 +14,8 @@ export const mutations = {
   },
   setAllLoaded(state, value) {
     state.all_loaded = value
+  },
+  setNewestSubscription(state, value) {
+    state.newestSubscription = value
   }
 }
