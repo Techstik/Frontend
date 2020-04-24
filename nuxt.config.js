@@ -88,6 +88,13 @@ module.exports = {
           '/fonts/Graphik-Regular-Web-36a20ba0e775b202ea4c516e93a90b390a3ae495d69b0854e66d744f601327c5.woff',
         crossorigin: true
       }
+    ],
+    script: [
+      {
+        innerHTML:
+          '{"@context":"http://schema.org","@type":"Organization","name":"Techstik","url":"https://techstik.com","logo":"https://techstik.com/android-chrome-192x192.png","sameAs":["https://twitter.com/Techstik_Jobs"],"contactPoint":[{"@type":"ContactPoint","email":"team@techstik.com","contactType":"customer support","url":"https://techstik.com/support"}]}',
+        type: 'application/ld+json'
+      }
     ]
   },
   /*
