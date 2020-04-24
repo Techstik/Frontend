@@ -80,11 +80,9 @@
                       >Tell us about what you do, but keep it short and
                       precise!</small
                     >
-                    <ckeditor
+                    <Editor
                       v-model="$v.post_info.company_intro.$model"
-                      :editor="editor"
-                      placeholder="Some text here (keep it short)"
-                    ></ckeditor>
+                    ></Editor>
                   </div>
                 </div>
                 <div class="section">
@@ -235,11 +233,7 @@
                     >A bit of information such as what they'll be working on,
                     who they'll be working with, hours etc.</small
                   >
-                  <ckeditor
-                    v-model="$v.post_info.about_position.$model"
-                    :editor="editor"
-                    class="h-200"
-                  ></ckeditor>
+                  <Editor v-model="$v.post_info.about_position.$model"></Editor>
                 </div>
               </div>
               <div class="section">
@@ -731,11 +725,9 @@
                     email address or you want to outline your interview
                     process</small
                   >
-                  <ckeditor
+                  <Editor
                     v-model="$v.post_info.application_instr.$model"
-                    :editor="editor"
-                    class="h-200"
-                  ></ckeditor>
+                  ></Editor>
                 </div>
                 <div
                   :class="[
@@ -850,8 +842,7 @@
   </div>
 </template>
 <script>
-import CKEditor from '@ckeditor/ckeditor5-vue'
-import ClassicEditor from '@ckeditor/ckeditor5-build-inline'
+import Editor from '@/components/editor'
 import FilePond from '@/components/filepond'
 import Map from '@/components/map'
 import TechStack from '@/components/techstack'
@@ -876,7 +867,7 @@ const currencyValidator = value =>
 
 export default {
   components: {
-    ckeditor: CKEditor.component,
+    Editor,
     Map,
     FilePond,
     TechStack,
@@ -889,7 +880,6 @@ export default {
   },
   data() {
     return {
-      editor: ClassicEditor,
       place: null,
       map: null,
       activeStep: 0,

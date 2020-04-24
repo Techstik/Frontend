@@ -98,12 +98,6 @@ export default {
   components: {
     draggable
   },
-  props: {
-    value: {
-      type: Array,
-      default: null
-    }
-  },
   data() {
     return {
       selectedTech: [],
