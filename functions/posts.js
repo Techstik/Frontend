@@ -228,7 +228,7 @@ exports.on_updated = firebase_functions.firestore
       }
     }
 
-    if (updatedPost.verified && !updatedPost.tweeted)
+    if (!originalPost.verified && updatedPost.verified && !updatedPost.tweeted)
       tweetPost(updatedPost, change.after.ref)
 
     if (updatedPost.type.extras && updatedPost.type.extras.length)
@@ -435,7 +435,7 @@ function tweetPost(post, postRef) {
         post.salary.set
           ? `${post.salary.maximum / 1000}k`
           : `${post.salary.minimum / 1000}k - ${post.salary.maximum / 1000}k`
-      }. Details here 👉 https://techstik.com/jobs/${post.position
+      }. Details here 👇 https://techstik.com/jobs/${post.position
         .toLowerCase()
         .replace(/ /g, '-')}-at-${post.company_name
         .toLowerCase()
