@@ -32,6 +32,9 @@
   </a-tooltip>
 </template>
 <script>
+import 'devicon/devicon.css'
+import 'devicon/devicon-colors.css'
+
 export default {
   props: {
     tech: {

@@ -25,8 +25,8 @@
 }
 
 [class*="ant-col-"] {
-    padding-left: 0.9em;
-    padding-right: 0.9em;
+    padding-left: 0.9em !important;
+    padding-right: 0.9em !important;
 }
 
 /* .ant-row-flex>[class*="ant-col-"] {
@@ -35,12 +35,12 @@
 } */
 
 .ant-row, .ant-row-flex {
-    margin-left: -0.9em;
-    margin-right: -0.9em;
+    margin-left: -0.9em !important;
+    margin-right: -0.9em !important;
 }
 
 .ant-collapse>.ant-collapse-item>.ant-collapse-header {
-    padding: 0px
+    padding: 0px !important;
 }
 
 /* STEPS */
@@ -56,7 +56,7 @@
 }
 
 .ant-radio-group {
-    width: 100%;
+    width: 100% !important;
 }
 
 /* .ant-btn:hover, .ant-btn:focus {
@@ -68,80 +68,80 @@
 } */
 
 .ant-btn, .ant-btn:focus {
-    height: unset;
-    font-family: "Graphik-Bold", "Helvetica Neue", helvetica, "Apple Color Emoji", arial, sans-serif;
-    font-weight: 700;
-    transition: all 0.2s ease;
-    transition-property: color, background-color, border-color;
-    display: inline-block;
-    padding: 0.5em 1em;
-    background-color: #283b6c;
-    color: #fff;
-    font-size: 75%;
-    font-weight: bold;
-    text-decoration: none;
-    text-align: center;
-    line-height: normal;
-    -webkit-appearance: none;
-    border: 0.1em solid #283b6c;
-    border-radius: 5px;
+    height: unset !important;
+    font-family: "Graphik-Bold", "Helvetica Neue", helvetica, "Apple Color Emoji", arial, sans-serif !important;
+    font-weight: 700 !important;
+    transition: all 0.2s ease !important;
+    transition-property: color, background-color, border-color !important;
+    display: inline-block !important;
+    padding: 0.5em 1em !important;
+    background-color: #283b6c !important;
+    color: #fff !important;
+    font-size: 75% !important;
+    font-weight: bold !important;
+    text-decoration: none !important;
+    text-align: center !important;
+    line-height: normal !important;
+    -webkit-appearance: none !important;
+    border: 0.1em solid #283b6c !important;
+    border-radius: 5px !important;
 }
 
 .ant-btn:active, .ant-btn.active, .ant-btn:hover {
-    color: black;
+    color: black !important;
     background-color: #ffa500 !important;
-    border-color: #ffa500;
+    border-color: #ffa500 !important;
 }
 
 .ant-checkbox-inner, .ant-radio-inner {
-    height: 25px;
-    width: 25px;
+    height: 25px !important;
+    width: 25px !important;
     border: 1px solid #ffffff !important;
     border-radius: 7px !important;
 }
 
 .ant-checkbox-inner::after {
-    height: 10.142857px;
-    left: 29%;
-    top: 46%;
+    height: 10.142857px !important;
+    left: 29% !important;
+    top: 46% !important;
 }
 
 .ant-checkbox-checked .ant-checkbox-inner {
-    background-color: #161d2e;
-    border-color: #161d2e;
+    background-color: #161d2e !important;
+    border-color: #161d2e !important;
 }
 
 .ant-checkbox-wrapper:hover .ant-checkbox-inner, .ant-checkbox:hover .ant-checkbox-inner, .ant-checkbox-input:focus+.ant-checkbox-inner, .ant-radio-wrapper:hover .ant-radio, .ant-radio:hover .ant-radio-inner, .ant-radio-input:focus+.ant-radio-inner, .ant-radio-checked .ant-radio-inner {
-    border-color: #19262d;
+    border-color: #19262d !important;
 }
 
 .ant-radio-inner::after {
-    top: 3px;
-    left: 3px;
-    width: 17px;
-    height: 17px;
-    background-color: #f3976b;
-    border-radius: 100px;
+    top: 3px !important;
+    left: 3px !important;
+    width: 17px !important;
+    height: 17px !important;
+    background-color: #f3976b !important;
+    border-radius: 100px !important;
 }
 
 .ant-input, .ant-input-number {
-    border: 2px solid white;
-    margin-bottom: 10px;
-    height: 47.5px;
-    border-radius: 10px;
-    color: black;
-    padding: 0 35px 0 35px;
-    font-family: "Graphik", "Helvetica Neue", helvetica, "Apple Color Emoji", arial, sans-serif;
-    font-size: 85%;
+    border: 2px solid white !important;
+    margin-bottom: 10px !important;
+    height: 47.5px !important;
+    border-radius: 10px !important;
+    color: black !important;
+    padding: 0 35px 0 35px !important;
+    font-family: "Graphik", "Helvetica Neue", helvetica, "Apple Color Emoji", arial, sans-serif !important;
+    font-size: 85% !important;
 }
 
-.ant-input-group, .ant-input-affix-wrapper{
-    font-size: 85%;
+.ant-input-group, .ant-input-affix-wrapper {
+    font-size: 85% !important;
 }
 
 .ant-input-number-input {
-    height: 40px;
-    font-size: 120%;
+    height: 40px !important;
+    font-size: 120% !important;
 }
 
 .ant-input:hover, .ant-input:focus, .ant-input-affix-wrapper:hover .ant-input:not(.ant-input-disabled), .ant-input-number:hover {
@@ -155,29 +155,29 @@
 }
 
 .ant-steps-item-wait .ant-steps-item-icon {
-    background-color: #f3976b;
-    border-color: #f3976b;
+    background-color: #f3976b !important;
+    border-color: #f3976b !important;
 }
 
 .ant-steps-item-wait .ant-steps-item-icon>.ant-steps-icon, .ant-steps-item-process .ant-steps-item-icon>.ant-steps-icon {
-    color: black;
+    color: black !important;
 }
 
 .ant-steps-item-process .ant-steps-item-icon {
-    background: #f3976b;
+    background: #f3976b !important;
 }
 
 .ant-steps-item-process .ant-steps-item-icon {
-    border-color: #f3976b;
+    border-color: #f3976b !important;
 }
 
 .ant-steps-item-finish .ant-steps-item-icon {
-    background-color: #fcd669;
-    border-color: #fcd669;
+    background-color: #fcd669 !important;
+    border-color: #fcd669 !important;
 }
 
 .ant-steps-item-finish>.ant-steps-item-content>.ant-steps-item-title::after {
-    background-color: #fcd669;
+    background-color: #fcd669 !important;
 }
 
 .ant-steps-item-finish .ant-steps-item-icon>.ant-steps-icon {
@@ -185,42 +185,42 @@
 }
 
 .ant-tabs {
-    font-size: unset;
-    line-height: inherit;
+    font-size: unset !important;
+    line-height: inherit !important;
 }
 
 .ant-tooltip-inner {
-    background-color: #303c6c;
-    color: white;
+    background-color: #303c6c !important;
+    color: white !important;
 }
 
 .ant-tooltip-placement-top .ant-tooltip-arrow, .ant-tooltip-placement-topLeft .ant-tooltip-arrow, .ant-tooltip-placement-topRight .ant-tooltip-arrow {
-    border-top-color: #303c6c;
+    border-top-color: #303c6c !important;
 }
 
 .ant-input-group-addon .ant-select-open .ant-select-selection, .ant-input-group-addon .ant-select-focused .ant-select-selection {
-    color: #f3976b;
+    color: #f3976b !important;
 }
 
 .ant-radio-group.ant-radio-group-outline.ant-radio-group-default input, .ant-radio-group.ant-radio-group-outline.ant-radio-group-default label {
-    font-size: initial;
+    font-size: initial !important;
 }
 
 .ant-input-affix-wrapper .ant-input-suffix {
-    padding-bottom: 8px;
+    padding-bottom: 8px !important;
 }
 
 .ant-badge {
-    font-size: .6em;
+    font-size: .6em !important;
 }
 
 .ant-badge-count {
-    font-size: .9em;
+    font-size: .9em !important;
 }
 
 .ant-badge-count, .ant-divider-inner-text {
-    font-family: "Graphik-Bold", "Helvetica Neue", helvetica, "Apple Color Emoji", arial, sans-serif;
-    font-weight: 700;
+    font-family: "Graphik-Bold", "Helvetica Neue", helvetica, "Apple Color Emoji", arial, sans-serif !important;
+    font-weight: 700 !important;
 }
 
 a {
@@ -236,7 +236,7 @@ a:hover {
 }
 
 a.ant-btn {
-    line-height: initial;
+    line-height: initial !important;
     color: white !important;
 }
 
@@ -254,11 +254,11 @@ a.ant-btn:hover {
 }
 
 .ant-calendar-picker {
-    width: 100%;
+    width: 100% !important;
 }
 
 .ant-calendar {
-    border-radius: 10px;
+    border-radius: 10px !important;
 }
 
 .ant-calendar-picker-container {
@@ -285,15 +285,15 @@ a.ant-btn:hover {
 }
 
 .btn-yellow {
-    background-color: #fcd668;
-    border-color: #fcd668;
-    color: black;
+    background-color: #fcd668 !important;
+    border-color: #fcd668 !important;
+    color: black !important;
 }
 
 .btn-grey {
-    background-color: #f2f2f2;
-    border-color: #f2f2f2;
-    color: black;
+    background-color: #f2f2f2 !important;
+    border-color: #f2f2f2 !important;
+    color: black !important;
 }
 
 a:focus {
@@ -302,12 +302,13 @@ a:focus {
 
 .ant-tabs, .ant-collapse {
     font-size: unset !important;
-    color: unset;
+    color: unset !important;
 }
 
 .ant-collapse {
     background-color: transparent !important;
 }
+
 textarea.ant-input {
-    padding-top: 10px;
+    padding-top: 10px !important;
 }

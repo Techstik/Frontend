@@ -160,12 +160,13 @@
                   class="align-center location"
                 >
                   <div>
-                    <span
+                    <CountryFlag :country-code="post.location.country_code" />
+                    <!-- <span
                       v-if="post.location.country_code"
                       :class="
                         `flag-icon flag-icon-${post.location.country_code.toLowerCase()}`
                       "
-                    ></span>
+                    ></span> -->
                     <h4>
                       {{ post.location.city }},
                       {{ post.location.country }}
@@ -245,9 +246,10 @@
             <template slot="title">
               <span>{{ country.name }}</span>
             </template>
-            <span
+            <CountryFlag :country-code="country.code" :classes="['mr-15']" />
+            <!-- <span
               :class="`flag-icon flag-icon-${country.code.toLowerCase()} mr-15`"
-            ></span>
+            ></span> -->
           </a-tooltip>
         </div>
         <div v-else class="timezones">
@@ -282,6 +284,7 @@
 </template>
 <script>
 import techicon from '@/components/techicon'
+import CountryFlag from '@/components/countryflag'
 import Map from '@/components/map'
 import Gallery from '@/components/gallery'
 import ExperienceSelect from '@/components/experienceselect'
@@ -294,7 +297,8 @@ export default {
     Map,
     Gallery,
     ExperienceSelect,
-    Skeleton
+    Skeleton,
+    CountryFlag
   },
   props: {
     post: {

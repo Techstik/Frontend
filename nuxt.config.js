@@ -50,7 +50,7 @@ module.exports = {
         hid: 'og:image',
         name: 'og:image',
         property: 'og:image',
-        content: 'https://techstik.com/favicon-32x32.png'
+        content: 'https://techstik.com/web-icon.png'
       }
     ],
     link: [
@@ -87,12 +87,28 @@ module.exports = {
         href:
           '/fonts/Graphik-Regular-Web-36a20ba0e775b202ea4c516e93a90b390a3ae495d69b0854e66d744f601327c5.woff',
         crossorigin: true
+      },
+      {
+        rel: 'preconnect',
+        href: 'https://www.google-analytics.com'
+      },
+      {
+        rel: 'dns-prefetch',
+        href: 'https://www.google-analytics.com'
+      },
+      {
+        rel: 'preconnect',
+        href: 'https://firestore.googleapis.com'
+      },
+      {
+        rel: 'dns-prefetch',
+        href: 'https://firestore.googleapis.com'
       }
     ],
     script: [
       {
         innerHTML:
-          '{"@context":"http://schema.org","@type":"Organization","name":"Techstik","url":"https://techstik.com","logo":"https://techstik.com/android-chrome-192x192.png","sameAs":["https://twitter.com/Techstik_Jobs"],"contactPoint":[{"@type":"ContactPoint","email":"team@techstik.com","contactType":"customer support","url":"https://techstik.com/support"}]}',
+          '{"@context":"http://schema.org","@type":"Organization","name":"Techstik","url":"https://techstik.com","logo":"https://techstik.com/web-icon.png","sameAs":["https://twitter.com/Techstik_Jobs"],"contactPoint":[{"@type":"ContactPoint","email":"team@techstik.com","contactType":"customer support","url":"https://techstik.com/support"}]}',
         type: 'application/ld+json'
       }
     ]
@@ -105,13 +121,12 @@ module.exports = {
    ** Global CSS
    */
   css: [
-    'ant-design-vue/dist/antd.css',
+    'ant-design-vue/dist/antd.min.css',
     '@/assets/styles/layout.css',
     '@/assets/styles/ant-overrides.css',
     '@/assets/styles/site-wide.css',
     '@/assets/styles/grid.css',
     '@/assets/styles/currency-flags.min.css',
-    '@/node_modules/flag-icon-css/css/flag-icon.min.css',
     '@/assets/styles/skeleton.css'
   ],
   /*
@@ -178,9 +193,11 @@ module.exports = {
    ** Build configuration
    */
   build: {
-    /*
-     ** You can extend webpack config here
-     */
+    analyze: true,
+    cache: true,
+    babel: {
+      plugins: [['import', { libraryName: 'ant-design-vue/lib', style: 'css' }]]
+    },
     extend(config) {
       config.resolve.alias['vue'] = 'vue/dist/vue.common'
     }

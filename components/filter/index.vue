@@ -126,19 +126,21 @@
                   typeof option === 'object' ? option : { [label]: option }
                 "
               >
-                <span
+                <CountryFlag :country-code="option.code" :classes="['mr-15']" />
+                <!-- <span
                   :class="
                     `flag-icon flag-icon-${option.code.toLowerCase()} mr-15`
                   "
-                ></span>
+                ></span> -->
                 {{ option.name }}
               </template>
               <template v-slot:option="option">
-                <span
+                <CountryFlag :country-code="option.code" :classes="['mr-15']" />
+                <!-- <span
                   :class="
                     `flag-icon flag-icon-${option.code.toLowerCase()} mr-15`
                   "
-                ></span>
+                ></span> -->
                 {{ option.name }}
               </template>
             </v-select>
@@ -194,10 +196,14 @@
   </div>
 </template>
 <script>
+import CountryFalg from '@/components/countryflag'
 import { mapState, mapGetters } from 'vuex'
 import { createPopper } from '@popperjs/core'
 
 export default {
+  components: {
+    CountryFalg
+  },
   data() {
     return {
       filters: [

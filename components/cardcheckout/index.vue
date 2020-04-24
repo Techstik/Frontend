@@ -59,19 +59,27 @@
                     typeof option === 'object' ? option : { [label]: option }
                   "
                 >
-                  <span
+                  <CountryFlag
+                    :country-code="option.code"
+                    :classes="['mr-15']"
+                  />
+                  <!-- <span
                     :class="
                       `flag-icon flag-icon-${option.code.toLowerCase()} mr-15`
                     "
-                  ></span>
+                  ></span> -->
                   {{ option.name }}
                 </template>
                 <template v-slot:option="option">
-                  <span
+                  <CountryFlag
+                    :country-code="option.code"
+                    :classes="['mr-15']"
+                  />
+                  <!-- <span
                     :class="
                       `flag-icon flag-icon-${option.code.toLowerCase()} mr-15`
                     "
-                  ></span>
+                  ></span> -->
                   {{ option.name }}
                 </template>
               </v-select>
@@ -179,11 +187,13 @@ import { functions } from '@/plugins/firebase'
 import { required, requiredIf, email } from 'vuelidate/lib/validators'
 import stripelogo from '@/assets/images/logos/stripe/solid_dark.svg'
 import AvatarCard from '@/components/avatarcard'
+import CountryFlag from '@/components/countryflag'
 import { mapState } from 'vuex'
 
 export default {
   components: {
-    AvatarCard
+    AvatarCard,
+    CountryFlag
   },
   props: {
     amount: {

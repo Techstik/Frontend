@@ -624,19 +624,27 @@
                           : { [label]: option }
                       "
                     >
-                      <span
+                      <CountryFlag
+                        :country-code="option.code"
+                        :classes="['mr-15']"
+                      />
+                      <!-- <span
                         :class="
                           `flag-icon flag-icon-${option.code.toLowerCase()} mr-15`
                         "
-                      ></span>
+                      ></span> -->
                       {{ option.name }}
                     </template>
                     <template v-slot:option="option">
-                      <span
+                      <CountryFlag
+                        :country-code="option.code"
+                        :classes="['mr-15']"
+                      />
+                      <!-- <span
                         :class="
                           `flag-icon flag-icon-${option.code.toLowerCase()} mr-15`
                         "
-                      ></span>
+                      ></span> -->
                       {{ option.name }}
                     </template>
                   </v-select>
@@ -852,6 +860,7 @@ import MultipleFileUpload from '@/components/multifileupload'
 import OTP from '@/components/OTP'
 import Post from '@/components/post'
 import Pricing from '@/components/post/pricing'
+import CountryFlag from '@/components/countryflag'
 import {
   required,
   requiredIf,
@@ -876,7 +885,8 @@ export default {
     MultipleFileUpload,
     Post,
     OTP,
-    Pricing
+    Pricing,
+    CountryFlag
   },
   data() {
     return {

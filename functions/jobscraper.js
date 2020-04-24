@@ -54,7 +54,6 @@ async function stackoverflow(leadStats) {
   let feed = await parser.parseURL('https://stackoverflow.com/jobs/feed')
 
   let freshSyncList = []
-  let statUpdateRequired = false
 
   feed.items.forEach(async item => {
     let publishDate = moment(item.pubDate)
@@ -73,10 +72,8 @@ async function stackoverflow(leadStats) {
       return
 
     var response = await axios.get(item.link)
-    console.log(response.data)
     if (!response.data.includes('QuantitativeValue')) return
 
-    statUpdateRequired = true
     let lead = {
       scraped: true,
       URL: item.link,
@@ -227,16 +224,15 @@ async function stackoverflow(leadStats) {
       .catch(error => console.log(`Error adding postdetails: ${error}`))
   })
 
-  if (statUpdateRequired)
-    firebase_admin
-      .firestore()
-      .collection('leadstatistics')
-      .doc('3PZW2KyTYobELMpg9SSq')
-      .update({
-        stackoverflow_scraped_guids: freshSyncList
-      })
+  firebase_admin
+    .firestore()
+    .collection('leadstatistics')
+    .doc('3PZW2KyTYobELMpg9SSq')
+    .update({
+      stackoverflow_scraped_guids: freshSyncList
+    })
 
-  return statUpdateRequired
+  return true
 }
 
 async function indeed_UK(leadStats) {
