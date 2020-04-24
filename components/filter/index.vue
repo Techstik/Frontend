@@ -196,13 +196,13 @@
   </div>
 </template>
 <script>
-import CountryFalg from '@/components/countryflag'
+import CountryFlag from '@/components/countryflag'
 import { mapState, mapGetters } from 'vuex'
 import { createPopper } from '@popperjs/core'
 
 export default {
   components: {
-    CountryFalg
+    CountryFlag
   },
   data() {
     return {
