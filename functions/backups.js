@@ -42,6 +42,7 @@ function backupDatabase() {
 }
 
 function cleanDatabase() {
+  //eslint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve, reject) => {
     let last3days = moment()
       .subtract(3, 'days')

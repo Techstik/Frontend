@@ -337,6 +337,7 @@ function sendScrapedEmailNotification(post) {
 }
 
 function updateStatistics() {
+  //eslint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve, reject) => {
     let last30days = moment()
       .subtract(30, 'days')
