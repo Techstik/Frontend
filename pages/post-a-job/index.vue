@@ -1486,6 +1486,7 @@ small {
   text-align: center;
   background-color: white;
   transition: all 0.2s;
+  max-width: 320px;
 }
 .selection-block h5,
 .selection-block small {
