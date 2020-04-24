@@ -47,6 +47,7 @@
 import advancedSearch from '@/mixins/advancedSearch'
 import PostDetails from '@/components/post/details'
 import Skeleton from '@/components/generalskeleton'
+import currencySymbols from '@/assets/scripts/currency_symbols.json'
 import { mapState, mapGetters } from 'vuex'
 
 export default {
@@ -60,6 +61,7 @@ export default {
       loading: true,
       post: null,
       post_details: null,
+      symbols: currencySymbols,
       structuredData: {}
     }
   },
@@ -75,6 +77,30 @@ export default {
       var tmp = document.createElement('DIV')
       tmp.innerHTML = this.post_details.about_position
       return tmp.textContent || tmp.innerText || ''
+    },
+    computedMetaDescription() {
+      return this.post
+        ? `📣 ${this.post.company_name} is hiring a${
+            // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+            this.post.experience.sort()[0].charAt(0) == 'i' && !this.post.remote
+              ? 'n'
+              : ''
+            // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+          } ${this.post.remote ? 'remote ' : ''}${this.post.experience
+            .sort()
+            .map(exp => {
+              if (exp === 'entry-level') return 'Junior'
+              return exp.charAt(0).toUpperCase() + exp.substring(1)
+            })
+            .join('/')} ${this.post.position}. Offering ${
+            this.symbols[this.post.salary.currency.code].symbol
+          }${
+            this.post.salary.set
+              ? `${this.post.salary.maximum / 1000}k`
+              : `${this.post.salary.minimum / 1000}k - ${this.post.salary
+                  .maximum / 1000}k`
+          } and a bunch of benefits - find out more and apply on Techstik.`
+        : 'Find remote or location-based jobs at leading tech companies around the globe with upfront salary offers.'
     },
     computedSalary() {
       if (
@@ -194,13 +220,13 @@ export default {
         {
           hid: 'description',
           name: 'description',
-          content: this.computedDescription.substring(0, 200)
+          content: this.computedMetaDescription
         },
         {
           hid: 'og:description',
           name: 'og:description',
           property: 'og:description',
-          content: this.computedDescription.substring(0, 200)
+          content: this.computedMetaDescription
         },
         {
           hid: 'og:url',
