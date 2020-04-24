@@ -315,7 +315,6 @@ export default {
           .limit(1)
           .onSnapshot(querySnapshot => {
             let doc = querySnapshot.docs[0]
-            console.log(doc)
             if (
               !this.posts.find(post => {
                 return post.id == doc.id
