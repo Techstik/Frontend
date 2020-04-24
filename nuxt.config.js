@@ -71,7 +71,23 @@ module.exports = {
         sizes: '16x16',
         href: '/favicon-16x16.png'
       },
-      { rel: 'manifest', href: '/site.webmanifest' }
+      { rel: 'manifest', href: '/site.webmanifest' },
+      {
+        rel: 'preload',
+        as: 'font',
+        type: 'font/woff',
+        href:
+          '/fonts/Graphik-Bold-Web-1e0056812ec1e2fd3dc9ef458b15a188a912570556fff0b5f721c549f865ccf4.woff',
+        crossorigin: true
+      },
+      {
+        rel: 'preload',
+        as: 'font',
+        type: 'font/woff',
+        href:
+          '/fonts/Graphik-Regular-Web-36a20ba0e775b202ea4c516e93a90b390a3ae495d69b0854e66d744f601327c5.woff',
+        crossorigin: true
+      }
     ]
   },
   /*
@@ -97,21 +113,13 @@ module.exports = {
   plugins: [
     '@/plugins/injections/bugsnag.js',
     '@/plugins/firebase.js',
-    '@plugins/injections/storage.js',
-    '@plugins/injections/firestore.js',
+    '@plugins/injections/firebase.js',
     '@plugins/injections/locationservices.js',
     '@plugins/injections/eventBus.js',
     '@plugins/injections/localStorage.js',
-    '@plugins/injections/analytics.js',
-    '@/plugins/antd-ui.js',
+    '@/plugins/packages.js',
     '@/plugins/vuex-seed.js',
-    '@/plugins/lodash.js',
-    '@/plugins/moment.js',
-    '@/plugins/vuelidate.js',
-    '@/plugins/vue-select.js',
-    '@/plugins/devicon.js',
-    '@/plugins/filters.js',
-    '@/plugins/lazy-load.js'
+    '@/plugins/filters.js'
   ],
   /*
    ** Nuxt.js dev-modules

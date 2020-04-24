@@ -390,6 +390,31 @@ export default {
           this.typeWriter('Find Tech-Related Jobs Around the World.', 0)
         }, 700)
     }
+  },
+  head() {
+    return {
+      script: [
+        {
+          innerHTML: JSON.stringify({
+            '@context': 'http://schema.org',
+            '@type': 'Organization',
+            name: 'Techstik',
+            url: 'https://techstik.com',
+            logo: 'https://techstik.com/android-chrome-192x192.png',
+            sameAs: ['https://twitter.com/Techstik_Jobs'],
+            contactPoint: [
+              {
+                '@type': 'ContactPoint',
+                email: 'team@techstik.com',
+                contactType: 'customer support',
+                url: 'https://techstik.com/support'
+              }
+            ]
+          }),
+          type: 'application/ld+json'
+        }
+      ]
+    }
   }
 }
 </script>
