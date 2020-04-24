@@ -2,6 +2,7 @@
 @font-face {
   font-family: 'Graphik';
   font-weight: normal;
+  font-display: swap;
   src: url('~static/fonts/Graphik-Regular-Web-36a20ba0e775b202ea4c516e93a90b390a3ae495d69b0854e66d744f601327c5.woff');
   src: url('~static/fonts/Graphik-Regular-Web-36a20ba0e775b202ea4c516e93a90b390a3ae495d69b0854e66d744f601327c5.woff') format('woff');
 }
@@ -9,6 +10,7 @@
 @font-face {
   font-family: 'Graphik-Bold';
   font-weight: normal;
+  font-display: swap;
   src: url('~static/fonts/Graphik-Bold-Web-1e0056812ec1e2fd3dc9ef458b15a188a912570556fff0b5f721c549f865ccf4.woff');
   src: url('~static/fonts/Graphik-Bold-Web-1e0056812ec1e2fd3dc9ef458b15a188a912570556fff0b5f721c549f865ccf4.woff') format('woff');
 }
