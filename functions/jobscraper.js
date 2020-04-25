@@ -54,6 +54,7 @@ async function stackoverflow(leadStats) {
   let feed = await parser.parseURL('https://stackoverflow.com/jobs/feed')
 
   let freshSyncList = []
+  let statUpdateRequired = false
 
   feed.items.forEach(async item => {
     let publishDate = moment(item.pubDate)
@@ -70,6 +71,8 @@ async function stackoverflow(leadStats) {
     if (leadStats.stackoverflow_scraped_guids.includes(item.guid)) return
     if (['india', 'japan'].some(val => item.title.toLowerCase().includes(val)))
       return
+
+    statUpdateRequired = true
 
     var response = await axios.get(item.link)
     if (!response.data.includes('QuantitativeValue')) return
@@ -232,7 +235,7 @@ async function stackoverflow(leadStats) {
       stackoverflow_scraped_guids: freshSyncList
     })
 
-  return true
+  return statUpdateRequired
 }
 
 async function indeed_UK(leadStats) {

@@ -26,7 +26,7 @@ module.exports = {
         name: 'og:description',
         property: 'og:description',
         content:
-          'Explore remote and location-based tech opportunities around the world. A hub for Software Developers, Designers, DevOps and more. With upfront salary offers and tech stack transparency, your search ends here.'
+          '🚀 Explore remote and location-based tech opportunities around the world. A hub for Software Developers, Designers, DevOps and more. With upfront salary offers and tech stack transparency, your search ends here.'
       },
       {
         hid: 'og:url',
