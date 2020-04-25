@@ -193,7 +193,7 @@ module.exports = {
    ** Build configuration
    */
   build: {
-    analyze: true,
+    // analyze: true,
     cache: true,
     babel: {
       plugins: [['import', { libraryName: 'ant-design-vue/lib', style: 'css' }]]
