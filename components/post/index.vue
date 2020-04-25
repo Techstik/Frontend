@@ -20,7 +20,7 @@
       <div>
         <div class="summary" @click="onRevealRequest">
           <div>
-            <div class="company-image">
+            <div v-if="!isMobile" class="company-image">
               <img
                 v-if="
                   (post.type.name == 'Premium' ||
@@ -614,8 +614,8 @@ export default {
     width: 45px;
   }
   .content {
-    margin-left: 60px;
-    width: calc(100% - 60px);
+    margin-left: 0px;
+    width: 100%;
   }
   .company-initials {
     margin-top: 11px;

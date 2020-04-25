@@ -276,4 +276,9 @@ a:hover {
 .w-40 {
   width: 40%;
 }
+@media (max-width: 750px) {
+  .wrapper--intro {
+    padding: 5em 0 4em 0;
+  }
+}
 </style>

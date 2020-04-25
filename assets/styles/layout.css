@@ -608,5 +608,8 @@ svg:focus{
   .toasted {
     transform: translateY(50px) !important
   }
+  ul {
+    margin-left: -20px !important;
+  }
 }
 

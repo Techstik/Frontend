@@ -188,9 +188,7 @@
                 <h3 class="subheading">
                   Size
                 </h3>
-                <p>
-                  <b> {{ post.size }} people </b>
-                </p>
+                <p>{{ post.size }} people</p>
               </div>
               <div
                 v-if="
@@ -419,6 +417,9 @@ export default {
   border-radius: 5px;
 }
 @media (max-width: 750px) {
+  .subheading {
+    font-size: 130%;
+  }
   .tech-container {
     font-size: 200%;
   }

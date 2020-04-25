@@ -59,13 +59,19 @@
       </div>
 
       <div class="grid__item grid__item--mobile-large post-container">
-        <Post v-for="post in searchFilter.sticky" :key="post.id" :post="post" />
+        <Post
+          v-for="post in searchFilter.sticky"
+          :key="post.id"
+          :post="post"
+          :class="[{ max: isMobile && currentlyRevealedPost == post.id }]"
+        />
         <div v-if="searchFilter.today.length">
           <h3 class="subheading">Today</h3>
           <Post
             v-for="post in searchFilter.today"
             :key="post.id"
             :post="post"
+            :class="[{ max: isMobile && currentlyRevealedPost == post.id }]"
           />
         </div>
         <div v-if="searchFilter.yesterday.length">
@@ -74,6 +80,7 @@
             v-for="post in searchFilter.yesterday"
             :key="post.id"
             :post="post"
+            :class="[{ max: isMobile && currentlyRevealedPost == post.id }]"
           />
         </div>
         <div v-if="searchFilter.lastweek.length">
@@ -82,6 +89,7 @@
             v-for="post in searchFilter.lastweek"
             :key="post.id"
             :post="post"
+            :class="[{ max: isMobile && currentlyRevealedPost == post.id }]"
           />
         </div>
         <div v-if="searchFilter.older.length">
@@ -90,6 +98,7 @@
             v-for="post in searchFilter.older"
             :key="post.id"
             :post="post"
+            :class="[{ max: isMobile && currentlyRevealedPost == post.id }]"
           />
         </div>
         <div v-if="loading">
@@ -547,6 +556,14 @@ export default {
   }
   .subheading {
     font-size: 120%;
+  }
+  .post-container .listing,
+  .skeleton {
+    margin: 7px 0px;
+  }
+  .post-container .listing.max {
+    margin-left: -15px;
+    margin-right: -15px;
   }
 }
 </style>
