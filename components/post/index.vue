@@ -126,11 +126,12 @@
             >
               <span>
                 &nbsp; | &nbsp;
-                {{ post.salary.currency.code }}
                 <span v-if="!post.salary.set"
-                  >{{ post.salary.minimum | moneyFormat }} -
+                  >{{ symbols[post.salary.currency.code].symbol
+                  }}{{ post.salary.minimum | moneyFormat }} -
                 </span>
-                {{ post.salary.maximum | moneyFormat }}</span
+                {{ symbols[post.salary.currency.code].symbol
+                }}{{ post.salary.maximum | moneyFormat }}</span
               >
               <span
                 v-if="
@@ -140,11 +141,13 @@
                 "
               >
                 <b
-                  >({{ selectedCurrency }}
+                  >(
                   <span v-if="!post.salary.set"
-                    >{{ computedSalary.minimum | moneyClosestTenFormat }} -
+                    >{{ symbols[selectedCurrency].symbol
+                    }}{{ computedSalary.minimum | moneyClosestTenFormat }} -
                   </span>
-                  {{ computedSalary.maximum | moneyClosestTenFormat }})</b
+                  {{ symbols[selectedCurrency].symbol
+                  }}{{ computedSalary.maximum | moneyClosestTenFormat }})</b
                 ></span
               >
             </span>
@@ -206,6 +209,7 @@
 <script>
 import techicon from '@/components/techicon'
 import Details from './details'
+import currencySymbols from '@/assets/scripts/currency_symbols.json'
 import { mapState, mapMutations, mapGetters } from 'vuex'
 import { firestore } from 'firebase/app'
 
@@ -242,7 +246,8 @@ export default {
       revealing: false,
       hovering: false,
       activeTabKey: '1',
-      details: null
+      details: null,
+      symbols: currencySymbols
     }
   },
   computed: {
