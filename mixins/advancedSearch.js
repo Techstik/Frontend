@@ -137,8 +137,6 @@ export default {
         if (al_filters.length)
           searchOptions.filters = this.lodash.join(al_filters, ' ') //any exact values (currency, contract, salary) go here
 
-        console.log(searchOptions.similarQuery)
-
         algolia_post_index
           .search(searchWord ? searchWord : '', searchOptions)
           .then(response => {
