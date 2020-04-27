@@ -173,10 +173,11 @@ exports.on_updated = firebase_functions.firestore
           delete: true,
           url: `https://techstik.com/jobs/${updatedPost.position
             .toLowerCase()
-            .replace(
-              / /g,
-              '-'
-            )}-at-${updatedPost.company_name.toLowerCase().replace(/ /g, '-')}`
+            .replace(/ /g, '-')
+            .replace(/\//g, '-')}-at-${updatedPost.company_name
+            .toLowerCase()
+            .replace(/ /g, '-')
+            .replace(/\//g, '-')}`
         })
     } else {
       if (
@@ -192,10 +193,11 @@ exports.on_updated = firebase_functions.firestore
         google.index({
           url: `https://techstik.com/jobs/${updatedPost.position
             .toLowerCase()
-            .replace(
-              / /g,
-              '-'
-            )}-at-${updatedPost.company_name.toLowerCase().replace(/ /g, '-')}`
+            .replace(/ /g, '-')
+            .replace(/\//g, '-')}-at-${updatedPost.company_name
+            .toLowerCase()
+            .replace(/ /g, '-')
+            .replace(/\//g, '-')}`
         })
 
       if (
@@ -303,9 +305,11 @@ function sendScrapedEmailNotification(post) {
         staff_member_email: 'matt@techstik.com',
         link_to_post: `https://techstik.com/jobs/${post.position
           .toLowerCase()
-          .replace(/ /g, '-')}-at-${post.company_name
+          .replace(/ /g, '-')
+          .replace(/\//g, '-')}-at-${post.company_name
           .toLowerCase()
-          .replace(/ /g, '-')}`
+          .replace(/ /g, '-')
+          .replace(/\//g, '-')}`
       },
       cc: [
         {
@@ -437,9 +441,11 @@ function tweetPost(post, postRef) {
           : `${post.salary.minimum / 1000}k - ${post.salary.maximum / 1000}k`
       }. Details here 👇 https://techstik.com/jobs/${post.position
         .toLowerCase()
-        .replace(/ /g, '-')}-at-${post.company_name
+        .replace(/ /g, '-')
+        .replace(/\//g, '-')}-at-${post.company_name
         .toLowerCase()
-        .replace(/ /g, '-')}`
+        .replace(/ /g, '-')
+        .replace(/\//g, '-')}`
     )
     .then(() => {
       return postRef.update({ tweeted: true })
