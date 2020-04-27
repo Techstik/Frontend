@@ -235,6 +235,9 @@ export default {
           this.paginate()
         }, 1000)
       } else this.determineSearching()
+    },
+    currentlyRevealedPost(value) {
+      if (!value && this.canPaginate) this.setPaginate(false)
     }
   },
   created() {
@@ -286,6 +289,7 @@ export default {
     async paginate() {
       if (
         this.pagingInProgress ||
+        this.currentlyRevealedPost ||
         (!this.isSearching && this.allPostsLoaded) ||
         (this.isSearching && this.search.allLoaded)
       )
