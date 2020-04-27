@@ -35,7 +35,11 @@ export default {
                 break
               case 'tech stack':
                 var technames = filter.values.map(value => {
-                  return value.name
+                  return this.lodash
+                    .remove(value.name.split(' '), word => {
+                      return word != 'js'
+                    })
+                    .join(' ')
                 })
                 similarQuery.push(this.lodash.join(technames, ' '))
                 break
@@ -132,6 +136,8 @@ export default {
           searchOptions.facetFilters = al_facet_filters //any exact values (currency, contract, salary) go here
         if (al_filters.length)
           searchOptions.filters = this.lodash.join(al_filters, ' ') //any exact values (currency, contract, salary) go here
+
+        console.log(searchOptions.similarQuery)
 
         algolia_post_index
           .search(searchWord ? searchWord : '', searchOptions)

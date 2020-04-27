@@ -312,7 +312,7 @@ export default {
       // eslint-disable-next-line no-unused-vars
       const { v, h } = this.$refs.scroll_container.getScrollProcess()
 
-      if (v > 0.5 && !this.canPaginate) this.setPaginate(true)
+      if (v > 0.7 && !this.canPaginate) this.setPaginate(true)
     },
     handleWindowResize() {
       this.setWindowWidth(window.innerWidth)
