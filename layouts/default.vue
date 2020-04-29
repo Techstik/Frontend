@@ -30,8 +30,8 @@
                 }
               </style>
             </defs>
-            <g id="Layer_2" data-name="Layer 2">
-              <g id="Layer_1-2" data-name="Layer 1">
+            <g data-name="Layer 2">
+              <g data-name="Layer 1">
                 <text
                   class="cls-1"
                   transform="translate(110.66 91.8) scale(1.05 1)"
@@ -164,7 +164,7 @@
               <h3 class="subheading">Support</h3>
             </a>
             <div class="align-center mt-20">
-              <a href="https://twitter.com/Techstik_Jobs" target="_blank"
+              <a href="https://twitter.com/Techstik_Jobs" aria-label="Twitter"
                 ><svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 250 203.14"
@@ -177,8 +177,8 @@
                       }
                     </style>
                   </defs>
-                  <g id="Layer_2" data-name="Layer 2">
-                    <g id="Layer_1-2" data-name="Layer 1">
+                  <g data-name="Layer 2">
+                    <g data-name="Layer 1">
                       <path
                         class="twitter-bird"
                         d="M78.62,203.14C173,203.14,224.56,125,224.56,57.2c0-2.22,0-4.43-.15-6.63A104.36,104.36,0,0,0,250,24a102.24,102.24,0,0,1-29.46,8.07A51.46,51.46,0,0,0,243.09,3.72a103,103,0,0,1-32.57,12.45A51.34,51.34,0,0,0,123.11,63,145.63,145.63,0,0,1,17.4,9.36,51.33,51.33,0,0,0,33.28,77.83,51,51,0,0,1,10,71.41v.65a51.32,51.32,0,0,0,41.15,50.28,51.2,51.2,0,0,1-23.16.88,51.36,51.36,0,0,0,47.92,35.62,103,103,0,0,1-63.7,22A106,106,0,0,1,0,180.1a145.22,145.22,0,0,0,78.62,23"
@@ -195,6 +195,7 @@
       ref="scroll_container"
       class="scroll-container"
       :ops="scrollOptions"
+      alt="vue-scroll container"
       @handle-scroll="handleScroll"
     >
       <div class="nuxt-container">
@@ -206,8 +207,8 @@
         <div v-if="!isMobile" class="sitelinks">
           <a
             href="https://twitter.com/Techstik_Jobs"
-            target="_blank"
             class="f-l"
+            aria-label="Twitter"
             ><svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 250 203.14"
@@ -216,12 +217,12 @@
               <defs>
                 <style>
                   .twitter-bird {
-                    fill: #161d2d;
+                    fill: #1da1f2;
                   }
                 </style>
               </defs>
-              <g id="Layer_2" data-name="Layer 2">
-                <g id="Layer_1-2" data-name="Layer 1">
+              <g data-name="Layer 2">
+                <g data-name="Layer 1">
                   <path
                     class="twitter-bird"
                     d="M78.62,203.14C173,203.14,224.56,125,224.56,57.2c0-2.22,0-4.43-.15-6.63A104.36,104.36,0,0,0,250,24a102.24,102.24,0,0,1-29.46,8.07A51.46,51.46,0,0,0,243.09,3.72a103,103,0,0,1-32.57,12.45A51.34,51.34,0,0,0,123.11,63,145.63,145.63,0,0,1,17.4,9.36,51.33,51.33,0,0,0,33.28,77.83,51,51,0,0,1,10,71.41v.65a51.32,51.32,0,0,0,41.15,50.28,51.2,51.2,0,0,1-23.16.88,51.36,51.36,0,0,0,47.92,35.62,103,103,0,0,1-63.7,22A106,106,0,0,1,0,180.1a145.22,145.22,0,0,0,78.62,23"
@@ -352,10 +353,6 @@ export default {
 .twitter {
   width: 40px;
 }
-.twitter-bird:hover {
-  transition: 0.3s;
-  fill: #1da1f2;
-}
 .top-nav {
   position: relative;
   z-index: 19000;
@@ -450,7 +447,7 @@ export default {
 }
 .sitelinks a {
   margin-right: 1em;
-  color: #161d2d !important;
+  color: #b1b1b1 !important;
   font-size: 90%;
 }
 .sitelinks a:hover {

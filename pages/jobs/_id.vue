@@ -245,7 +245,7 @@ export default {
       ],
       script: [
         {
-          innerHTML: JSON.stringify(this.structuredData),
+          json: this.structuredData,
           type: 'application/ld+json'
         }
       ]

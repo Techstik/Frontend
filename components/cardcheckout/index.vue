@@ -101,7 +101,7 @@
           </a-col>
         </a-row>
         <a-button @click="submitPayment"> Pay ${{ amount }}.00 </a-button>
-        <a target="_blank" href="https://stripe.com/"
+        <a target="_blank" rel="noopener" href="https://stripe.com/"
           ><img class="logo" :src="stripelogo" alt="Stripe"
         /></a>
       </div>

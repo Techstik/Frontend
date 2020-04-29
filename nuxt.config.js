@@ -19,14 +19,14 @@ module.exports = {
         hid: 'description',
         name: 'description',
         content:
-          '🚀 Explore remote and location-based tech opportunities around the world. A hub for Software Developers, Designers, DevOps and more. With upfront salary offers and tech stack transparency, your search ends here.'
+          '🚀 Explore remote and location-based tech jobs around the world. A hub for Software Developers, Designers, DevOps and more. With upfront salary offers and tech stack transparency, your search ends here.'
       },
       {
         hid: 'og:description',
         name: 'og:description',
         property: 'og:description',
         content:
-          '🚀 Explore remote and location-based tech opportunities around the world. A hub for Software Developers, Designers, DevOps and more. With upfront salary offers and tech stack transparency, your search ends here.'
+          '🚀 Explore remote and location-based tech jobs around the world. A hub for Software Developers, Designers, DevOps and more. With upfront salary offers and tech stack transparency, your search ends here.'
       },
       {
         hid: 'og:url',
@@ -107,8 +107,22 @@ module.exports = {
     ],
     script: [
       {
-        innerHTML:
-          '{"@context":"http://schema.org","@type":"Organization","name":"Techstik","url":"https://techstik.com","logo":"https://techstik.com/web-icon.png","sameAs":["https://twitter.com/Techstik_Jobs"],"contactPoint":[{"@type":"ContactPoint","email":"team@techstik.com","contactType":"customer support","url":"https://techstik.com/support"}]}',
+        json: {
+          '@context': 'http://schema.org',
+          '@type': 'Organization',
+          name: 'Techstik',
+          url: 'https://techstik.com',
+          logo: 'https://techstik.com/web-icon.png',
+          sameAs: ['https://twitter.com/Techstik_Jobs'],
+          contactPoint: [
+            {
+              '@type': 'ContactPoint',
+              email: 'team@techstik.com',
+              contactType: 'customer support',
+              url: 'https://techstik.com/support'
+            }
+          ]
+        },
         type: 'application/ld+json'
       }
     ]

@@ -14,8 +14,8 @@
       </h3>
       <p class="medium grid__item--medium mt-1">
         Your post will be curated from
-        <a :href="lead.URL" target="_blank">this source</a> and handled by our
-        team member, <b>{{ lead.assignee.name }}</b
+        <a :href="lead.URL">this source</a> and handled by our team member,
+        <b>{{ lead.assignee.name }}</b
         >. <br />Feel free to contact {{ lead.assignee.salutation }} if you have
         any questions.
       </p>
