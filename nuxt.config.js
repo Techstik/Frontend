@@ -175,7 +175,8 @@ module.exports = {
     [
       'vue-currency-input/nuxt',
       { globalOptions: { allowNegative: false, currency: null } }
-    ]
+    ],
+    'nuxt-dayjs-module'
   ],
 
   sitemap: {
@@ -207,7 +208,7 @@ module.exports = {
    ** Build configuration
    */
   build: {
-    // analyze: true,
+    analyze: true,
     cache: true,
     babel: {
       plugins: [['import', { libraryName: 'ant-design-vue/lib', style: 'css' }]]
