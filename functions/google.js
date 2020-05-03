@@ -1,9 +1,6 @@
-const axios = require('axios')
 var { google } = require('googleapis')
-const firebase_functions = require('firebase-functions')
 var request = require('request')
-var key = require('./scripts/service_account.json')
-//NOTE: Google keys are stored in live env config only
+var key = require('./scripts/talent_solutions_service_account.json')
 
 const jwtClient = new google.auth.JWT(
   key.client_email,

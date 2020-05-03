@@ -2,11 +2,23 @@
 /* eslint-disable promise/no-nesting */
 const firebase_functions = require('firebase-functions')
 const firebase_admin = require('firebase-admin')
+// const storage = require('@google-cloud/storage')
+// const crypto = require('crypto')
 const moment = require('moment')
-const axios = require('axios')
+// const axios = require('axios')
 let pushNotifications = require('./pushNotifications')
 const allListedTech = require('./scripts/tech.json')
 let Parser = require('rss-parser')
+
+var request = require('request')
+const cheerio = require('cheerio')
+
+// const bucket = firebase_admin.storage().bucket()
+
+// exports.test_scraper = firebase_functions.https.onRequest(async () => {
+//   saveImage('https://i.stack.imgur.com/joolT.png', 'TESTINGFUNCTIONUPLOAD')
+//   return true
+// })
 
 exports.scrape = firebase_functions.pubsub
   .schedule('every 1 hours')
@@ -74,157 +86,168 @@ async function stackoverflow(leadStats) {
 
     statUpdateRequired = true
 
-    var response = await axios.get(item.link)
-    if (!response.data.includes('QuantitativeValue')) return
+    request(item.link, (error, response, html) => {
+      if (!error && response.statusCode === 200) {
+        if (!html.includes('QuantitativeValue')) return
 
-    let lead = {
-      scraped: true,
-      URL: item.link,
-      approved: true,
-      company_name: '',
-      email: item.guid,
-      position: item.title,
-      date_created: firebase_admin.firestore.Timestamp.fromDate(new Date()),
-      deleted: false
-    }
+        var $ = cheerio.load(html)
 
-    let post = {
-      type: {
-        name: 'Scraped',
-        price: 0
-      },
-      date_created: firebase_admin.firestore.Timestamp.fromDate(
-        moment(item.pubDate).toDate()
-      ),
-      verified: false,
-      deleted: false,
-      position: item.title.split(' at ')[0],
-      company_logo: '',
-      company_name: item.author['a10:name'][0],
-      company_website: '',
-      experience: [],
-      full_time: true,
-      contract: false,
-      location_based: item.location ? true : false,
-      remote: item.location ? false : true,
-      tech: !item.categories
-        ? []
-        : item.categories.map(tech => {
-            let match = allListedTech.find(_tech => {
-              return _tech.name.toLowerCase() === tech.toLowerCase()
+        let lead = {
+          scraped: true,
+          URL: item.link,
+          approved: true,
+          company_name: '',
+          email: item.guid,
+          position: item.title,
+          date_created: firebase_admin.firestore.Timestamp.fromDate(new Date()),
+          deleted: false
+        }
+
+        let post = {
+          type: {
+            name: 'Scraped',
+            price: 0
+          },
+          date_created: firebase_admin.firestore.Timestamp.fromDate(
+            moment(item.pubDate).toDate()
+          ),
+          verified: false,
+          deleted: false,
+          position: item.title.split(' at ')[0],
+          company_logo: '',
+          company_name: item.author['a10:name'][0],
+          company_website: '',
+          experience: [],
+          full_time: true,
+          contract: false,
+          location_based: item.location ? true : false,
+          remote: item.location ? false : true,
+          tech: !item.categories
+            ? []
+            : item.categories.map(tech => {
+                let match = allListedTech.find(_tech => {
+                  return _tech.name.toLowerCase() === tech.toLowerCase()
+                })
+                return match
+                  ? {
+                      name: match.name
+                    }
+                  : {
+                      name: tech,
+                      custom: true
+                    }
+              }),
+          salary: {
+            set: true,
+            minimum: 1000,
+            maximum: 1000,
+            currency: {
+              name: 'United States Dollar',
+              code: 'USD'
+            }
+          },
+          size: '1-10',
+          payment_details: {
+            paid: false
+          },
+          residing_restrictions: {
+            by_country: {
+              restricted: false,
+              countries: []
+            },
+            by_timezone: {
+              restricted: false,
+              timezones: []
+            }
+          }
+        }
+
+        if (item.location)
+          post.location = {
+            city: item.location.split(',')[0],
+            country: item.location.split(',')[1].trim()
+          }
+
+        if (
+          ['senior', 'lead'].some(val => item.title.toLowerCase().includes(val))
+        )
+          post.experience.push('senior')
+
+        if (
+          ['intermediate', 'mid-level'].some(val =>
+            item.title.toLowerCase().includes(val)
+          )
+        )
+          post.experience.push('intermediate')
+
+        if (
+          ['junior', 'entry-level', 'graduate', 'beginner'].some(val =>
+            item.title.toLowerCase().includes(val)
+          )
+        )
+          post.experience.push('entry-level')
+
+        let post_info = {
+          company_intro: '',
+          about_position: item.content ? item.content : '',
+          benefits: $('.-benefits')
+            .children('ul')
+            .children('li')
+            .map(function(i, el) {
+              return {
+                benefit: $(this).attr('title')
+              }
             })
-            return match
-              ? {
-                  name: match.name
-                }
-              : {
-                  name: tech,
-                  custom: true
-                }
-          }),
-      salary: {
-        set: true,
-        minimum: 1000,
-        maximum: 1000,
-        currency: {
-          name: 'United States Dollar',
-          code: 'USD'
+            .get(),
+          requirements: [
+            {
+              requirement: ''
+            },
+            {
+              requirement: ''
+            }
+          ],
+          responsibilities: [
+            {
+              responsibility: ''
+            },
+            {
+              responsibility: ''
+            },
+            {
+              responsibility: ''
+            }
+          ],
+          application_url: item.link,
+          application_instr: '',
+          application_email: ''
         }
-      },
-      size: '1-10',
-      payment_details: {
-        paid: false
-      },
-      residing_restrictions: {
-        by_country: {
-          restricted: false,
-          countries: []
-        },
-        by_timezone: {
-          restricted: false,
-          timezones: []
-        }
-      }
-    }
 
-    if (item.location)
-      post.location = {
-        city: item.location.split(',')[0],
-        country: item.location.split(',')[1]
-      }
-
-    if (['senior', 'lead'].some(val => item.title.toLowerCase().includes(val)))
-      post.experience.push('senior')
-
-    if (
-      ['intermediate', 'mid-level'].some(val =>
-        item.title.toLowerCase().includes(val)
-      )
-    )
-      post.experience.push('intermediate')
-
-    if (
-      ['junior', 'entry-level', 'graduate', 'beginner'].some(val =>
-        item.title.toLowerCase().includes(val)
-      )
-    )
-      post.experience.push('entry-level')
-
-    let post_info = {
-      company_intro: '',
-      about_position: item.content,
-      benefits: [
-        {
-          benefit: ''
-        }
-      ],
-      requirements: [
-        {
-          requirement: ''
-        },
-        {
-          requirement: ''
-        }
-      ],
-      responsibilities: [
-        {
-          responsibility: ''
-        },
-        {
-          responsibility: ''
-        },
-        {
-          responsibility: ''
-        }
-      ],
-      application_url: item.link,
-      application_instr: '',
-      application_email: ''
-    }
-
-    firebase_admin
-      .firestore()
-      .collection('postdetails')
-      .add(post_info)
-      .then(post_details_doc => {
-        post.postdetails_ref = `postdetails/${post_details_doc.id}`
-
-        return firebase_admin
+        firebase_admin
           .firestore()
-          .collection('posts')
-          .add(post)
-          .then(post_doc => {
-            lead.post_ref = `posts/${post_doc.id}`
+          .collection('postdetails')
+          .add(post_info)
+          .then(post_details_doc => {
+            post.postdetails_ref = `postdetails/${post_details_doc.id}`
 
             return firebase_admin
               .firestore()
-              .collection('leads')
-              .add(lead)
-              .catch(error => console.log(`Error adding lead: ${error}`))
+              .collection('posts')
+              .add(post)
+              .then(post_doc => {
+                lead.post_ref = `posts/${post_doc.id}`
+
+                return firebase_admin
+                  .firestore()
+                  .collection('leads')
+                  .add(lead)
+                  .catch(error => console.log(`Error adding lead: ${error}`))
+              })
+              .catch(error => console.log(`Error adding post: ${error}`))
           })
-          .catch(error => console.log(`Error adding post: ${error}`))
-      })
-      .catch(error => console.log(`Error adding postdetails: ${error}`))
+          .catch(error => console.log(`Error adding postdetails: ${error}`))
+      }
+    })
   })
 
   firebase_admin
@@ -363,7 +386,7 @@ async function indeed_UK(leadStats) {
 
     let post_info = {
       company_intro: '',
-      about_position: item.description,
+      about_position: item.description ? item.description : '',
       benefits: [
         {
           benefit: ''
@@ -541,7 +564,7 @@ async function landing_jobs(leadStats) {
 
     let post_info = {
       company_intro: '',
-      about_position: item.content,
+      about_position: item.content ? item.content : '',
       benefits: [
         {
           benefit: ''
@@ -733,7 +756,7 @@ async function remote_OK(leadStats) {
 
     let post_info = {
       company_intro: '',
-      about_position: item.description,
+      about_position: item.description ? item.description : '',
       benefits: [
         {
           benefit: ''
@@ -926,7 +949,7 @@ async function authentic_jobs(leadStats) {
 
     let post_info = {
       company_intro: '',
-      about_position: item['content:encoded'],
+      about_position: item['content:encoded'] ? item['content:encoded'] : '',
       benefits: [
         {
           benefit: ''
@@ -1111,7 +1134,7 @@ async function ux_jobs_board(leadStats) {
 
     let post_info = {
       company_intro: '',
-      about_position: item['content:encoded'],
+      about_position: item['content:encoded'] ? item['content:encoded'] : '',
       benefits: [
         {
           benefit: ''
@@ -1177,3 +1200,35 @@ async function ux_jobs_board(leadStats) {
 
   return statUpdateRequired
 }
+
+// function saveImage(url, storagePath) {
+//   return new Promise((resolve, reject) => {
+//     var urlPieces = url.split('.')
+//     const randomFileName = `${crypto.randomBytes(8).toString('hex')}.${
+//       urlPieces[urlPieces.length - 1]
+//     }`
+
+//     request.head(url, (error, info) => {
+//       if (error) {
+//         console.error(error)
+//         return reject(error)
+//       }
+
+//       request(url)
+//         .pipe(
+//           bucket.file(`${storagePath}/${randomFileName}`).createWriteStream({
+//             metadata: {
+//               contentType: info.headers['content-type']
+//             }
+//           })
+//         )
+//         .on('error', error => {
+//           console.error(error)
+//           reject(error)
+//         })
+//         .on('finish', URL => {
+//           console.log(URL)
+//         })
+//     })
+//   })
+// }

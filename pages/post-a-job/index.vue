@@ -727,7 +727,7 @@
                     'mt-15'
                   ]"
                 >
-                  <label class="d-block">Instructions</label>
+                  <label class="d-block">Instructions/notes</label>
                   <small
                     >Maybe you'd like applicants to send their resume to an
                     email address or you want to outline your interview

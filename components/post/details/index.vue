@@ -226,7 +226,8 @@
         "
         class="restrictions"
       >
-        This position is restrcited to applicants residing in the following
+        This position is restrcited to applicants residing/authorized to work in
+        the following
         {{
           post.residing_restrictions.by_country.restricted
             ? 'countries'
@@ -259,7 +260,7 @@
         </div>
       </div>
       <div v-if="postDetails.application_instr" class="apply-container">
-        <h3 class="subheading">How to apply</h3>
+        <h3 class="subheading">Application notes</h3>
         <div class="p-m-0" v-html="postDetails.application_instr"></div>
       </div>
       <div class="align-center mt-10">
