@@ -1,9 +1,7 @@
 const firebase_admin = require('firebase-admin')
-var storage_service_account = require('./scripts/storage_service_account.json')
 
 firebase_admin.initializeApp({
-  // credential: firebase_admin.credential.applicationDefault()
-  credential: firebase_admin.credential.cert(storage_service_account)
+  credential: firebase_admin.credential.applicationDefault()
 })
 
 exports.stripe = require('./stripe')

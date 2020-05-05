@@ -1,6 +1,6 @@
 var { google } = require('googleapis')
 var request = require('request')
-var key = require('./scripts/talent_solutions_service_account.json')
+var key = require('./scripts/service_account.json')
 
 const jwtClient = new google.auth.JWT(
   key.client_email,
