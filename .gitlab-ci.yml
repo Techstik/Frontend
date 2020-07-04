@@ -64,9 +64,6 @@ code_quality:
     expire_in: 10 weeks
   dependencies:
     - install
-  except:
-    variables:
-      - $CODE_QUALITY_DISABLED
 
 staging-build:
   stage: generate
