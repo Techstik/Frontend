@@ -90,3 +90,7 @@ sw.*
 *.swp
 
 firebase.json
+
+.firebase
+
+.vscode
