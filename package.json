@@ -44,7 +44,7 @@
     "numeral": "^2.0.6",
     "nuxt": "^2.0.0",
     "nuxt-dayjs-module": "^1.1.2",
-    "swiper": "^5.3.6",
+    "swiper": "^6.5.1",
     "vue-awesome-swiper": "^4.1.0",
     "vue-burger-menu": "^2.0.5",
     "vue-currency-input": "^1.16.0",
